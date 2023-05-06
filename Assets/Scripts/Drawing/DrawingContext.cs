@@ -10,15 +10,19 @@ public class DrawingContext : MonoBehaviour
 	public const float THRESHOLD = 0.1f;
 	private DrawingState state;
 	private DrawingStateFactory factory;
+	public LineCreator lineCreator;
 	[SerializeField]
 	private InputReaderSO inputReader;
-	public Line LinePrefab;
+	[SerializeField]
+	private Line LinePrefab;
 	public Line Line;
-	public Vector2 TouchPosition {get =>
-	
-		main.ScreenToWorldPoint(inputReader.Position)
-	;private set{}}
-	public Camera main;
+	public event Action<Line> OnProperLine;
+	public Vector2 TouchPosition {
+		get => main.ScreenToWorldPoint(inputReader.Position);
+		private set {}
+	}
+	public Camera main;//put in in injection
+	public Dictionary<GameObject, Line> createdLines;
 
 	/*[Inject]
 	public void Constructor(InputReaderSO input) => this.input = input;*/
@@ -26,6 +30,7 @@ public class DrawingContext : MonoBehaviour
 	private void Awake() 
 	{
 		factory = new DrawingStateFactory();
+		lineCreator = new LineCreator(LinePrefab);
 		state = factory.GetOrCreate<DrawingStartState>();
 	}
 	

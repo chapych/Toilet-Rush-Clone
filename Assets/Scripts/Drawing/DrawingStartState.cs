@@ -16,13 +16,13 @@ public class DrawingStartState : DrawingState
 	{
 		base.Handle(context);
 		
-		Collider2D character = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
-		if(character) //check if it is character
+		Vector2 position = context.TouchPosition;
+		Collider2D collider = Physics2D.OverlapCircle(position, detectingRadius);
+		if(collider.TryGetComponent<CharacterData>(out CharacterData character))
 		{
-			if(context.Line) return; //mb let not context carry thoae lines but objects themselves
-			//or create gfabric-like data container
+			if(context.lineCreator.ContainsLineFor(character)) return;
 			
-			context.Line = GameObject.Instantiate(context.LinePrefab, context.TouchPosition, Quaternion.identity);
+			context.Line = context.lineCreator.Create(character, position);
 			context.Line.transform.parent = context.transform;
 			DrawingState.TransitionFrom<DrawingPressedState>(this);
 		}
