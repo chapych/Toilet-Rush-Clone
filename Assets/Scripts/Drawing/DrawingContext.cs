@@ -10,34 +10,20 @@ public class DrawingContext : MonoBehaviour
 	public const float THRESHOLD = 0.1f;
 	private DrawingState state;
 	private DrawingStateFactory factory;
-	public LineCreator lineCreator;
-	[SerializeField]
-	private InputReaderSO inputReader;
-	[SerializeField]
-	private Line LinePrefab;
-	public Line Line;
-	public event Action<Line> OnProperLine;
-	public Vector2 TouchPosition {
-		get => main.ScreenToWorldPoint(inputReader.Position);
-		private set {}
-	}
-	public Camera main;//put in in injection
-	public Dictionary<GameObject, Line> createdLines;
+	private LineCreator lineCreator;
+	private DrawingInputControler input;
+	public Vector2 TouchPosition => input.TouchPosition;
+	//public Line Line => lineCreator.CurrentLine; 
 
 	/*[Inject]
-	public void Constructor(InputReaderSO input) => this.input = input;*/
+public void Constructor(InputReaderSO input) => this.input = input;*/
 
 	private void Awake() 
 	{
+		input = GetComponent<DrawingInputControler>();
+		lineCreator = GetComponent<LineCreator>();
 		factory = new DrawingStateFactory();
-		lineCreator = new LineCreator(LinePrefab);
 		state = factory.GetOrCreate<DrawingStartState>();
-	}
-	
-	private void Start() 
-	{
-		inputReader.DrawingEnable();
-		inputReader.TouchEvent+=TouchHandle;
 	}
 	
 	private void Update() 
@@ -45,20 +31,22 @@ public class DrawingContext : MonoBehaviour
 		state.UpdateHandler(this);
 	}
 	
-	private void TouchHandle()
+	public void TouchHandle()
 	{
-		state.Handle(this);
-	}
-	
-	private void OnDisable()
-	{
-		inputReader.TouchEvent-=TouchHandle;
+		state.TouchHandle(this);
 	}
 	
 	public void Transition<T>() where T : DrawingState, new()
 	{
 		state = factory.GetOrCreate<T>();
 	}
+
+	public bool CanCreateLine(CharacterData character) => !lineCreator.ContainsLineFor(character);
+
+	public void CreateLine(CharacterData character, Vector2 position) => lineCreator.Create(character, position);
 	
+	public void ContinueLine() => lineCreator.ContinueLine(TouchPosition);
 	
+	public void RegisterLine(FinishData data) => lineCreator.AddCurrentLine(data);
+	public void DestroyLine() => lineCreator.DestroyLine();
 }

@@ -11,20 +11,16 @@ public class DrawingPressedState : DrawingState
 	{
 		if(!context)
 			this.context = context;
-		
-		Line line = context.Line;
-		if(line.CanContinue(context.TouchPosition, DrawingContext.THRESHOLD))
-		{
-			line.ContinueLine(context.TouchPosition);
-		}
+		context.ContinueLine();
 	}
 
-	public override void Handle(DrawingContext context)
+	public override void TouchHandle(DrawingContext context)
 	{
-		base.Handle(context);
-		Collider2D character = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
-		Debug.Log(character);
-		if(!character) GameObject.Destroy(context.Line.gameObject); //use pool instead?
+		base.TouchHandle(context);
+		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
+		if(collider && collider.TryGetComponent<FinishData>(out FinishData data))
+			context.RegisterLine(data);
+		else context.DestroyLine();
 		DrawingState.TransitionFrom<DrawingStartState>(this);
 	}
 	

@@ -6,6 +6,25 @@ public class Line : MonoBehaviour
 {
 	[SerializeField]
 	private LineRenderer lineRenderer;
+	private Color color;
+	public Color Color
+	{
+		set
+		{
+			Gradient gradient = new Gradient();
+			gradient.mode = GradientMode.Blend;
+			var gradientColorKeys = new GradientColorKey[1]
+			{
+				new GradientColorKey(value, 1)
+			};
+			var alphaKeys = new GradientAlphaKey[1]
+			{
+				new GradientAlphaKey(1f, 1),
+			};
+			gradient.SetKeys(gradientColorKeys, alphaKeys);
+			lineRenderer.colorGradient = gradient;
+		}
+	}
 	
 	private void Start()
 	{
