@@ -1,6 +1,6 @@
-public interface ICharacterData
+public interface ICharacterData : IComponent
 {
-    Line Line { get; set; }
-
-    void OnAllLinesCreatedHandle();
+	Line Line { get; set; }
+	Gender Gender { get; set; }
+	void OnAllLinesCreatedHandle();
 }

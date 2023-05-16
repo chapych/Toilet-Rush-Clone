@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterData : MonoBehaviour, ICharacterData
 {
-    public Gender Gender;
+    public Gender Gender { get; set; }
 
     public Line Line { get; set; }
 

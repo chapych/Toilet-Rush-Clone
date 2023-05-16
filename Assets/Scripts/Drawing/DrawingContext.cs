@@ -51,7 +51,11 @@ public void Constructor(InputReaderSO input) => this.input = input;*/
 
 	public bool CanCreateLine(CharacterData character) => !lineCreator.ContainsLineFor(character);
 
-	public void CreateLine(CharacterData character, Vector2 position) => lineCreator.Create(character, position);
+	public void CreateLine(CharacterData character, Vector2 position)
+	{
+		Line line = lineCreator.Create(character, position);	
+		lineCreator.SetLineProperties(character);
+	}
 
 	public void ContinueLine() => lineCreator.ContinueLine(TouchPosition);
 

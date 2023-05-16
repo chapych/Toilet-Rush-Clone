@@ -7,22 +7,27 @@ public class LineCreator
 {
 	private Line prefab;
 	private Line currentLine;
-	private CharacterData currentCharacter;
-	private List<CharacterData> createdLines = new List<CharacterData>(); //make seperated class for created lines
+	private ICharacterData currentCharacter;
+	private List<ICharacterData> createdLines = new List<ICharacterData>(); //make seperated class for created lines
 	
 	public LineCreator(Line prefab)
 	{
 		this.prefab = prefab;
 	}
-	public bool ContainsLineFor(CharacterData character) => createdLines.Contains(character);
-	public void Create(CharacterData character, Vector2 position)
+	public bool ContainsLineFor(ICharacterData character) => createdLines.Contains(character);
+	public Line Create(ICharacterData character, Vector2 position)
 	{
 		currentLine = GameObject.Instantiate(prefab, position, Quaternion.identity);///subcribe to this
+		currentCharacter = character;
+		return currentLine;
+	}
+
+	public void SetLineProperties(ICharacterData character)
+	{
 		currentLine.transform.parent = character.transform;
 		currentLine.Color = GenderToColor.GetColor(character.Gender);
-		currentCharacter = character;
 	}
-	
+
 	public void ContinueLine(Vector2 position)
 	{
 		if(currentLine.CanContinue(position, DrawingContext.THRESHOLD))
@@ -31,7 +36,7 @@ public class LineCreator
 		}
 	}
 	
-	public bool TryAddCurrentLine(FinishData finishData)
+	public bool TryAddCurrentLine(IFinishData finishData)
 	{
 		if(finishData.IsGenderNeutral || finishData.Gender == currentCharacter.Gender)
 		{

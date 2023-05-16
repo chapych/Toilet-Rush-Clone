@@ -1,26 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
+using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
 public class NewTestScript
 {
-	
-	// A Test behaves as an ordinary method
-	[Test]
-	public void NewTestScriptSimplePasses()
+	[UnityTest]
+	public IEnumerator NoAddingOnCreatingLine()
 	{
-		var f = new DrawingStateFactory();
+		LineCreator creator;
+		ICharacterData data = Substitute.For<ICharacterData>();
+		Line line = CreateLine(data, out creator);
+		
+		bool isAdded = creator.ContainsLineFor(data);
+
+		Assert.That(isAdded, Is.EqualTo(false));
+		GameObject.Destroy(line);
+		yield return null;
+	}
+	[UnityTest]
+	public IEnumerator AddOnRegisteringLine()
+	{
+		LineCreator creator;
+		ICharacterData data = Substitute.For<ICharacterData>();
+		Line line = CreateLine(data, out creator);
+		IFinishData finishData = Substitute.For<IFinishData>();
+		finishData.IsGenderNeutral = true;
+		
+		creator.TryAddCurrentLine(finishData);
+		bool isAdded = creator.ContainsLineFor(data);
+
+		Assert.That(isAdded, Is.EqualTo(true));
+		GameObject.Destroy(line);
+		yield return null;
 	}
 
-	// A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-	// `yield return null;` to skip a frame.
-	[UnityTest]
-	public IEnumerator NewTestScriptWithEnumeratorPasses()
+	private static Line CreateLine(ICharacterData data, out LineCreator creator)
 	{
-		// Use the Assert class to test conditions.
-		// Use yield to skip a frame.
-		yield return null;
+		Line prefab = new GameObject().AddComponent<Line>();
+		creator = new LineCreator(prefab);
+		Vector2 spawnPosiiton = new Vector2(0, 0);
+
+		return creator.Create(data, spawnPosiiton);
 	}
 }
