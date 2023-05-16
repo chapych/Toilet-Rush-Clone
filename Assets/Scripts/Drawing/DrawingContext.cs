@@ -5,37 +5,45 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class DrawingContext : MonoBehaviour
+public class DrawingContext : MonoBehaviour, IDrawingContext
 {
 	public const float THRESHOLD = 0.1f;
 	private DrawingState state;
 	private DrawingStateFactory factory;
 	private LineCreator lineCreator;
 	private DrawingInputControler input;
+	
+	[SerializeField] private Line prefab;
+	
 	public Vector2 TouchPosition => input.TouchPosition;
-	//public Line Line => lineCreator.CurrentLine; 
+	
+	public event Action OnProperLineCreated;
 
 	/*[Inject]
 public void Constructor(InputReaderSO input) => this.input = input;*/
 
-	private void Awake() 
+	private void Start()
 	{
 		input = GetComponent<DrawingInputControler>();
-		lineCreator = GetComponent<LineCreator>();
+		lineCreator = new LineCreator(prefab);
 		factory = new DrawingStateFactory();
-		state = factory.GetOrCreate<DrawingStartState>();
+		state = GetStartState();
 	}
-	
-	private void Update() 
+
+	private void Update()
 	{
 		state.UpdateHandler(this);
 	}
-	
+	public DrawingState GetStartState()
+	{
+		return factory.GetOrCreate<DrawingStartState>();
+	}
+
 	public void TouchHandle()
 	{
 		state.TouchHandle(this);
 	}
-	
+
 	public void Transition<T>() where T : DrawingState, new()
 	{
 		state = factory.GetOrCreate<T>();
@@ -44,9 +52,13 @@ public void Constructor(InputReaderSO input) => this.input = input;*/
 	public bool CanCreateLine(CharacterData character) => !lineCreator.ContainsLineFor(character);
 
 	public void CreateLine(CharacterData character, Vector2 position) => lineCreator.Create(character, position);
-	
+
 	public void ContinueLine() => lineCreator.ContinueLine(TouchPosition);
-	
-	public void RegisterLine(FinishData data) => lineCreator.AddCurrentLine(data);
+
+	public void RegisterLine(FinishData data)
+	{
+		bool hasAdded = lineCreator.TryAddCurrentLine(data);
+		if(hasAdded) OnProperLineCreated?.Invoke();
+	}
 	public void DestroyLine() => lineCreator.DestroyLine();
 }

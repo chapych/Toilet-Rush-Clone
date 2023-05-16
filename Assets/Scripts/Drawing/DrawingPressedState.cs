@@ -7,21 +7,22 @@ public class DrawingPressedState : DrawingState
 	private float detectingRadius = 0.1f;
 	public DrawingPressedState() : base() {}
 	
-	public override void UpdateHandler(DrawingContext context)
+	public override void UpdateHandler(IDrawingContext context)
 	{
-		if(!context)
+		if(context is null)
 			this.context = context;
 		context.ContinueLine();
 	}
 
-	public override void TouchHandle(DrawingContext context)
+	public override void TouchHandle(IDrawingContext context)
 	{
 		base.TouchHandle(context);
 		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
 		if(collider && collider.TryGetComponent<FinishData>(out FinishData data))
 			context.RegisterLine(data);
 		else context.DestroyLine();
-		DrawingState.TransitionFrom<DrawingStartState>(this);
+		
+		DrawingState.TransitionTo<DrawingStartState>(this);
 	}
 	
 }

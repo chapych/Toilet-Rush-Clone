@@ -3,20 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineCreator : MonoBehaviour
+public class LineCreator
 {
-	[SerializeField]
 	private Line prefab;
 	private Line currentLine;
 	private CharacterData currentCharacter;
-	private Dictionary<CharacterData, Line> createdLines = new Dictionary<CharacterData, Line>();
-	public bool ContainsLineFor(CharacterData character) => createdLines.ContainsKey(character);
+	private List<CharacterData> createdLines = new List<CharacterData>(); //make seperated class for created lines
+	
+	public LineCreator(Line prefab)
+	{
+		this.prefab = prefab;
+	}
+	public bool ContainsLineFor(CharacterData character) => createdLines.Contains(character);
 	public void Create(CharacterData character, Vector2 position)
 	{
-		currentLine = Instantiate(prefab, position, Quaternion.identity);
-		currentLine.transform.parent = this.transform;
+		currentLine = GameObject.Instantiate(prefab, position, Quaternion.identity);///subcribe to this
+		currentLine.transform.parent = character.transform;
 		currentLine.Color = GenderToColor.GetColor(character.Gender);
-		
 		currentCharacter = character;
 	}
 	
@@ -24,19 +27,25 @@ public class LineCreator : MonoBehaviour
 	{
 		if(currentLine.CanContinue(position, DrawingContext.THRESHOLD))
 		{
-			currentLine.ContinueLine(position);
+			currentLine.Continue(position);
 		}
 	}
 	
-	public void AddCurrentLine(FinishData finishData)
+	public bool TryAddCurrentLine(FinishData finishData)
 	{
 		if(finishData.IsGenderNeutral || finishData.Gender == currentCharacter.Gender)
-			createdLines[currentCharacter] = currentLine;
-		else DestroyLine();
+		{
+			createdLines.Add(currentCharacter);
+			currentCharacter.Line = currentLine;
+			return true;
+		}
+		DestroyLine();
+		return false;
 	}
+	
 	public void DestroyLine()
 	{
-		Destroy(currentLine.gameObject);
+		GameObject.Destroy(currentLine.gameObject);
 		currentCharacter = null;
 	}
 }

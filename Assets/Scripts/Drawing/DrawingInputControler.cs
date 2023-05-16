@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DrawingInputControler : MonoBehaviour
 {
-    [SerializeField]
+	[SerializeField]
 	private InputReaderSO inputReader;
 	private DrawingContext context;
 	public Camera main;//put in in injection
@@ -12,12 +12,9 @@ public class DrawingInputControler : MonoBehaviour
 		get => main.ScreenToWorldPoint(inputReader.Position);
 		private set {}
 	}
-	private void Awake()
-	{
-		context = GetComponent<DrawingContext>();
-	}
 	private void Start() 
 	{
+		context = GetComponent<DrawingContext>();
 		inputReader.DrawingEnable();
 		inputReader.TouchEvent+=context.TouchHandle;
 	}
