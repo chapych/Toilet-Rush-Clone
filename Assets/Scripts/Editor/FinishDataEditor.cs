@@ -12,8 +12,9 @@ public class FinishDataEditor : Editor
 	 
 	 void OnEnable () 
 	 {
-		 isGenderNeutral = serializedObject.FindProperty ("IsGenderNeutral");
-		 gender = serializedObject.FindProperty("Gender");  
+		 isGenderNeutral = serializedObject.FindProperty ("<IsGenderNeutral>k__BackingField");
+		 gender = serializedObject.FindProperty("<Gender>k__BackingField");  
+		 Debug.Log(isGenderNeutral.propertyType);
 	 }
 	public override void OnInspectorGUI() 
 	{

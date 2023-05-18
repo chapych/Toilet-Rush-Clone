@@ -17,7 +17,6 @@ public class NewTestScript
 		bool isAdded = creator.ContainsLineFor(data);
 
 		Assert.That(isAdded, Is.EqualTo(false));
-		GameObject.Destroy(line);
 		yield return null;
 	}
 	[UnityTest]
@@ -25,15 +24,41 @@ public class NewTestScript
 	{
 		LineCreator creator;
 		ICharacterData data = Substitute.For<ICharacterData>();
+		ICharacterData otherData = Substitute.For<ICharacterData>();
 		Line line = CreateLine(data, out creator);
 		IFinishData finishData = Substitute.For<IFinishData>();
 		finishData.IsGenderNeutral = true;
 		
 		creator.TryAddCurrentLine(finishData);
 		bool isAdded = creator.ContainsLineFor(data);
+		bool isOtherAdded = creator.ContainsLineFor(otherData);
 
 		Assert.That(isAdded, Is.EqualTo(true));
-		GameObject.Destroy(line);
+		Assert.That(isOtherAdded, Is.EqualTo(false));
+		yield return null;
+	}
+	
+	[UnityTest]
+	public IEnumerator SetLineProperties()
+	{
+		LineCreator creator;
+		ICharacterData data = Substitute.For<ICharacterData>();
+		Line line = CreateLine(data, out creator);
+		line.gameObject.AddComponent<LineRenderer>();
+		line.SetInitialProperties();
+		
+		creator.SetLineProperties(data);
+		
+		Assert.That(line.transform.parent, Is.EqualTo(data.transform));
+		yield return null;
+	}
+	
+	[UnityTearDown]
+	public IEnumerator TearingDown()
+	{
+		Line[] lines = GameObject.FindObjectsOfType<Line>();
+		foreach(var line in lines)
+			GameObject.Destroy(line);
 		yield return null;
 	}
 

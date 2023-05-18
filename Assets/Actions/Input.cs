@@ -15,10 +15,10 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-public partial class @DrawingInput : IInputActionCollection2, IDisposable
+public partial class @Input : IInputActionCollection2, IDisposable
 {
     public InputActionAsset asset { get; }
-    public @DrawingInput()
+    public @Input()
     {
         asset = InputActionAsset.FromJson(@"{
     ""name"": ""Drawing"",
@@ -224,8 +224,8 @@ public partial class @DrawingInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Drawing_Position;
     public struct DrawingActions
     {
-        private @DrawingInput m_Wrapper;
-        public DrawingActions(@DrawingInput wrapper) { m_Wrapper = wrapper; }
+        private @Input m_Wrapper;
+        public DrawingActions(@Input wrapper) { m_Wrapper = wrapper; }
         public InputAction @Touch => m_Wrapper.m_Drawing_Touch;
         public InputAction @Position => m_Wrapper.m_Drawing_Position;
         public InputActionMap Get() { return m_Wrapper.m_Drawing; }

@@ -1,15 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class FinishData : MonoBehaviour, IFinishData
 {
-	public bool IsGenderNeutral { get; set; }
-	public Gender Gender { get; set; }
-}
-
-public interface IFinishData
-{
-	public bool IsGenderNeutral { get; set; }
-	public Gender Gender { get; set; }
+	[field : SerializeField] public bool IsGenderNeutral { get; set; }
+	[field : SerializeField] public Gender Gender { get; set; }
 }
