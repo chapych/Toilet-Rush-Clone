@@ -11,4 +11,6 @@ public class GenderToColor
 		dictionary[Gender.Female] = Color.red;
 	}
 	static public Color GetColor(Gender gender) => dictionary[gender];
+	
+	static public Color GetColor(int index) => GetColor((Gender)index);
 }
