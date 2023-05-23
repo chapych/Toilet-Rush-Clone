@@ -8,11 +8,11 @@ public class CharacterObserver : MonoBehaviour
 	{
 		var line = characterData.Line;
 		var lineShortener = new LineShortener(line);
-		var moveComponent = GetComponent<Move>();
+		var moveComponent = GetComponent<MoveComponent>();
 		
 		moveComponent.OnLinePointWalkedBy+=lineShortener.OnLinePointWalkedByHandler;
 		
 		var points = line.Points;
-		GetComponent<Move>().StartMovement(points.ConvertToQueue());
+		GetComponent<MoveComponent>().StartMovement(points.ConvertToQueue());
 	}
 }

@@ -15,7 +15,9 @@ public class LineShortener
 	}
 	public void OnLinePointWalkedByHandler()
 	{
-		current = current.Skip(1).ToArray();
+		current = current.Skip(1)
+						 .ToArray();
+						 
 		line.SetPoints(current);
 	}
 }

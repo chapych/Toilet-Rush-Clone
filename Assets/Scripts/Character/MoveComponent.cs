@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Move : MonoBehaviour
+public class MoveComponent : MonoBehaviour
 {
 	private Vector2 next;
 	public Queue<Vector2> path;
 	private Rigidbody2D rigidbody;
+	[SerializeField] public float speed;
+	private float step;
 	[SerializeField] private float epsilon = float.Epsilon;
-	public float Speed;
-	
 	public event Action OnLinePointWalkedBy;
 	void Start()
 	{
@@ -20,6 +20,7 @@ public class Move : MonoBehaviour
 	{
 		path = queue;
 		next = path.Dequeue();
+		step = speed * Time.fixedDeltaTime;
 		
 		StartCoroutine(Movement());
 	}
@@ -33,11 +34,10 @@ public class Move : MonoBehaviour
 				if(path.Count != 0)
 				{
 					next = path.Dequeue();
-					OnLinePointWalkedBy();
+					OnLinePointWalkedBy?.Invoke();
 				}
 				else break;
 			}
-			var step = Speed * Time.fixedDeltaTime;
 			Vector2 newPosition = Vector2.MoveTowards(transform.position, next, step);
 			rigidbody.MovePosition(newPosition);
 			yield return null;
