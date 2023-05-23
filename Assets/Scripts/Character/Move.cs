@@ -11,7 +11,7 @@ public class Move : MonoBehaviour
 	[SerializeField] private float epsilon = float.Epsilon;
 	public float Speed;
 	
-	public event Action<Vector2> OnLineStartChanged;
+	public event Action OnLinePointWalkedBy;
 	void Start()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -33,7 +33,7 @@ public class Move : MonoBehaviour
 				if(path.Count != 0)
 				{
 					next = path.Dequeue();
-					OnLineStartChanged(next);
+					OnLinePointWalkedBy();
 				}
 				else break;
 			}

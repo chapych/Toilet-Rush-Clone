@@ -12,32 +12,21 @@ public class Line : MonoBehaviour, ILine
 		set
 		{
 			Gradient gradient = new Gradient();
+			
 			SetGradient(value, gradient);
 			lineRenderer.colorGradient = gradient;
 		}
 	}
-	public Queue<Vector2> Points
+	public Vector3[] Points //return Vector3[] 
 	{
 		get
 		{
-			Queue<Vector2> queue = GetAllPositions();
-			return queue;
+			int count = lineRenderer.positionCount;
+			Vector3[] array = new Vector3[count];
+			
+			lineRenderer.GetPositions(array);
+			return array;
 		}
-	}
-
-	private Queue<Vector2> GetAllPositions()
-	{
-		int count = lineRenderer.positionCount;
-		Vector3[] array = new Vector3[count];
-		lineRenderer.GetPositions(array);
-
-		var queue = new Queue<Vector2>();
-		for (int i = 0; i < count; i++)
-		{
-			queue.Enqueue((Vector2)array[i]);
-		}
-
-		return queue;
 	}
 
 	private static void SetGradient(Color value, Gradient gradient)
@@ -80,4 +69,5 @@ public class Line : MonoBehaviour, ILine
 		return Vector2.Distance(newPosition, oldPosition) > threshold;
 	}
 
+	public void SetPoints(Vector3[] array) => lineRenderer.SetPositions(array);
 }

@@ -9,12 +9,9 @@ public class LineCreator
 	private Line currentLine;
 	private ICharacterData currentCharacter;
 	private List<ICharacterData> createdLines = new List<ICharacterData>(); //make seperated class for created lines
-	
-	public LineCreator(Line prefab)
-	{
-		this.prefab = prefab;
-	}
-	public bool ContainsLineFor(ICharacterData character) => createdLines.Contains(character);
+
+    public LineCreator(Line prefab) => this.prefab = prefab;
+    public bool ContainsLineFor(ICharacterData character) => createdLines.Contains(character);
 	public Line Create(ICharacterData character, Vector2 position)
 	{
 		currentLine = GameObject.Instantiate(prefab, position, Quaternion.identity);///subcribe to this

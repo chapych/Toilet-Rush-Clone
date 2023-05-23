@@ -11,7 +11,7 @@ public class ProperCreatedLinesHandler : MonoBehaviour
  	public event Action OnAllLinesCreated;
 	private void Awake()
 	{
-		var characters = FindObjectsOfType<CharacterData>();
+		var characters = FindObjectsOfType<CharacterObserver>();
 		charactersCount = characters.Length;
 		foreach(var character in characters)
 		{

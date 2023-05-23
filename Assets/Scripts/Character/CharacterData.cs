@@ -18,13 +18,6 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	}
 
 	public Line Line { get; set; }
-
-	public void OnAllLinesCreatedHandle()
-	{
-		var moveComponent = GetComponent<Move>();
-		var points = Line.Points;
-		GetComponent<Move>().StartMovement(points);
-	}
 	
 	private void OnValidate() 
 	{
