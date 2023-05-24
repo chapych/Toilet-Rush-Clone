@@ -7,7 +7,7 @@ public class ProperCreatedLinesHandler : MonoBehaviour
 {
 	private int charactersCount;
 	private int linesCount = 0;
-	[SerializeField] DrawingContext context;
+	[SerializeField] DrawingContext context; //zenject
  	public event Action OnAllLinesCreated;
 	private void Awake()
 	{
