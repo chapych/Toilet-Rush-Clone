@@ -4,8 +4,19 @@ using UnityEngine;
 
 public class GameOver
 {
-    public void GameOverHandle()
-    {
-    	Debug.Log("Over");
-    }
+	[SerializeField] private GameOverScreen screen;
+	private bool hasCalled = false;
+	
+	public GameOver()
+	{
+		screen = GameObject.FindObjectOfType<GameOverScreen>();
+	}
+	public void GameOverHandle()
+	{
+		if(!hasCalled)
+		{
+			hasCalled = true;
+			screen.SetActive();
+		}
+	}
 }
