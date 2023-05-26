@@ -1,22 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GameOver
 {
-	[SerializeField] private GameOverScreen screen;
+	private GameOverScreen screen;
 	private bool hasCalled = false;
 	
-	public GameOver()
+	[Inject]
+	public void Construct(GameOverScreen screen)
 	{
-		screen = GameObject.FindObjectOfType<GameOverScreen>();
+		this.screen = screen;
+		screen.gameObject.SetActive(false);
 	}
+	
 	public void GameOverHandle()
 	{
 		if(!hasCalled)
 		{
 			hasCalled = true;
-			screen.SetActive();
+			screen.gameObject.SetActive(true);
 		}
 	}
 }

@@ -19,9 +19,6 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 	
 	public event Action OnProperLineCreated;
 
-	/*[Inject]
-public void Constructor(InputReaderSO input) => this.input = input;*/
-
 	private void Start()
 	{
 		input = GetComponent<DrawingInputControler>();

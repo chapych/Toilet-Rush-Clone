@@ -128,7 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e02c98703d8174ba6806cfe2588028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 1392787387141704910}
   gender: 0
 --- !u!114 &1392787387141704906
 MonoBehaviour:

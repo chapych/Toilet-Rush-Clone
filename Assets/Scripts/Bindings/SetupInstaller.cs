@@ -3,14 +3,24 @@ using Zenject;
 
 public class SetupInstaller : MonoInstaller
 {
+	[SerializeField] private GameOverScreen gameOverScreen;
 	public override void InstallBindings()
-    {
-        BindGameOver();
-    }
+	{
+		BindGameOverScreen();
+		BindGameOver();
+		
+	}
 
-    private void BindGameOver()
-    {
-        Container.Bind<GameOver>()
-                         .AsSingle();
-    }
+	private void BindGameOverScreen()
+	{
+		Container.Bind<GameOverScreen>()
+						 .FromInstance(gameOverScreen)
+						 .AsSingle();
+	}
+
+	private void BindGameOver()
+	{
+		Container.Bind<GameOver>()
+				 .AsSingle();
+	}
 }

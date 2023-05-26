@@ -11,7 +11,7 @@ public class TriggerEvent : MonoBehaviour
 	public event Action OnCollision;
 	
 	[Inject]
-	public void Costructor(GameOver gameOver) => OnCollision += gameOver.GameOverHandle;
+	public void Costruct(GameOver gameOver) => OnCollision += gameOver.GameOverHandle;
 	
 	private void Start()
 	{
