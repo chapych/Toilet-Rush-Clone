@@ -6,6 +6,7 @@ using UnityEngine;
 public class MoveComponent : MonoBehaviour
 {
 	private Vector2 next;
+	private Coroutine coroutine;
 	public Queue<Vector2> path;
 	private Rigidbody2D rigidbody;
 	[SerializeField] public float speed;
@@ -22,7 +23,12 @@ public class MoveComponent : MonoBehaviour
 		next = path.Dequeue();
 		step = speed * Time.fixedDeltaTime;
 		
-		StartCoroutine(Movement());
+		coroutine = StartCoroutine(Movement());
+	}
+	
+	public void StopMovement()
+	{
+		StopCoroutine(coroutine);
 	}
 	
 	private IEnumerator Movement()

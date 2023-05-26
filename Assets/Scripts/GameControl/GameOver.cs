@@ -15,7 +15,7 @@ public class GameOver
 		screen.gameObject.SetActive(false);
 	}
 	
-	public void GameOverHandle()
+	public void GameOverExecute()
 	{
 		if(!hasCalled)
 		{

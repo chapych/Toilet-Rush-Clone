@@ -10,7 +10,6 @@ public class DrawingInstaller : MonoInstaller
 	public override void InstallBindings()
 	{
 		BindDrawingContext();
-		
 	}
 	
 	public void BindDrawingContext()

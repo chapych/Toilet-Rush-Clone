@@ -4,14 +4,22 @@ using Zenject;
 public class SetupInstaller : MonoInstaller
 {
 	[SerializeField] private GameOverScreen gameOverScreen;
+	[SerializeField] private DustControl dustControl;
 	public override void InstallBindings()
-	{
-		BindGameOverScreen();
-		BindGameOver();
-		
-	}
+    {
+        BindGameOverScreen();
+        BindGameOver();
+        BindDustControl();
+    }
 
-	private void BindGameOverScreen()
+    private void BindDustControl()
+    {
+        Container.Bind<DustControl>()
+                         .FromInstance(dustControl)
+                         .AsSingle();
+    }
+
+    private void BindGameOverScreen()
 	{
 		Container.Bind<GameOverScreen>()
 						 .FromInstance(gameOverScreen)

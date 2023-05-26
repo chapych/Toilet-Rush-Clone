@@ -7,11 +7,17 @@ using Zenject;
 
 public class TriggerEvent : MonoBehaviour
 {
+	private int seconds = 1;
 	public bool isTriger { get; private set; }
-	public event Action OnCollision;
+	private GameOver gameOver;
+	public event Action<Vector2> OnCollision;
 	
 	[Inject]
-	public void Costruct(GameOver gameOver) => OnCollision += gameOver.GameOverHandle;
+	public void Costruct(GameOver gameOver, DustControl dustControl)
+	{
+		this.gameOver = gameOver;
+		OnCollision+=dustControl.OnCollisionHandle;
+	}
 	
 	private void Start()
 	{
@@ -23,11 +29,26 @@ public class TriggerEvent : MonoBehaviour
 		{
 			if (IsAnyTriggerTurnedOff(component))
 				return;
-			OnCollision?.Invoke();
+				
+			HandleTrigger(other);
 		}
 
 		if (other.GetComponent<IFinishData>() != null)
 			isTriger = false;
 	}
-    private bool IsAnyTriggerTurnedOff(TriggerEvent component) => !component.isTriger || !isTriger;
+	private bool IsAnyTriggerTurnedOff(TriggerEvent component) => !component.isTriger || !isTriger;
+	
+	private void HandleTrigger(Collider2D other)
+	{
+		Vector2 medianPosition = (transform.position + other.transform.position) / 2;
+		OnCollision?.Invoke(medianPosition);
+		GetComponent<MoveComponent>().StopMovement();
+		other.GetComponent<MoveComponent>().StopMovement();
+		StartCoroutine(WaitFor(seconds));
+	}
+	private IEnumerator WaitFor(int seconds)
+	{
+		yield return new WaitForSeconds(seconds);
+		gameOver.GameOverExecute();	
+	}
 }
