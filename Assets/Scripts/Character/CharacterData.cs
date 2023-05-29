@@ -11,20 +11,21 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	{
 		get => gender;
 		set
-        {
-            gender = value;
-            SetColor();
-        }
-    }
+		{
+			gender = value;
+			SetColor();
+		}
+	}
+	public bool HasReachedFinish { get; set; }
 
-    private void SetColor()
-    {
-        if (!spriteRenderer)
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.color = GenderToColor.GetColor(gender);
-    }
+	private void SetColor()
+	{
+		if (!spriteRenderer)
+			spriteRenderer = GetComponent<SpriteRenderer>();
+		spriteRenderer.color = GenderToColor.GetColor(gender);
+	}
 
-    public Line Line { get; set; }
+	public Line Line { get; set; }
 	
 	private void OnValidate() 
 	{

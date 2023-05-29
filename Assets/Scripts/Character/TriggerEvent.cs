@@ -25,7 +25,7 @@ public class TriggerEvent : MonoBehaviour
 	}
 	private void OnTriggerEnter2D(Collider2D other) 
 	{
-		if(other.TryGetComponent(out TriggerEvent component))
+		if(other.TryGetComponent(out ICharacterData component))
 		{
 			if (IsAnyTriggerTurnedOff(component))
 				return;
@@ -34,9 +34,9 @@ public class TriggerEvent : MonoBehaviour
 		}
 
 		if (other.GetComponent<IFinishData>() != null)
-			isTriger = false;
+			GetComponent<ICharacterData>().HasReachedFinish = true;
 	}
-	private bool IsAnyTriggerTurnedOff(TriggerEvent component) => !component.isTriger || !isTriger;
+	private bool IsAnyTriggerTurnedOff(ICharacterData component) => component.HasReachedFinish || GetComponent<ICharacterData>().HasReachedFinish;
 	
 	private void HandleTrigger(Collider2D other)
 	{
