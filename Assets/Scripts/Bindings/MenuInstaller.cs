@@ -10,7 +10,7 @@ public class MenuInstaller : MonoInstaller
 
 	[SerializeField] RectTransform mainMenu;
 	[SerializeField] RectTransform levelsMenu;
-	[SerializeField] MenuTransition transition;
+	[SerializeField] Animator transitionAnimator;
 
 	public override void InstallBindings()
 	{
@@ -20,7 +20,7 @@ public class MenuInstaller : MonoInstaller
 		Container.Bind<RectTransform>()
 				 .WithId(LEVELS_MENU_ID)
 				 .FromInstance(levelsMenu);		
-		Container.Bind<MenuTransition>()
-				 .FromInstance(transition);		 
+		Container.Bind<Animator>()
+				 .FromInstance(transitionAnimator);
 	}
 }

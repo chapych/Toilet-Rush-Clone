@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TransitionEffects : MonoBehaviour
 {
-    private void Awake() 
-	{
-		DontDestroyOnLoad(this.gameObject);
-	}
+    // private void Awake() 
+	// {
+	// 	DontDestroyOnLoad(this.gameObject);
+	// }
 }

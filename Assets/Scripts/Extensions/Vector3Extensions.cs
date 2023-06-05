@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Extensions
+public static class Vector3Extensions
 {
 	public static Queue<Vector2> ConvertToQueue(this Vector3[] array)
 	{

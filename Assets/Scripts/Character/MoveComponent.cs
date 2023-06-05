@@ -9,8 +9,8 @@ public class MoveComponent : MonoBehaviour
 	private Coroutine coroutine;
 	public Queue<Vector2> path;
 	private Rigidbody2D rigidbody;
-	[SerializeField] public float speed;
 	private float step;
+	[SerializeField] public float speed;
 	[SerializeField] private float epsilon = float.Epsilon;
 	public event Action OnLinePointWalkedBy;
 	void Start()

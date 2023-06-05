@@ -7,7 +7,7 @@ using Zenject;
 public class MainMenu : MonoBehaviour
 {
 	private RectTransform levelMenu;
-	[SerializeField] private MenuTransition transition;
+	private MenuTransition transition;
 	[Inject]
 	public void Construct([Inject(Id = (MenuInstaller.LEVELS_MENU_ID))] RectTransform levelMenu,
 							MenuTransition transition)
@@ -17,13 +17,10 @@ public class MainMenu : MonoBehaviour
 		
 		this.transition = transition;
 	}
-	public void StartGame() => transition.RunAnimationTransition(SceneManager.GetActiveScene().buildIndex + 1);
-	public void ChooseLevel()
-	{
-		transition.RunAnimationTransition(this, levelMenu);
-	}
-	
-	public void Settings()
+	public void StartGame() => transition.DelayAnimationTransition(SceneManager.GetActiveScene().buildIndex + 1);
+    public void ChooseLevel() => transition.DelayAnimationTransition(this, levelMenu);
+
+    public void Settings()
 	{
 	//	transition.RunAnimationTransition(this, //settings);
 	}

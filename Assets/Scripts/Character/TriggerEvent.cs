@@ -1,11 +1,11 @@
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class TriggerEvent : MonoBehaviour
+public class TriggerEvent : MonoBehaviour //make a seperated script for finishPoint so it was triggerEnter
 {
 	private int seconds = 1;
 	public bool isTriger { get; private set; }
@@ -23,32 +23,36 @@ public class TriggerEvent : MonoBehaviour
 	{
 		isTriger = true;
 	}
-	private void OnTriggerEnter2D(Collider2D other) 
+	private void OnCollisionEnter2D(Collision2D collision) 
 	{
+		var other = collision.gameObject;
 		if(other.TryGetComponent(out ICharacterData component))
 		{
-			if (IsAnyTriggerTurnedOff(component))
+			if (HasAnyoneFinished(component))
 				return;
 				
-			HandleTrigger(other);
+			HandleCollision(other);
 		}
-
-		if (other.GetComponent<IFinishData>() != null)
-			GetComponent<ICharacterData>().HasReachedFinish = true;
 	}
-	private bool IsAnyTriggerTurnedOff(ICharacterData component) => component.HasReachedFinish || GetComponent<ICharacterData>().HasReachedFinish;
+	private bool HasAnyoneFinished(ICharacterData component) => GetComponent<ICharacterData>().HasReachedFinish || component.HasReachedFinish;
 	
-	private void HandleTrigger(Collider2D other)
+	private void HandleCollision(GameObject other)
 	{
-		Vector2 medianPosition = (transform.position + other.transform.position) / 2;
-		OnCollision?.Invoke(medianPosition);
-		GetComponent<MoveComponent>().StopMovement();
-		other.GetComponent<MoveComponent>().StopMovement();
-		StartCoroutine(WaitFor(seconds));
+		Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
+		
+		OnCollision?.Invoke(medianCollisionPoint);
+		foreach(var element in new GameObject[] {this.gameObject, other})
+		{
+			StopMovement(element);
+		}
+		
+		StartCoroutine(WaitGameOver(seconds));
 	}
-	private IEnumerator WaitFor(int seconds)
+	private IEnumerator WaitGameOver(int seconds)
 	{
 		yield return new WaitForSeconds(seconds);
 		gameOver.GameOverExecute();	
 	}
+	
+	private void StopMovement(GameObject movingObject)=>movingObject.GetComponent<MoveComponent>().StopMovement();
 }
