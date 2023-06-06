@@ -11,11 +11,9 @@ public class MenuTransition : ScriptableObject
 	private int sortingOrder = 10;
 	[SerializeField] private Animator animatorPrefab;
 	[SerializeField] private float time;
-	private Animator animator; 
-	private delegate void ParamsAction(params object[] arguments);
-    private void OnEnable() => animator = GetAnimatorFromPrefab();
+	private Animator animator;
 
-    private Animator GetAnimatorFromPrefab() 
+	private Animator GetAnimatorFromPrefab() 
 	{
 		Canvas animatorHolder = new GameObject("Animator Holder").AddComponent<Canvas>();
 		animatorHolder.renderMode = RenderMode.ScreenSpaceOverlay;
