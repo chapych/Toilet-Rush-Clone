@@ -5,22 +5,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class LevelMenu : MonoBehaviour
+public class LevelMenu : Menu
 {
-    private RectTransform mainMenu;
-    private MenuTransition transition;
-    [Inject]
-    public void Construct([Inject(Id = (MenuInstaller.MAIN_MENU_ID))] RectTransform mainMenu,
-                            MenuTransition transition)
-    {
-        this.mainMenu = mainMenu;
-        this.transition = transition;
-    }
     public void LoadLevel(GameObject button)
     {
         int index = Int32.Parse(button.name);
-        transition.DelayAnimationTransition(index);
+        base.Transition(index);
     }
-
-    public void BackToMainMenu() => transition.DelayAnimationTransition(this, mainMenu);
 }
