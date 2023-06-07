@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineCreator
+public class LineCreator : IFactory<Line, ICharacterData>
 {
 	private Line prefab;
 	private Line currentLine;
 	private ICharacterData currentCharacter;
 	private List<ICharacterData> createdLines = new List<ICharacterData>(); //make seperated class for created lines
 
-    public LineCreator(Line prefab) => this.prefab = prefab;
-    public bool ContainsLineFor(ICharacterData character) => createdLines.Contains(character);
+	public LineCreator(Line prefab) => this.prefab = prefab;
+	public bool ContainsElementFor(ICharacterData character) => createdLines.Contains(character);
 	public Line Create(ICharacterData character, Vector2 position)
 	{
 		currentLine = GameObject.Instantiate(prefab, position, Quaternion.identity);///subcribe to this
@@ -27,15 +27,15 @@ public class LineCreator
 
 	public void ContinueLine(Vector2 position)
 	{
-		if(currentLine.CanContinue(position, DrawingContext.THRESHOLD))
+		if (currentLine.CanContinue(position, DrawingContext.THRESHOLD))
 		{
 			currentLine.Continue(position);
 		}
 	}
-	
-	public bool TryAddCurrentLine(IFinishData finishData)
+
+	public bool TryAddCurrentLineToList(IFinishData finishData)
 	{
-		if(finishData.IsGenderNeutral || finishData.Gender == currentCharacter.Gender)
+		if (finishData.IsGenderNeutral || finishData.Gender == currentCharacter.Gender)
 		{
 			createdLines.Add(currentCharacter);
 			currentCharacter.Line = currentLine;
@@ -44,7 +44,7 @@ public class LineCreator
 		DestroyLine();
 		return false;
 	}
-	
+
 	public void DestroyLine()
 	{
 		GameObject.Destroy(currentLine.gameObject);

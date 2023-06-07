@@ -46,7 +46,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 		state = factory.GetOrCreate<T>();
 	}
 
-	public bool CanCreateLine(CharacterData character) => !lineCreator.ContainsLineFor(character);
+	public bool CanCreateLine(CharacterData character) => !lineCreator.ContainsElementFor(character);
 
 	public void CreateLine(CharacterData character, Vector2 position)
 	{
@@ -58,7 +58,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 
 	public void RegisterLine(FinishData data)
 	{
-		bool hasAdded = lineCreator.TryAddCurrentLine(data);
+		bool hasAdded = lineCreator.TryAddCurrentLineToList(data);
 		if(hasAdded) OnProperLineCreated?.Invoke();
 	}
 	public void DestroyLine() => lineCreator.DestroyLine();

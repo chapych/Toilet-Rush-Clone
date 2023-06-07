@@ -14,7 +14,7 @@ public class NewTestScript
 		ICharacterData data = Substitute.For<ICharacterData>();
 		Line line = CreateLine(data, out creator);
 		
-		bool isAdded = creator.ContainsLineFor(data);
+		bool isAdded = creator.ContainsElementFor(data);
 
 		Assert.That(isAdded, Is.EqualTo(false));
 		yield return null;
@@ -29,9 +29,9 @@ public class NewTestScript
 		IFinishData finishData = Substitute.For<IFinishData>();
 		finishData.IsGenderNeutral = true;
 		
-		creator.TryAddCurrentLine(finishData);
-		bool isAdded = creator.ContainsLineFor(data);
-		bool isOtherAdded = creator.ContainsLineFor(otherData);
+		creator.TryAddCurrentLineToList(finishData);
+		bool isAdded = creator.ContainsElementFor(data);
+		bool isOtherAdded = creator.ContainsElementFor(otherData);
 
 		Assert.That(isAdded, Is.EqualTo(true));
 		Assert.That(isOtherAdded, Is.EqualTo(false));

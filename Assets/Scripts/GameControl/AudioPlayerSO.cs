@@ -7,12 +7,7 @@ public class AudioPlayerSO : ScriptableObject
 {
 	private Vector3 audioSourcePosition = Vector3.zero;
 	[SerializeField] private AudioClip backgroundMusic;
-	[SerializeField] private AudioClip clickSound;
-	
-	private void OnEnable() 
-	{
-		//backgroundMusic.playOnAwake = true;
-	}
+	[SerializeField] private AudioClip clickSound;	
 	
 	public void PlayClickSound() => AudioSource.PlayClipAtPoint(clickSound, audioSourcePosition);
 }

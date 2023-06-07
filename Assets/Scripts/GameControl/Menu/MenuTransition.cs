@@ -8,45 +8,41 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(fileName = "Menu Transition", menuName = "ScriptableObjects/Menu Transition", order = 1)]
 public class MenuTransition : ScriptableObject
 {
-	private int sortingOrder = 10;
-	[SerializeField] private Animator animatorPrefab;
+	private AnimationFactory factory = new AnimationFactory();
+	private Animator current = default;
 	[SerializeField] private float time;
-	private Animator animator;
-
-	private Animator GetAnimatorFromPrefab() 
+	
+	public async void DelayAnimationTransition(Component from, Component to, AnimationTypeSO animation)
 	{
-		Canvas animatorHolder = new GameObject("Animator Holder").AddComponent<Canvas>();
-		animatorHolder.renderMode = RenderMode.ScreenSpaceOverlay;
-		animatorHolder.sortingOrder = sortingOrder;
-		
-		animator = Instantiate(animatorPrefab, animatorHolder.transform);
-		DontDestroyOnLoad(animatorHolder);
-		return animator;
-	}
-
-	public async void DelayAnimationTransition(Component from, Component to)
-	{
+		current = factory.Create(animation);
 		await AnimationTransitionStartAsync();
+		
 		from.gameObject.SetActive(false);
 		to.gameObject.SetActive(true);
+		
 		AnimationTransitionEnd();
 	}
-	public async void DelayAnimationTransition(int sceneIndex)
+	public async void DelayAnimationTransition(int sceneIndex, AnimationTypeSO animation)
 	{
+		if(factory == null) factory = new AnimationFactory();
+		current = factory.Create(animation);
 		await AnimationTransitionStartAsync();
+		
 		SceneManager.LoadScene(sceneIndex);
+		
 		AnimationTransitionEnd();
 	}
 	private async Task AnimationTransitionStartAsync()
 	{
-		if(!animator)
-			animator = GetAnimatorFromPrefab();
-		
 		var timeInMSec = (int)(1000 * time);
 		
-		animator.SetTrigger("Start");
+		current.SetTrigger("Start");
 		await Task.Delay(timeInMSec);
 	}
 
-	private void AnimationTransitionEnd() => animator.SetTrigger("End");
+	private void AnimationTransitionEnd()
+	{
+		current.SetTrigger("End");
+		current = default;
+	}
 }
