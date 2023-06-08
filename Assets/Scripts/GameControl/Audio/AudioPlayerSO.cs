@@ -6,8 +6,10 @@ using UnityEngine;
 public class AudioPlayerSO : ScriptableObject
 {
 	private Vector3 audioSourcePosition = Vector3.zero;
-	[SerializeField] private AudioClip backgroundMusic;
-	[SerializeField] private AudioClip clickSound;	
+//	[SerializeField] private AudioClip backgroundMusic;
 	
-	public void PlayClickSound() => AudioSource.PlayClipAtPoint(clickSound, audioSourcePosition);
+	public void PlayClickSound(AudioSource source)
+	{
+		source.Play();
+	}
 }

@@ -6,7 +6,8 @@ public class Menu : MonoBehaviour
 {
 	protected MenuTransition transition;
 	private AudioPlayerSO player;
-	[SerializeField] private AnimationTypeSO animationType; 
+	private AudioHolder holder;
+	[SerializeField] private Animator animator; 
 	
 	[Inject]
 	public void Construct(MenuTransition transition, AudioPlayerSO player)
@@ -14,14 +15,15 @@ public class Menu : MonoBehaviour
 		this.transition = transition;
 		this.player = player;
 	}
+
+	public void Awake() => holder = GetComponent<AudioHolder>();
 	public void Transition(int sceneIndex)
 	{
-		transition.DelayAnimationTransition(SceneManager.GetActiveScene().buildIndex + 1, animationType);
+		transition.DelayAnimationTransition(SceneManager.GetActiveScene().buildIndex + 1, animator);
 	}
-	public void Transition(Menu other) => transition.DelayAnimationTransition(this, other, animationType);
+	public void Transition(Menu other) => transition.DelayAnimationTransition(this, other, animator);
 	public void PlaySound()
 	{
-		Debug.Log("working");
-		player.PlayClickSound();
+		player.PlayClickSound(holder.ClickSound);
 	}
 }

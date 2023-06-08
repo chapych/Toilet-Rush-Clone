@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineCreator : IFactory<Line, ICharacterData>
+public class LineCreator : ICreator<Line, ICharacterData>
 {
 	private Line prefab;
 	private Line currentLine;
