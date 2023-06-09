@@ -19,6 +19,7 @@ public class AudioHolder : MonoBehaviour
 			Audio audio = property.GetValue(this) as Audio;
 			audio.Source = gameObject.AddComponent<AudioSource>();
 			audio.Source.clip = audio.AudioClip;
+			audio.Source.playOnAwake = false;
 		}
 	}
 }

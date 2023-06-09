@@ -8,12 +8,15 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(fileName = "Menu Transition", menuName = "ScriptableObjects/Menu Transition", order = 1)]
 public class MenuTransition : ScriptableObject
 {
-	//private AnimationFactory factory = new AnimationFactory();
 	private Animator current = default;
+	private bool isInTransition = false;
 	[SerializeField] private float time;
 	
 	public async void DelayAnimationTransition(Component from, Component to, Animator animation)
 	{
+		if(isInTransition) return;
+		isInTransition = true;
+		
 		current = animation;
 		await AnimationTransitionStartAsync();
 		
@@ -24,7 +27,9 @@ public class MenuTransition : ScriptableObject
 	}
 	public async void DelayAnimationTransition(int sceneIndex, Animator animation)
 	{
-		//if(factory == null) factory = new AnimationFactory();
+		if(isInTransition) return;
+		isInTransition = true;
+		
 		current = animation;
 		
 		await AnimationTransitionStartAsync();
@@ -44,6 +49,8 @@ public class MenuTransition : ScriptableObject
 	private void AnimationTransitionEnd()
 	{
 		current.SetTrigger("End");
+		
 		current = default;
+		isInTransition = false;
 	}
 }
