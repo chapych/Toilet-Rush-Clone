@@ -5,21 +5,39 @@ public class SetupInstaller : MonoInstaller
 {
 	[SerializeField] private GameOverScreen gameOverScreen;
 	[SerializeField] private DustControl dustControl;
+	[SerializeField] private FinishPointsHolder finishPointsHolder;
+	[SerializeField] private LevelCleared levelCleared;
 	public override void InstallBindings()
     {
         BindGameOverScreen();
         BindGameOver();
         BindDustControl();
+        BindFinishPointsHolder();
+        BindLevelCreated();
     }
 
-    private void BindDustControl()
+    private void BindLevelCreated()
     {
-        Container.Bind<DustControl>()
-                         .FromInstance(dustControl)
+        Container.Bind<LevelCleared>()
+                         .FromInstance(levelCleared)
                          .AsSingle();
     }
 
-    private void BindGameOverScreen()
+    private void BindFinishPointsHolder()
+    {
+        Container.Bind<FinishPointsHolder>()
+                         .FromInstance(finishPointsHolder)
+                         .AsSingle();
+    }
+
+    private void BindDustControl()
+	{
+		Container.Bind<DustControl>()
+						 .FromInstance(dustControl)
+						 .AsSingle();
+	}
+
+	private void BindGameOverScreen()
 	{
 		Container.Bind<GameOverScreen>()
 						 .FromInstance(gameOverScreen)

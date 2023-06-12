@@ -16,7 +16,7 @@ public class FinishDataEditor : Editor
 		 isGenderNeutral = serializedObject.FindProperty ("<IsGenderNeutral>k__BackingField");
 		 gender = serializedObject.FindProperty("<Gender>k__BackingField");
 	 }
-	public override void OnInspectorGUI() 
+	public override void OnInspectorGUI()
 	{
 		color = Color.white;
 		 

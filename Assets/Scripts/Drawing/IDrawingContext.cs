@@ -10,7 +10,7 @@ public interface IDrawingContext
 	void ContinueLine();
 	void CreateLine(CharacterData character, Vector2 position);
 	void DestroyLine();
-	void RegisterLine(FinishData data);
+	void TryRegisterLine(FinishData data);
 	void TouchHandle();
 	void Transition<T>() where T : DrawingState, new();
 }

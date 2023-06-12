@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AudioPlayerSO : ScriptableObject
 {
 	private AudioSource backgroundMusicSource;
-	private float musicVolume;
+	private float musicVolume; //make to public
 	private float soundVolume;
 	
 	public void PlayMusic(AudioSource source)
@@ -16,6 +16,7 @@ public class AudioPlayerSO : ScriptableObject
 		source.volume = musicVolume;
 		source.Play();
 	}
+	
 	public void PlayClickSound(AudioSource source)
 	{
 		source.volume = soundVolume;
@@ -27,5 +28,6 @@ public class AudioPlayerSO : ScriptableObject
 		musicVolume = slider.value;
 		backgroundMusicSource.volume = musicVolume;	
 	}
+	
 	public void SetSoundVolume(Slider slider) => soundVolume = slider.value;
 }

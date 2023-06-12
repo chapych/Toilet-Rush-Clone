@@ -19,7 +19,7 @@ public class DrawingPressedState : DrawingState
 		base.TouchHandle(context);
 		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
 		if(collider && collider.TryGetComponent<FinishData>(out FinishData data))
-			context.RegisterLine(data);
+			context.TryRegisterLine(data);
 		else context.DestroyLine();
 		
 		DrawingState.TransitionTo<DrawingStartState>(this);

@@ -56,7 +56,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 
 	public void ContinueLine() => lineCreator.ContinueLine(TouchPosition);
 
-	public void RegisterLine(FinishData data)
+	public void TryRegisterLine(FinishData data)
 	{
 		bool hasAdded = lineCreator.TryAddCurrentLineToList(data);
 		if(hasAdded) OnProperLineCreated?.Invoke();
