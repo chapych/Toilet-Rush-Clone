@@ -7,7 +7,6 @@ public class DrawingInstaller : MonoInstaller
 {
 	[SerializeField] private DrawingContext context;
 	
-	
 	public override void InstallBindings()
 	{
 		BindDrawingContext();

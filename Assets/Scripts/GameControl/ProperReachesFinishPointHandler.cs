@@ -4,37 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class ProperReachesFinishPointHandler : MonoBehaviour, IProperNumberOfElementsHandler
+public class ProperReachesFinishPointHandler : OnProperNumberOfElementsHandleBase<CharacterObserver>
 {
-	private int charactersCount;
-	private int reachedElements = 0;
-	private CharacterObserver[] characters;
 	private LevelCleared levelCleared;
-	private FinishPointsHolder triggerEventHolder;
-	public event Action OnAllElements;
+	
 	[Inject]
-	public void Contruct(LevelCleared levelCleared, FinishPointsHolder triggerEventHolder)
+	public void Contruct(LevelCleared levelCleared, [Inject(Id = SetupInstaller.FINISH_HOLDER_ID)] GameObject holder)
 	{
 		this.levelCleared = levelCleared;
-		this.triggerEventHolder = triggerEventHolder;
+		
+		foreach(var element in holder.GetComponentsInChildren<ReachingFinish>())
+			element.OnReachedFinish += OnProperNumberOfElementsHandle;
 	}
-	
-	private void Awake()
+	public override void Subscribe()
 	{
-		characters = FindObjectsOfType<CharacterObserver>();
-		charactersCount = characters.Length;
-		foreach(var element in triggerEventHolder.GetComponentsInChildren<TriggerEventFinish>())
-			element.OnReachedFinish+=OnProperNumberOfElementsHandle;
-		OnAllElements+=levelCleared.OnAllElementsHandle;
+		OnAllElements += levelCleared.OnAllElementsHandle;
 	}
 
-	public void OnProperNumberOfElementsHandle()
+	public override void Unsubcribe()
 	{
-		reachedElements++;
-		if (reachedElements == charactersCount)
-		{
-			OnAllElements?.Invoke();
-			OnAllElements-=levelCleared.OnAllElementsHandle;
-		}
+		OnAllElements -= levelCleared.OnAllElementsHandle;
 	}
 }

@@ -16,7 +16,6 @@ public class CharacterData : MonoBehaviour, ICharacterData
 			SetColor();
 		}
 	}
-	public bool HasReachedFinish { get; set; }
 
 	private void SetColor()
 	{

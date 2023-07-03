@@ -3,34 +3,36 @@ using Zenject;
 
 public class SetupInstaller : MonoInstaller
 {
+	public const string FINISH_HOLDER_ID = "Finish holder";
 	[SerializeField] private GameOverScreen gameOverScreen;
 	[SerializeField] private DustControl dustControl;
-	[SerializeField] private FinishPointsHolder finishPointsHolder;
+	[SerializeField] private GameObject finishPointsHolder;
 	[SerializeField] private LevelCleared levelCleared;
 	public override void InstallBindings()
-    {
-        BindGameOverScreen();
-        BindGameOver();
-        BindDustControl();
-        BindFinishPointsHolder();
-        BindLevelCreated();
-    }
+	{
+		BindGameOverScreen();
+		BindGameOver();
+		BindDustControl();
+		BindFinishPointsHolder();
+		BindLevelCreated();
+	}
 
-    private void BindLevelCreated()
-    {
-        Container.Bind<LevelCleared>()
-                         .FromInstance(levelCleared)
-                         .AsSingle();
-    }
+	private void BindLevelCreated()
+	{
+		Container.Bind<LevelCleared>()
+						 .FromInstance(levelCleared)
+						 .AsSingle();
+	}
 
-    private void BindFinishPointsHolder()
-    {
-        Container.Bind<FinishPointsHolder>()
-                         .FromInstance(finishPointsHolder)
-                         .AsSingle();
-    }
+	private void BindFinishPointsHolder()
+	{
+		Container.Bind<GameObject>()
+						 .WithId(FINISH_HOLDER_ID)
+						 .FromInstance(finishPointsHolder)
+						 .AsSingle();
+	}
 
-    private void BindDustControl()
+	private void BindDustControl()
 	{
 		Container.Bind<DustControl>()
 						 .FromInstance(dustControl)

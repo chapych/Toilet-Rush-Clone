@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CharacterObserver : MonoBehaviour
+public class CharacterObserver : MonoBehaviour //:IObservable?
 {
 	private CharacterData characterData;
     private void Start() => characterData = GetComponent<CharacterData>();
