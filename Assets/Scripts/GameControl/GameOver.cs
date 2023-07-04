@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 public class GameOver
 {
-	private GameOverScreen screen;
-	private bool hasCalled = false;
+	private IPanel screen;
+	[SerializeField] private float secondsToWait = 1f;
 	
 	[Inject]
-	public void Construct(GameOverScreen screen)
+	public void Construct(GameOverPanel panel)
 	{
-		this.screen = screen;
-		screen.gameObject.SetActive(false);
+		this.screen = panel;
 	}
 	
-	public void GameOverExecute()
+	public async void OnCollisionHandle(object sender, CollisionEventArgs args)
 	{
-		if(!hasCalled)
-		{
-			hasCalled = true;
-			screen.gameObject.SetActive(true);
-		}
+		var timeInMSec = (int)(1000 * secondsToWait);
+		
+		await Task.Delay(timeInMSec);
+		screen.Show();
 	}
 }

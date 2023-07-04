@@ -1,10 +1,10 @@
 using UnityEngine;
 using Zenject;
 
-public class SetupInstaller : MonoInstaller
+public class SetupInstaller : MonoInstaller //inject IPanel
 {
 	public const string FINISH_HOLDER_ID = "Finish holder";
-	[SerializeField] private GameOverScreen gameOverScreen;
+	[SerializeField] private GameOverPanel gameOverPanel;
 	[SerializeField] private DustControl dustControl;
 	[SerializeField] private GameObject finishPointsHolder;
 	[SerializeField] private LevelCleared levelCleared;
@@ -41,8 +41,8 @@ public class SetupInstaller : MonoInstaller
 
 	private void BindGameOverScreen()
 	{
-		Container.Bind<GameOverScreen>()
-						 .FromInstance(gameOverScreen)
+		Container.Bind<GameOverPanel>()
+						 .FromInstance(gameOverPanel)
 						 .AsSingle();
 	}
 

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class OnProperNumberOfElementsHandleBase<T> : MonoBehaviour, IProperNumberOfElementsHandler where T : MonoBehaviour
+public abstract class OnProperNumberOfElementsHandleBase<T> : MonoBehaviour, ISubscriber, 
+									IProperNumberOfElementsHandler where T : MonoBehaviour
 {
 	private int charactersCount;
 	private int linesCount = 0;

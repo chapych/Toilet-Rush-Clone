@@ -5,18 +5,24 @@ using System.Linq;
 using UnityEngine;
 using Zenject;
 
-public class PathIntersection : MonoBehaviour
+public class PathIntersection : MonoBehaviour, ISubscriber
 {
-	private float waitTillGameOverPanel = 1f;
+	static private bool hasCollisionHappened;
 	private GameOver gameOver;
-	public event Action<Vector2> OnCollision;
+	private DustControl dustControl;
+	public EventHandler<CollisionEventArgs> OnCollision;
 	
 	[Inject]
 	public void Costruct(GameOver gameOver, DustControl dustControl)
 	{
 		this.gameOver = gameOver;
-		
-		OnCollision += dustControl.OnCollisionHandle;
+		this.dustControl = dustControl;
+	}
+	
+	void Start()
+	{
+		hasCollisionHappened = false;
+		Subscribe();
 	}
 	
 	private void OnCollisionEnter2D(Collision2D collision) 
@@ -30,22 +36,33 @@ public class PathIntersection : MonoBehaviour
 		
 	private void HandleCollision(GameObject other)
 	{
-		Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
+		var movingObject = GetComponent<MoveComponent>();
 		
-		OnCollision?.Invoke(medianCollisionPoint);
-		foreach(var element in new GameObject[] {gameObject, other})
-		{
-			var movingObject = element.GetComponent<MoveComponent>();
-			StopMovement(movingObject);
-		}
-		StartCoroutine(ShowGameOverPanel(waitTillGameOverPanel));
+		InvokeEventOnce(other);
+		Unsubcribe();
+		StopMovement(movingObject);
 	}
-	
-	private IEnumerator ShowGameOverPanel(float seconds)
+
+	private void InvokeEventOnce(GameObject other)
 	{
-		yield return new WaitForSeconds(seconds);
-		gameOver.GameOverExecute();
+		if (hasCollisionHappened) return;
+		
+		Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
+		OnCollision?.Invoke(this, new CollisionEventArgs(medianCollisionPoint));
+		hasCollisionHappened = true;
 	}
 	
 	private void StopMovement(MoveComponent movingObject) => movingObject.StopMovement();
+
+	public void Subscribe()
+	{
+		OnCollision += gameOver.OnCollisionHandle;
+		OnCollision += dustControl.OnCollisionHandle;
+	}
+
+	public void Unsubcribe()
+	{
+		OnCollision -= gameOver.OnCollisionHandle;
+		OnCollision -= dustControl.OnCollisionHandle;
+	}
 }

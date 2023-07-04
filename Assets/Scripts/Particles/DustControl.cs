@@ -10,9 +10,9 @@ public class DustControl : MonoBehaviour
 	{
 		particles = GetComponent<ParticleSystem>();
 	}
-	public void OnCollisionHandle(Vector2 position)
+	public void OnCollisionHandle(object sender, CollisionEventArgs args)
 	{
-		particles.transform.position = position;
+		particles.transform.position = args.Position;
 		particles.Play(true);
 	}
 }
