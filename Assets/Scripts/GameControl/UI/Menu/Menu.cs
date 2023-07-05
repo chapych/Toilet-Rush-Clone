@@ -16,10 +16,12 @@ public class Menu : MonoBehaviour
 		this.transition = transition;
 		this.player = player;
 	}
+	
+	private void Start() => transition.IsInTransition = false;
 	public void Exit() => Application.Quit();
 	public void Transition(int sceneIndex)
 	{
-		transition.DelayAnimationTransition(SceneManager.GetActiveScene().buildIndex + 1, animator);
+		transition.DelayAnimationTransition(sceneIndex, animator);
 	}
 	public void Transition(Menu other) => transition.DelayAnimationTransition(this, other, animator);
 	public void PlaySound()

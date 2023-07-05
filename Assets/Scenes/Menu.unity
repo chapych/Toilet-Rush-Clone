@@ -353,6 +353,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 97775832}
+  - component: {fileID: 97775833}
   m_Layer: 0
   m_Name: Animations
   m_TagString: Untagged
@@ -376,6 +377,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &97775833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 97775831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecf8544fca4ed284397e441d127e5660, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &106033883
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,6 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 154180250}
   - component: {fileID: 154180251}
+  - component: {fileID: 154180252}
   m_Layer: 5
   m_Name: Music Volume
   m_TagString: Untagged
@@ -584,6 +598,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &154180252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154180249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588bd8141a7a9214998137b42d12dd55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &213459791 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9199399432471154606, guid: 69a0e9ff55db431489cfb0a64ffcd19b, type: 3}
@@ -678,7 +704,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3441817759963351205, guid: e918b567ef6d1da458b2a8d2ac4587e4, type: 3}
       propertyPath: m_Name
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3441817759963351210, guid: e918b567ef6d1da458b2a8d2ac4587e4, type: 3}
       propertyPath: m_Pivot.x
@@ -1576,6 +1602,7 @@ GameObject:
   m_Component:
   - component: {fileID: 671957463}
   - component: {fileID: 671957464}
+  - component: {fileID: 671957465}
   m_Layer: 5
   m_Name: SoundVolume
   m_TagString: Untagged
@@ -1672,6 +1699,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &671957465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671957462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2ab79be1546f74caf1d8f67b804c65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &672603693
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,13 +10,12 @@ public class LevelCleared
 	private IPanel panel;
 	
 	[Inject]
-	public void Construct([Inject(Id = UIInstaller.LEVELCLEARED_PANEL_ID)]IPanel screen)
+	public void Construct([Inject(Id = UIInstaller.LEVELCLEARED_PANEL_ID)]IPanel panel)
 	{
-		this.panel = screen;
+		this.panel = panel;
 	}
 	public void OnAllElementsHandle()
 	{
-		Debug.Log("cleared");
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		panel.Show();
 	}
 }

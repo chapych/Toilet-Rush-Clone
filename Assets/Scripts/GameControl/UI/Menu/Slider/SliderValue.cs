@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class SliderValue : MonoBehaviour //get player voluem data
+public abstract class SliderValue : MonoBehaviour
 {
-	private AudioPlayerSO player;
+	protected AudioPlayerSO player;
 	 
 	[Inject]
 	private void Construct(AudioPlayerSO player)
@@ -16,5 +16,9 @@ public class SliderValue : MonoBehaviour //get player voluem data
 	private void Awake()
 	{
 		Slider slider = GetComponent<Slider>();
+		
+		Synchronise(slider);
 	}
+	
+	public abstract void Synchronise(Slider slider);
 }

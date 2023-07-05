@@ -15,7 +15,7 @@ public class GameOver
 		this.panel = panel;
 	}
 	
-	public async void OnCollisionHandle(object sender, CollisionEventArgs args)
+	public async void OnCollisionHandleAsync(object sender, CollisionEventArgs args)
 	{
 		var timeInMSec = (int)(1000 * secondsToWait);
 		

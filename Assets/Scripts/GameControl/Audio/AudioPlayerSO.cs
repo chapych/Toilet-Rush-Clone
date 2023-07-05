@@ -6,28 +6,30 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "AudioPlayer", menuName = "ScriptableObjects/Audio Player", order = 1)]
 public class AudioPlayerSO : ScriptableObject
 {
-	private AudioSource backgroundMusicSource;
-	private float musicVolume; //make to public
-	private float soundVolume;
+	private AudioSource backgroundMusicSource = null;
+	public float MusicVolume { get; private set; }
+	public float SoundVolume { get; private set; }
 	
 	public void PlayMusic(AudioSource source)
 	{
-		backgroundMusicSource = source;
-		source.volume = musicVolume;
+		if(!backgroundMusicSource) backgroundMusicSource = source;
+		if(backgroundMusicSource.isPlaying) return;
+		
+		source.volume = MusicVolume;
 		source.Play();
 	}
 	
 	public void PlayClickSound(AudioSource source)
 	{
-		source.volume = soundVolume;
+		source.volume = SoundVolume;
 		source.Play();
 	}
 	
 	public void SetMusicVolume(Slider slider) 
 	{
-		musicVolume = slider.value;
-		backgroundMusicSource.volume = musicVolume;	
+		MusicVolume = slider.value;
+		backgroundMusicSource.volume = MusicVolume;	
 	}
 	
-	public void SetSoundVolume(Slider slider) => soundVolume = slider.value;
+	public void SetSoundVolume(Slider slider) => SoundVolume = slider.value;
 }

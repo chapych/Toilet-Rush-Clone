@@ -37,10 +37,13 @@ public class PathIntersection : MonoBehaviour, ISubscriber
 	private void HandleCollision(GameObject other)
 	{
 		var movingObject = GetComponent<MoveComponent>();
+		Collider2D collider = GetComponent<Collider2D>();
 		
 		InvokeEventOnce(other);
 		Unsubcribe();
+		
 		StopMovement(movingObject);
+		collider.enabled = false;
 	}
 
 	private void InvokeEventOnce(GameObject other)
@@ -56,13 +59,13 @@ public class PathIntersection : MonoBehaviour, ISubscriber
 
 	public void Subscribe()
 	{
-		OnCollision += gameOver.OnCollisionHandle;
+		OnCollision += gameOver.OnCollisionHandleAsync;
 		OnCollision += dustControl.OnCollisionHandle;
 	}
 
 	public void Unsubcribe()
 	{
-		OnCollision -= gameOver.OnCollisionHandle;
+		OnCollision -= gameOver.OnCollisionHandleAsync;
 		OnCollision -= dustControl.OnCollisionHandle;
 	}
 }

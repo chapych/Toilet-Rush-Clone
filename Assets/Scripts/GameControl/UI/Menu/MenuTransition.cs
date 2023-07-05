@@ -9,13 +9,12 @@ using UnityEngine.SceneManagement;
 public class MenuTransition : ScriptableObject
 {
 	private Animator current = default;
-	private bool isInTransition = false;
+	public bool IsInTransition;
 	[SerializeField] private float time;
-	
 	public async void DelayAnimationTransition(Component from, Component to, Animator animation)
 	{
-		if(isInTransition) return;
-		isInTransition = true;
+		if(IsInTransition) return;
+		IsInTransition = true;
 		
 		current = animation;
 		await AnimationTransitionStartAsync();
@@ -27,8 +26,8 @@ public class MenuTransition : ScriptableObject
 	}
 	public async void DelayAnimationTransition(int sceneIndex, Animator animation)
 	{
-		if(isInTransition) return;
-		isInTransition = true;
+		if(IsInTransition) return;
+		IsInTransition = true;
 		
 		current = animation;
 		
@@ -51,6 +50,6 @@ public class MenuTransition : ScriptableObject
 		current.SetTrigger("End");
 		
 		current = default;
-		isInTransition = false;
+		IsInTransition = false;
 	}
 }
