@@ -10,7 +10,7 @@ public class LevelCleared
 	private IPanel panel;
 	
 	[Inject]
-	public void Construct(GameOverPanel screen)
+	public void Construct([Inject(Id = UIInstaller.LEVELCLEARED_PANEL_ID)]IPanel screen)
 	{
 		this.panel = screen;
 	}

@@ -1,4 +1,4 @@
-interface IPanel 
+public interface IPanel 
 {
 	void Show();
 	void Hide();
