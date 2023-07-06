@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 
 public abstract class PanelBase : MonoBehaviour, IPanel
 {
-	private CanvasGroup group;
+	protected CanvasGroup group;
 	
 	private void Awake()
 	{
 		group = GetComponent<CanvasGroup>();
+		OnAwakeActions();
+	}
+	
+	public virtual void OnAwakeActions()
+	{
 		Hide();
 	}
 	public void Hide()
@@ -24,7 +29,7 @@ public abstract class PanelBase : MonoBehaviour, IPanel
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 
-	public void Show()
+	public virtual void Show()
 	{
 		group.alpha = 1;
 		group.interactable = true;

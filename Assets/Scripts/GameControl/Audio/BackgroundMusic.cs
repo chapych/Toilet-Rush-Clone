@@ -5,12 +5,22 @@ using Zenject;
 
 public class BackgroundMusic : MonoBehaviour
 {
+	private static BackgroundMusic instance = null;
 	private AudioPlayerSO player;
 	[Inject]
 	public void Construct(AudioPlayerSO player) => this.player = player; 
-	void Awake()
+	private void Awake()
 	{
-		DontDestroyOnLoad(this.transform.root);
-		player.PlayMusic(GetComponent<AudioSource>());	
-	} 
+		if (instance != null)
+		{
+			Destroy(gameObject);
+		}
+		else
+		{
+			// Allow audio to keep playing between scenes
+			instance = this;
+			DontDestroyOnLoad(gameObject);
+			player.PlayMusic(GetComponent<AudioSource>());
+		}
+	}
 }

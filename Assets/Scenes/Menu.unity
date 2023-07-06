@@ -610,11 +610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 588bd8141a7a9214998137b42d12dd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &213459791 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9199399432471154606, guid: 69a0e9ff55db431489cfb0a64ffcd19b, type: 3}
-  m_PrefabInstance: {fileID: 697371009}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &231007521
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,7 +699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3441817759963351205, guid: e918b567ef6d1da458b2a8d2ac4587e4, type: 3}
       propertyPath: m_Name
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3441817759963351210, guid: e918b567ef6d1da458b2a8d2ac4587e4, type: 3}
       propertyPath: m_Pivot.x
@@ -899,9 +894,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 213459791}
-  - {fileID: 447787037}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1273,7 +1266,7 @@ GameObject:
   - component: {fileID: 447787037}
   - component: {fileID: 447787038}
   m_Layer: 0
-  m_Name: UI
+  m_Name: UIAudio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1286,13 +1279,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 447787036}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 331167140}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &447787038
 MonoBehaviour:
@@ -1887,7 +1880,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 331167140}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1981083935235261325, guid: 69a0e9ff55db431489cfb0a64ffcd19b, type: 3}
       propertyPath: m_Name
@@ -1895,7 +1888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199399432471154606, guid: 69a0e9ff55db431489cfb0a64ffcd19b, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9199399432471154606, guid: 69a0e9ff55db431489cfb0a64ffcd19b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2104,7 +2097,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &856994105
 MonoBehaviour:
