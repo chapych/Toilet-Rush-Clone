@@ -9,16 +9,20 @@ public class LevelCleared
 {
 	private IPanel panel;
 	private IPanel gui;
+	private PlayerDataManager playerDataManager;
 	
 	[Inject]
 	public void Construct([Inject(Id = UIInstaller.LEVELCLEARED_PANEL_ID)]IPanel panel, 
-							[Inject(Id = UIInstaller.GUI_PANEL_ID)]IPanel gui)
+							[Inject(Id = UIInstaller.GUI_PANEL_ID)]IPanel gui,
+							PlayerDataManager playerDataManager)
 	{
 		this.panel = panel;
 		this.gui = gui;
+		this.playerDataManager = playerDataManager;
 	}
 	public void OnAllElementsHandle()
 	{
+		playerDataManager.currentLevel.IncreaseLevel();
 		gui.Hide();
 		panel.Show();
 	}

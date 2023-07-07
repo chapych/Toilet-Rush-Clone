@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class DDoL : MonoBehaviour
 {
-    static DDoL instance = null;
+	static DDoL instance = null;
 
 	private void Awake()
 	{
 		if (instance != null)
 		{
 			Destroy(gameObject);
-        }
+		}
 		else
 		{
 			instance = this;
 			DontDestroyOnLoad(gameObject);
 		}
-    }
+	}
 }

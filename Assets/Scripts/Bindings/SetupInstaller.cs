@@ -7,14 +7,13 @@ public class SetupInstaller : MonoInstaller
 	[SerializeField] private DustControl dustControl;
 	[SerializeField] private GameObject finishPointsHolder;
 	public override void InstallBindings()
-	{
-		BindGameOver();
-		BindDustControl();
-		BindFinishPointsHolder();
-		BindLevelCleared();
-	}
-
-	private void BindLevelCleared()
+    {
+        BindGameOver();
+        BindDustControl();
+        BindFinishPointsHolder();
+        BindLevelCleared();
+    }
+    private void BindLevelCleared()
 	{
 		Container.Bind<LevelCleared>()
 						 .AsSingle();
