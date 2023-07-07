@@ -25,6 +25,7 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	}
 
 	public Line Line { get; set; }
+	public IFinishData Finish {get; set; }
 	
 	private void OnValidate() 
 	{

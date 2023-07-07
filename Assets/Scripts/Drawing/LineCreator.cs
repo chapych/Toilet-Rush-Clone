@@ -39,6 +39,7 @@ public class LineCreator : ICreator<Line, ICharacterData>
 		{
 			createdLines.Add(currentCharacter);
 			currentCharacter.Line = currentLine;
+			currentCharacter.Finish = finishData;
 			return true;
 		}
 		DestroyLine();

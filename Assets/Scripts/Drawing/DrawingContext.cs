@@ -15,7 +15,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 	
 	[SerializeField] private Line prefab;
 	
-	public Vector2 TouchPosition => input.TouchPosition;
+	public Vector2 TouchPosition { get; set; }
 	
 	public event Action OnProperLineCreated;
 
@@ -29,6 +29,9 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 
 	private void Update()
 	{
+		if(input.TouchPosition is null) return;
+		TouchPosition = input.TouchPosition ?? default(Vector2);
+		
 		state.UpdateHandler(this);
 	}
 	public DrawingState GetStartState()
@@ -38,6 +41,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 
 	public void TouchHandle()
 	{
+		if(input.TouchPosition is null) return;
 		state.TouchHandle(this);
 	}
 
@@ -54,7 +58,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 		lineCreator.SetLineProperties(character);
 	}
 
-	public void ContinueLine() => lineCreator.ContinueLine(TouchPosition);
+	public void ContinueLine(Vector2 position) => lineCreator.ContinueLine(position);
 
 	public void TryRegisterLine(FinishData data)
 	{

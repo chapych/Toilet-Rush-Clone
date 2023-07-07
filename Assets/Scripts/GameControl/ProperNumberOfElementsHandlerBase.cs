@@ -6,22 +6,22 @@ using UnityEngine;
 public abstract class OnProperNumberOfElementsHandleBase<T> : MonoBehaviour, ISubscriber, 
 									IProperNumberOfElementsHandler where T : MonoBehaviour
 {
-	private int charactersCount;
-	private int linesCount = 0;
+	private int max;
+	private int current = 0;
 	protected T[] characters;
 	public event Action OnAllElements;
 	
 	private void Awake()
 	{
 		characters = FindObjectsOfType<T>();
-		charactersCount = characters.Length;
+		max = characters.Length;
 		Subscribe();
 	}
 
 	public void OnProperNumberOfElementsHandle()
 	{
-		linesCount++;
-		if (linesCount == charactersCount)
+		current++;
+		if (current == max)
 		{
 			OnAllElements?.Invoke();
 			Unsubcribe();

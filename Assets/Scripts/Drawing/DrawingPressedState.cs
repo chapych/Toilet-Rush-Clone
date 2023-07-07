@@ -9,14 +9,14 @@ public class DrawingPressedState : DrawingState
 	
 	public override void UpdateHandler(IDrawingContext context)
 	{
-		if(context is null)
-			this.context = context;
-		context.ContinueLine();
+		base.UpdateHandler(context);
+		context.ContinueLine(context.TouchPosition);
 	}
 
 	public override void TouchHandle(IDrawingContext context)
 	{
 		base.TouchHandle(context);
+		
 		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
 		if(collider && collider.TryGetComponent<FinishData>(out FinishData data))
 			context.TryRegisterLine(data);

@@ -16,14 +16,13 @@ public class DrawingStartState : DrawingState
 	{
 		base.TouchHandle(context);
 		
-		Vector2 position = context.TouchPosition;
-		Collider2D collider = Physics2D.OverlapCircle(position, detectingRadius);
+		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
 		if(!collider) return;
 		if(collider.TryGetComponent<CharacterData>(out CharacterData character))
 		{
 			if(!context.CanCreateLine(character)) return;
 			
-			context.CreateLine(character, position);
+			context.CreateLine(character, context.TouchPosition);
 			DrawingState.TransitionTo<DrawingPressedState>(this);
 		}
 	}

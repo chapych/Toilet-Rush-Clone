@@ -297,7 +297,7 @@ Transform:
   - {fileID: 1692596002}
   - {fileID: 1162789413}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &190522193
 MonoBehaviour:
@@ -558,11 +558,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 225456738}
   m_CullTransparentMesh: 1
---- !u!1 &268978511 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1510473273055942801, guid: b6af05280477c3842977c8cc542af0c2, type: 3}
-  m_PrefabInstance: {fileID: 1696595248}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &308030780
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,18 +620,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1510473273055942802, guid: b6af05280477c3842977c8cc542af0c2, type: 3}
   m_PrefabInstance: {fileID: 1696595248}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &333694933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 268978511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f7da568870cf01498bfc1a9f4059c9d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &335076597
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOver: {fileID: 838199501}
   levelCleared: {fileID: 1205268103}
+  gui: {fileID: 1692596007}
 --- !u!114 &426078446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +944,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 120}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &815638907
 MonoBehaviour:
@@ -991,15 +975,15 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281452543
-  m_fontColor: {r: 1, g: 0.7803922, b: 0.19215688, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 1
+  m_colorMode: 2
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 1, g: 0, b: 0, a: 1}
+    topRight: {r: 1, g: 0, b: 0, a: 1}
+    bottomLeft: {r: 0.4056604, g: 0.07424348, b: 0.07424348, a: 1}
+    bottomRight: {r: 0.4056604, g: 0.07424348, b: 0.07424348, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -1009,8 +993,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 83.86
+  m_fontSizeBase: 83.86
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1019,7 +1003,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 22.1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1319,7 +1303,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 838199496}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2300,7 +2284,7 @@ Transform:
   - {fileID: 72329727}
   - {fileID: 1143579297}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1252971238
 GameObject:
@@ -8507,11 +8491,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1392787387141704905, guid: 36db818bab91076499624c756d878abd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.52
+      value: -11
       objectReference: {fileID: 0}
     - target: {fileID: 1392787387141704905, guid: 36db818bab91076499624c756d878abd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.78
+      value: 7.46
       objectReference: {fileID: 0}
     - target: {fileID: 1392787387141704905, guid: 36db818bab91076499624c756d878abd, type: 3}
       propertyPath: m_LocalPosition.z
