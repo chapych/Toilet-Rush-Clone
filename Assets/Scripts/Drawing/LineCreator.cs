@@ -22,7 +22,7 @@ public class LineCreator : ICreator<Line, ICharacterData>
 	public void SetLineProperties(ICharacterData character)
 	{
 		currentLine.transform.parent = character.transform;
-		currentLine.Color = GenderToColor.GetColor(character.Gender);
+		currentLine.Color = KindToColor.GetColor(character.Kind);
 	}
 
 	public void ContinueLine(Vector2 position)
@@ -35,7 +35,7 @@ public class LineCreator : ICreator<Line, ICharacterData>
 
 	public bool TryAddCurrentLineToList(IFinishData finishData)
 	{
-		if (finishData.IsGenderNeutral || finishData.Gender == currentCharacter.Gender)
+		if (finishData.IsGenderNeutral || finishData.Kind == currentCharacter.Kind)
 		{
 			createdLines.Add(currentCharacter);
 			currentCharacter.Line = currentLine;

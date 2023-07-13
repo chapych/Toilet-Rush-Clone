@@ -4,25 +4,46 @@ using UnityEngine;
 
 public class PlayerDataManager : MonoBehaviour
 {
-	public CurrentLevel currentLevel;
-	
+	private Level maxAvailableLevel;
+	public int MaxAvailableLevel 
+	{ 
+		get => maxAvailableLevel.Value;
+	}
+	private Level currentLevel;
+	public int CurrentLevel 
+	{ 
+		get => currentLevel.Value;
+		set
+		{
+			currentLevel = new Level(value);
+		}
+	}
 	private void Awake() 
 	{
-		currentLevel = new CurrentLevel();
+		maxAvailableLevel = new Level();
+		currentLevel = new Level();
 	}
 	private void Start()
 	{
-		SaveDataManager.LoadJsonData(currentLevel);
-		Debug.Log(currentLevel.Value);
+		SaveDataManager.LoadJsonData(maxAvailableLevel);
+	}
+	
+	public void IncreaseLevel()
+	{
+		if(currentLevel == maxAvailableLevel) 
+		{
+			maxAvailableLevel.IncreaseLevel();
+		}
+		currentLevel.IncreaseLevel();
 	}
 	
 	private void OnApplicationQuit() 
 	{
-		SaveDataManager.SaveJsonData(currentLevel);
+		SaveDataManager.SaveJsonData(maxAvailableLevel);
 	}
 	
 	private void OnDestroy()
 	{
-		SaveDataManager.SaveJsonData(currentLevel);
+		SaveDataManager.SaveJsonData(maxAvailableLevel);
 	}
 }

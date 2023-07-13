@@ -22,7 +22,7 @@ public class LevelCleared
 	}
 	public void OnAllElementsHandle()
 	{
-		playerDataManager.currentLevel.IncreaseLevel();
+		playerDataManager.IncreaseLevel();
 		gui.Hide();
 		panel.Show();
 	}

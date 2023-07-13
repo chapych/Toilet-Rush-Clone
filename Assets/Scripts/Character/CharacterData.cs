@@ -6,14 +6,14 @@ using UnityEngine;
 public class CharacterData : MonoBehaviour, ICharacterData
 {
 	private SpriteRenderer spriteRenderer;
-	[SerializeField] private Gender gender;
-	public Gender Gender 
+	[SerializeField] private Kind kind;
+	public Kind Kind 
 	{
-		get => gender;
+		get => kind;
 		set
 		{
-			gender = value;
-			SetColor();
+			kind = value;
+			//SetColor();
 		}
 	}
 
@@ -21,7 +21,7 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	{
 		if (!spriteRenderer)
 			spriteRenderer = GetComponent<SpriteRenderer>();
-		spriteRenderer.color = GenderToColor.GetColor(gender);
+		spriteRenderer.color = KindToColor.GetColor(kind);
 	}
 
 	public Line Line { get; set; }
@@ -29,6 +29,6 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	
 	private void OnValidate() 
 	{
-		Gender = gender;
+		Kind = kind;
 	}
 }

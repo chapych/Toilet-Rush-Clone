@@ -22,9 +22,10 @@ public class Menu : MonoBehaviour
 	
 	private void Start() => transition.IsInTransition = false;
 	public void Exit() => Application.Quit();
-	public void PlayCurrent() => SceneManager.LoadScene(playerDataManager.currentLevel.Value);
+	public void PlayCurrent() => Transition(playerDataManager.MaxAvailableLevel);
 	public void Transition(int sceneIndex)
 	{
+		playerDataManager.CurrentLevel = sceneIndex;
 		transition.DelayAnimationTransition(sceneIndex, animator);
 	}
 	public void Transition(Menu other) => transition.DelayAnimationTransition(this, other, animator);

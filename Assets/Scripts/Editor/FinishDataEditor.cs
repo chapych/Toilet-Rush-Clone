@@ -9,12 +9,12 @@ public class FinishDataEditor : Editor
 	private Color color;
 	public SerializedProperty 
 		isGenderNeutral,
-		gender;
+		kind;
 	 
 	 void OnEnable () 
 	 {
 		 isGenderNeutral = serializedObject.FindProperty ("<IsGenderNeutral>k__BackingField");
-		 gender = serializedObject.FindProperty("<Gender>k__BackingField");
+		 kind = serializedObject.FindProperty("<Kind>k__BackingField");
 	 }
 	public override void OnInspectorGUI()
 	{
@@ -24,7 +24,7 @@ public class FinishDataEditor : Editor
 		
 		if(!isGenderNeutral.boolValue)
 		{
-			EditorGUILayout.PropertyField(gender);
+			EditorGUILayout.PropertyField(kind);
 			color = GetColor();
 		}
 		
@@ -34,7 +34,7 @@ public class FinishDataEditor : Editor
 
 	private Color GetColor()
 	{
-		int genderIndex = gender.enumValueIndex;
-		return GenderToColor.GetColor(genderIndex);
+		int genderIndex = kind.enumValueIndex;
+		return KindToColor.GetColor(genderIndex);
 	}
 }

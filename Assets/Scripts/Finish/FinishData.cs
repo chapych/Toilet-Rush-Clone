@@ -7,5 +7,5 @@ using UnityEngine;
 public class FinishData : MonoBehaviour, IFinishData
 {
 	[field : SerializeField] public bool IsGenderNeutral { get; set; }
-	[field : SerializeField] public Gender Gender { get; set; }
+	[field : SerializeField] public Kind Kind { get; set; }
 }
