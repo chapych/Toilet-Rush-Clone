@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ReachingFinish : MonoBehaviour
 {
-	private IFinishData finish;
+	private IKindData finish;
 	public event Action OnReachedFinish;
 	
 	private void Start()

@@ -20,6 +20,7 @@ public class GameOver
 	
 	public async void OnCollisionHandleAsync(object sender, CollisionEventArgs args)
 	{
+		Debug.Log(args.Position);
 		var timeInMSec = (int)(1000 * secondsToWait);
 		
 		await Task.Delay(timeInMSec);

@@ -33,7 +33,7 @@ public class LineCreator : ICreator<Line, ICharacterData>
 		}
 	}
 
-	public bool TryAddCurrentLineToList(IFinishData finishData)
+	public bool TryAddCurrentLineToList(IKindData finishData)
 	{
 		if (finishData.IsGenderNeutral || finishData.Kind == currentCharacter.Kind)
 		{

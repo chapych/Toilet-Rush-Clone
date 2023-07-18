@@ -26,7 +26,7 @@ public class NewTestScript
 		ICharacterData data = Substitute.For<ICharacterData>();
 		ICharacterData otherData = Substitute.For<ICharacterData>();
 		Line line = CreateLine(data, out creator);
-		IFinishData finishData = Substitute.For<IFinishData>();
+		IKindData finishData = Substitute.For<IKindData>();
 		finishData.IsGenderNeutral = true;
 		
 		creator.TryAddCurrentLineToList(finishData);

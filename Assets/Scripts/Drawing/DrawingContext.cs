@@ -12,7 +12,6 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 	private DrawingStateFactory factory;
 	private LineCreator lineCreator;
 	private DrawingInputControler input;
-	
 	[SerializeField] private Line prefab;
 	
 	public Vector2 TouchPosition { get; set; }
