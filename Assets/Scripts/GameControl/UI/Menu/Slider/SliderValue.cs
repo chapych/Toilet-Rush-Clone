@@ -13,7 +13,7 @@ public abstract class SliderValue : MonoBehaviour
 	{
 		this.player = player;
 	}
-	private void Awake()
+	private void Start()
 	{
 		Slider slider = GetComponent<Slider>();
 		

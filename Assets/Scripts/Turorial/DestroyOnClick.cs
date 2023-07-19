@@ -15,6 +15,6 @@ public class DestroyOnClick : MonoBehaviour
 	private void DestroySelf()
 	{
 		input.TouchEvent -= DestroySelf;
-		Destroy(gameObject);
+		if(gameObject) Destroy(gameObject);
 	}
 }

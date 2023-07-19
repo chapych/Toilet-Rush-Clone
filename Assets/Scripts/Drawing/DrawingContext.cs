@@ -7,47 +7,33 @@ using Zenject;
 
 public class DrawingContext : MonoBehaviour, IDrawingContext
 {
-	public const float THRESHOLD = 0.1f;
-	private DrawingState state;
-	private DrawingStateFactory factory;
 	private LineCreator lineCreator;
+	private DrawingStateMachine stateMachine;
 	private DrawingInputControler input;
 	[SerializeField] private Line prefab;
-	
-	public Vector2 TouchPosition { get; set; }
-	
+	public Vector2 TouchPosition { get => input.TouchPosition ?? default(Vector2);}
 	public event Action OnProperLineCreated;
 
 	private void Start()
 	{
-		input = GetComponent<DrawingInputControler>();
 		lineCreator = new LineCreator(prefab);
-		factory = new DrawingStateFactory();
-		state = GetStartState();
+		stateMachine = new DrawingStateMachine();
+		stateMachine.Transition<DrawingStartState>();
+
+		input = GetComponent<DrawingInputControler>();		
 	}
 
 	private void Update()
 	{
 		if(input.TouchPosition is null) return;
-		TouchPosition = input.TouchPosition ?? default(Vector2);
 		
-		state.UpdateHandler(this);
+		stateMachine.UpdateHandler(this);
 	}
-	public DrawingState GetStartState()
-	{
-		return factory.GetOrCreate<DrawingStartState>();
-	}
-
 	public void TouchHandle()
 	{
 		if(input.TouchPosition is null) return;
-		TouchPosition = input.TouchPosition ?? default(Vector2);
-		state.TouchHandle(this);
-	}
-
-	public void Transition<T>() where T : DrawingState, new()
-	{
-		state = factory.GetOrCreate<T>();
+		
+		stateMachine.TouchHandle(this);
 	}
 
 	public bool CanCreateLine(CharacterData character) => !lineCreator.ContainsElementFor(character);

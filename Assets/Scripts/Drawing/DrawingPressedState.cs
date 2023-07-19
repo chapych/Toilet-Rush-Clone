@@ -5,25 +5,21 @@ using UnityEngine.InputSystem;
 public class DrawingPressedState : DrawingState
 {
 	private float detectingRadius = 0.1f;
-	public DrawingPressedState() : base() {}
+	public DrawingPressedState(DrawingStateMachine stateMachine) : base(stateMachine) {}
 	
 	public override void UpdateHandler(IDrawingContext context)
 	{
-		base.UpdateHandler(context);
 		context.ContinueLine(context.TouchPosition);
 	}
 
 	public override void TouchHandle(IDrawingContext context)
 	{
-		base.TouchHandle(context);
-		
 		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
-		Debug.Log("releasing, position: " + context.TouchPosition + " " + collider);
 		if(collider && collider.TryGetComponent<FinishData>(out FinishData data))
 			context.TryRegisterLine(data);
 		else context.DestroyLine();
 		
-		DrawingState.TransitionTo<DrawingStartState>(this);
+		stateMachine.Transition<DrawingStartState>();
 	}
 	
 }

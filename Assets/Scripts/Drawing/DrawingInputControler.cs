@@ -14,13 +14,7 @@ public class DrawingInputControler : MonoBehaviour
 	{
 		context = GetComponent<DrawingContext>();
 		inputReader.DrawingEnable();
-		inputReader.TouchEvent+=context.TouchHandle;
-	}
-	
-	private void Update()
-	{
-		//TouchPosition = GetTouchPosition();
-		//Debug.Log(TouchPosition);
+		inputReader.TouchEvent += context.TouchHandle;
 	}
 	
 	private Vector2? GetTouchPosition()
@@ -31,6 +25,6 @@ public class DrawingInputControler : MonoBehaviour
 	
 	private void OnDisable()
 	{
-		inputReader.TouchEvent-=context.TouchHandle;
+		inputReader.TouchEvent -= context.TouchHandle;
 	}
 }

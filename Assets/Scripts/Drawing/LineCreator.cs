@@ -8,13 +8,13 @@ public class LineCreator : ICreator<Line, ICharacterData>
 	private Line prefab;
 	private Line currentLine;
 	private ICharacterData currentCharacter;
-	private List<ICharacterData> createdLines = new List<ICharacterData>(); //make seperated class for created lines
+	private List<ICharacterData> createdLines = new List<ICharacterData>();
 
 	public LineCreator(Line prefab) => this.prefab = prefab;
 	public bool ContainsElementFor(ICharacterData character) => createdLines.Contains(character);
 	public Line Create(ICharacterData character, Vector2 position)
 	{
-		currentLine = GameObject.Instantiate(prefab, position, Quaternion.identity);///subcribe to this
+		currentLine = GameObject.Instantiate(prefab, position, Quaternion.identity);
 		currentCharacter = character;
 		return currentLine;
 	}
@@ -27,7 +27,7 @@ public class LineCreator : ICreator<Line, ICharacterData>
 
 	public void ContinueLine(Vector2 position)
 	{
-		if (currentLine.CanContinue(position, DrawingContext.THRESHOLD))
+		if (currentLine.CanContinue(position, Constants.THRESHOLD))
 		{
 			currentLine.Continue(position);
 		}
