@@ -9,7 +9,7 @@ public class DrawingInputControler : MonoBehaviour
 	private InputReaderSO inputReader;
 	private DrawingContext context;
 	public Camera main;
-	public Vector2? TouchPosition{ get; private set; }
+	public Vector2? TouchPosition{ get =>  GetTouchPosition(); }
 	private void Start() 
 	{
 		context = GetComponent<DrawingContext>();
@@ -19,7 +19,8 @@ public class DrawingInputControler : MonoBehaviour
 	
 	private void Update()
 	{
-		TouchPosition = GetTouchPosition();
+		//TouchPosition = GetTouchPosition();
+		//Debug.Log(TouchPosition);
 	}
 	
 	private Vector2? GetTouchPosition()

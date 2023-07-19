@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "AudioPlayer", menuName = "ScriptableObjects/Audio Player", order = 1)]
-public class AudioPlayerSO : ScriptableObject
+public class AudioPlayerSO : ScriptableObject, ISaveable
 {
-	private AudioSource backgroundMusicSource = null;
+	private AudioSource backgroundMusicSource = null; 
 	public float MusicVolume { get; private set; }
+	 
 	public float SoundVolume { get; private set; }
 	
 	public void PlayMusic(AudioSource source)
@@ -32,4 +33,16 @@ public class AudioPlayerSO : ScriptableObject
 	}
 	
 	public void SetSoundVolume(Slider slider) => SoundVolume = slider.value;
+
+	public void PopulateSaveData(SaveData saveData)
+	{
+		saveData.MusicVolume = MusicVolume;
+		saveData.SoundVolume = SoundVolume;
+	}
+
+	public void LoadFromSaveData(SaveData saveData)
+	{
+		MusicVolume = saveData.MusicVolume;
+		SoundVolume = saveData.SoundVolume;
+	}
 }

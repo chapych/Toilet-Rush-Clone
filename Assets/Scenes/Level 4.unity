@@ -2256,15 +2256,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 739838291347958903, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
       propertyPath: m_Alpha
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739838291347958903, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739838291347958903, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
       propertyPath: m_BlocksRaycasts
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 739838292199409055, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2280,7 +2280,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 739838292204319647, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739838292204319647, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 739838292204319647, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 739838292280944857, guid: d60250985d5a9684ebf8b05ec3930d8e, type: 3}
       propertyPath: m_AnchorMax.x

@@ -5,6 +5,8 @@ using UnityEngine;
 public class SaveData
 { 
 	public int currentLevel;
+	public float MusicVolume;
+	public float SoundVolume;
 	public string ToJson()
 	{
 		return JsonUtility.ToJson(this);

@@ -41,6 +41,7 @@ public class DrawingContext : MonoBehaviour, IDrawingContext
 	public void TouchHandle()
 	{
 		if(input.TouchPosition is null) return;
+		TouchPosition = input.TouchPosition ?? default(Vector2);
 		state.TouchHandle(this);
 	}
 

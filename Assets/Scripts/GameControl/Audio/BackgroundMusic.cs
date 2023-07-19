@@ -17,10 +17,13 @@ public class BackgroundMusic : MonoBehaviour
 		}
 		else
 		{
-			// Allow audio to keep playing between scenes
 			instance = this;
 			DontDestroyOnLoad(gameObject);
-			player.PlayMusic(GetComponent<AudioSource>());
 		}
+	}
+	
+	private void Start()
+	{
+		player.PlayMusic(GetComponent<AudioSource>());
 	}
 }
