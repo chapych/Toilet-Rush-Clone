@@ -1,23 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class LineShortener
+namespace Drawing
 {
-	private Line line;
-	private Vector3[] current;
+	public class LineShortener
+	{
+		private readonly ILine line;
+		private Vector3[] current;
 	
-	public LineShortener(Line line)
-	{
-		this.line = line;
-		current = line.Points;
-	}
-	public void OnLinePointWalkedByHandler()
-	{
-		current = current.Skip(1)
-						 .ToArray();
+		public LineShortener(ILine line)
+		{
+			this.line = line;
+			current = line.Points;
+		}
+		public void OnLinePointWalkedByHandler()
+		{
+			current = current.Skip(1)
+				.ToArray();
 						 
-		line.SetPoints(current);
+			line.SetPoints(current);
+		}
 	}
 }

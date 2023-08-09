@@ -1,25 +1,50 @@
 using System;
 using System.Collections.Generic;
+using GameControl.Factories;
+using UnityEngine;
 
-public class DrawingStateMachine
+namespace Drawing
 {
-	private IDrawingState active;
-	private readonly Dictionary<Type, IDrawingState> states;
+	public class DrawingStateMachine : IDrawingStateMachine
+	{
+		private IExitableState active;
+		private ICharacterData current;
+		private readonly Dictionary<Type, IExitableState> states;
 
-	public DrawingStateMachine()
-	{
-		states = new Dictionary<Type, IDrawingState>
+		public ICharacterData Character { get; set; }
+
+		public DrawingStateMachine(DrawingStateFactory factory)
 		{
-			[typeof(DrawingStartState)] = new DrawingStartState(this),
-			[typeof(DrawingPressedState)] = new DrawingPressedState(this)
-		};
+			states = new Dictionary<Type, IExitableState>
+			{
+				[typeof(TouchStartedState)] = factory.CreateTouchStartedState(this),
+				[typeof(TouchPerformedState)] = factory.CreateTouchPerformedState(this),
+				[typeof(DrawingStartedState)] = factory.CreateStartState(this),
+				[typeof(DrawingPressedState)] = factory.CreatePressedState(this),
+				[typeof(ConfigureFinishedLineState)] = factory.CreateReleasingState(this),
+				[typeof(DestroyLineState)] = factory.CreateDestroyLineState(this)
+			};
+		}
+
+		public void Enter<TState>() where TState : class, IEnteringState
+		{
+			active?.Exit();
+			IEnteringState state = GetState<TState>();
+			active = state;
+			state.Enter();
+		}
+
+		public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadedEnteringState<TPayload>
+		{
+			active?.Exit();
+			IPayloadedEnteringState<TPayload> state = GetState<TState>();
+			active = state;
+			state.Enter(payload);
+		}
+
+		private T GetState<T>() where T: class
+		{
+			return states[typeof(T)] as T;
+		}
 	}
-	
-	public void Transition<T>() where T : IDrawingState
-	{
-		active = states[typeof(T)];
-	}
-	
-	public void UpdateHandler(IDrawingContext context) => active.UpdateHandler(context);
-	public void TouchHandle(IDrawingContext context) => active.TouchHandle(context);
 }

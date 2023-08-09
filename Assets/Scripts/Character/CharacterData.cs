@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Drawing;
 using UnityEngine;
 
 public class CharacterData : MonoBehaviour, ICharacterData
@@ -10,11 +11,7 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	public Kind Kind 
 	{
 		get => kind;
-		set
-		{
-			kind = value;
-			//SetColor();
-		}
+		set => kind = value;
 	}
 
 	private void SetColor()
@@ -24,7 +21,7 @@ public class CharacterData : MonoBehaviour, ICharacterData
 		spriteRenderer.color = KindToColor.GetColor(kind);
 	}
 
-	public Line Line { get; set; }
+	public ILine Line { get; set; }
 	public IKindData Finish {get; set; }
 	
 	private void OnValidate() 

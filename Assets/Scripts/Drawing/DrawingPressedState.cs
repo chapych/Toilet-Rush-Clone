@@ -1,25 +1,43 @@
-using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class DrawingPressedState : DrawingState
+namespace Drawing
 {
-	private float detectingRadius = 0.1f;
-	public DrawingPressedState(DrawingStateMachine stateMachine) : base(stateMachine) {}
-	
-	public override void UpdateHandler(IDrawingContext context)
+	public class DrawingPressedState : IEnteringState
 	{
-		context.ContinueLine(context.TouchPosition);
-	}
-
-	public override void TouchHandle(IDrawingContext context)
-	{
-		Collider2D collider = Physics2D.OverlapCircle(context.TouchPosition, detectingRadius);
-		if(collider && collider.TryGetComponent<FinishData>(out FinishData data))
-			context.TryRegisterLine(data);
-		else context.DestroyLine();
+		private IDrawingStateMachine context;
+		private readonly ILineCreator creator;
+		private readonly IInputService input;
+		private readonly ICoroutineRunner coroutineRunner;
 		
-		stateMachine.Transition<DrawingStartState>();
+		private Coroutine coroutine;
+		public DrawingPressedState(IDrawingStateMachine context,IInputService input, 
+			ILineCreator creator, ICoroutineRunner coroutineRunner)
+		{
+			this.context = context;
+			this.creator = creator;
+			this.input = input;
+			this.coroutineRunner = coroutineRunner;					
+		}
+
+		public void Exit()
+		{
+			coroutineRunner.StopCoroutine(coroutine);
+		}
+
+		public void Enter()
+		{
+			coroutine = coroutineRunner.StartCoroutine(DrawLine());
+		}
+
+		private IEnumerator DrawLine()
+		{
+			while(true)
+			{
+				Vector2 position = input.Position;
+				creator.ContinueLine(position);
+				yield return null;
+			}
+		}
 	}
-	
 }

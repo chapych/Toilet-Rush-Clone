@@ -10,6 +10,6 @@ public class LevelMenu : Menu
 	public void LoadLevel(GameObject button)
 	{
 		int index = Int32.Parse(button.name);
-		base.Transition(index);
+		base.Transition(index + 1);
 	}
 }

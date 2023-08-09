@@ -1,17 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Drawing;
 using UnityEngine;
 using Zenject;
 
 public class ProperDrawenLinesHandler : OnProperNumberOfElementsHandleBase<CharacterObserver>
 {
+	private LineCreator creator;
 	[Inject]
-	public void Contruct(IDrawingContext context)
+	public void Contruct(LineCreator lineCreator)
 	{
-		context.OnProperLineCreated += OnProperNumberOfElementsHandle;
+		this.creator = lineCreator;
 	}
 
+	private void Start()
+	{
+		creator.OnProperLineCreated += OnProperNumberOfElementsHandle;
+	}
+	
 	public override void Subscribe()
 	{
 		foreach (var character in characters)

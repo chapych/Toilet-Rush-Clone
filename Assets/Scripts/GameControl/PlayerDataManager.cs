@@ -5,7 +5,7 @@ using Zenject;
 
 public class PlayerDataManager : MonoBehaviour
 {
-	private AudioPlayerSO player;
+	private ISaveable player;
 	private Level maxAvailableLevel;
 	public int MaxAvailableLevel 
 	{ 
@@ -21,12 +21,12 @@ public class PlayerDataManager : MonoBehaviour
 		}
 	}
 	
-	[Inject]
-	public void Construct(AudioPlayerSO player)
+	[Inject] //не нравится что жстко зависит от player
+	public void Construct(ISaveable player)
 	{
 		this.player = player;
 	}
-	private void Awake() 
+	private void Awake()  //вызвать из бутстрапера
 	{
 		maxAvailableLevel = new Level();
 		currentLevel = new Level();

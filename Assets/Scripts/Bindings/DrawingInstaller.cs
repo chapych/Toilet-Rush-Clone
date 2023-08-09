@@ -1,21 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Drawing;
 using UnityEngine;
 using Zenject;
 
 public class DrawingInstaller : MonoInstaller
 {
-	[SerializeField] private DrawingContext context;
+	[SerializeField] private InputService inputControler;
+	[SerializeField] private DrawingStateMachine context;
+	[SerializeField] private Line prefab;
+	[SerializeField] private ICoroutineRunner coroutineRunner;
 	
 	public override void InstallBindings()
-	{
-		BindDrawingContext();
-	}
+    {
+        BindCoroutineRunner();
+    }
+
+    private void BindCoroutineRunner()
+    {
+        Container.Bind<ICoroutineRunner>()
+                 .FromInstance(coroutineRunner)
+                 .AsSingle();
+    }
 	
-	public void BindDrawingContext()
-	{
-		Container.Bind<IDrawingContext>()
-				 .FromInstance(context)
-				 .AsSingle();
-	}
 }

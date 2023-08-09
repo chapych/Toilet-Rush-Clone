@@ -9,12 +9,12 @@ public class DestroyOnClick : MonoBehaviour
 	
 	private void Start()
 	{
-		input.TouchEvent += DestroySelf;
+		input.TouchStartedEvent += DestroySelf;
 	}
 
 	private void DestroySelf()
 	{
-		input.TouchEvent -= DestroySelf;
+		input.TouchStartedEvent -= DestroySelf;
 		if(gameObject) Destroy(gameObject);
 	}
 }

@@ -1,3 +1,4 @@
+using Drawing;
 using UnityEngine;
 
 public class CharacterObserver : MonoBehaviour //:IObservable?
@@ -6,7 +7,7 @@ public class CharacterObserver : MonoBehaviour //:IObservable?
     private void Start() => characterData = GetComponent<CharacterData>();
     public void OnAllElementsHandle()
 	{
-		var line = characterData.Line;
+		ILine line = characterData.Line;
 		var lineShortener = new LineShortener(line);
 		var moveComponent = GetComponent<MoveComponent>();
 		

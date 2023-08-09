@@ -1,11 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public interface ILine
+namespace Drawing
 {
-    Color Color { set; }
-    Vector3[] Points { get; }
+    public interface ILine : IComponent
+    {
+        Color Color { set; }
+        Vector3[] Points { get; }
 
-    bool CanContinue(Vector2 newPosition, float threshold);
-    void Continue(Vector2 newPosition);
+        bool CanContinue(Vector2 newPosition, float threshold);
+        void AddPoint(Vector2 newPosition);
+        void DestroySelf();
+        void SetPoints(Vector3[] current);
+    }
 }
