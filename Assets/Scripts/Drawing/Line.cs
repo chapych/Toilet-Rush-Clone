@@ -11,7 +11,7 @@ namespace Drawing
 		{
 			set
 			{
-				Gradient gradient = new Gradient();
+				var gradient = new Gradient();
 			
 				SetGradient(value, gradient);
 				lineRenderer.colorGradient = gradient;
@@ -22,7 +22,7 @@ namespace Drawing
 			get
 			{
 				int count = lineRenderer.positionCount;
-				Vector3[] array = new Vector3[count];
+				var array = new Vector3[count];
 			
 				lineRenderer.GetPositions(array);
 				return array;
@@ -32,11 +32,11 @@ namespace Drawing
 		private static void SetGradient(Color value, Gradient gradient)
 		{
 			gradient.mode = GradientMode.Blend;
-			var gradientColorKeys = new GradientColorKey[1]
+			var gradientColorKeys = new[]
 			{
 				new GradientColorKey(value, 1)
 			};
-			var alphaKeys = new GradientAlphaKey[1]
+			var alphaKeys = new[]
 			{
 				new GradientAlphaKey(1f, 1),
 			};
@@ -49,7 +49,7 @@ namespace Drawing
 				SetInitialProperties();
 		}
 
-		public void SetInitialProperties()
+		private void SetInitialProperties()
 		{
 			lineRenderer = GetComponent<LineRenderer>();
 		}

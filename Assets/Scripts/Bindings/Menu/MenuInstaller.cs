@@ -9,7 +9,7 @@ public class MenuInstaller : MonoInstaller
 	public const string LEVELS_MENU_ID = "Levels Menu";
 	[SerializeField] Animator transitionAnimator;
 	[SerializeField] AudioHolder audioHolder;
-	[SerializeField] private PlayerDataManager playerDataManager;
+	//[SerializeField] private PlayerDataManager playerDataManager;
 
 
 	public override void InstallBindings()
@@ -22,8 +22,6 @@ public class MenuInstaller : MonoInstaller
 	}
 	private void BindPlayerData()
 	{
-		Container.Bind<PlayerDataManager>()
-				 .FromInstance(playerDataManager)
-				 .AsSingle();
+	
 	}
 }

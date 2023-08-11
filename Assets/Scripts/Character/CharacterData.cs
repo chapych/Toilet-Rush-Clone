@@ -11,8 +11,10 @@ public class CharacterData : MonoBehaviour, ICharacterData
 	public Kind Kind 
 	{
 		get => kind;
-		set => kind = value;
+		private set => kind = value;
 	}
+
+	public bool IsFree => Line == null;
 
 	private void SetColor()
 	{
