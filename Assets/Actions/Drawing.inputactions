@@ -11,7 +11,7 @@
                     "id": "7fe0558a-d512-426e-819d-3039cc374e39",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press,Press(behavior=1)",
+                    "interactions": "Press(behavior=1)",
                     "initialStateCheck": true
                 },
                 {
@@ -28,7 +28,7 @@
                 {
                     "name": "",
                     "id": "75402f1d-25a7-45c1-9a04-a6ae61c059e2",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/press",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

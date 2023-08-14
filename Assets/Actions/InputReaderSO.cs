@@ -8,16 +8,12 @@ using UnityEngine.InputSystem;
 public class InputReaderSO : ScriptableObject, Input.IDrawingActions
 {
 	private Input controls;
-	public event Action TouchEvent;
+	public event Action TouchStartedEvent;
+	public event Action TouchFinishedEvent;
 	public event Action PositionEvent;
 	public Vector2 Position
 	{
-		get => GetPosition();
-	}
-
-	private Vector2 GetPosition()
-	{
-		return controls.Drawing.Position.ReadValue<Vector2>();
+		get => controls.Drawing.Position.ReadValue<Vector2>();
 	}
 
 	private void OnEnable()
@@ -38,7 +34,10 @@ public class InputReaderSO : ScriptableObject, Input.IDrawingActions
 	public void OnTouch(InputAction.CallbackContext context)
 	{
 		if (context.started)
-			TouchEvent?.Invoke();
+			TouchStartedEvent?.Invoke();
+		if(context.performed)
+			TouchFinishedEvent?.Invoke();
+
 	}
 
 	public void OnPosition(InputAction.CallbackContext context)
