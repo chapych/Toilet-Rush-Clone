@@ -1,7 +1,17 @@
 using System;
+using GameControl.GamePlay;
+using Zenject;
 
-public interface IProperNumberOfElementsHandler
+namespace GameControl.GamePlay
 {
-	event Action OnAllElements;
-	void OnProperNumberOfElementsHandle();
+	public interface IProperNumberOfElementsHandler
+	{
+		event Action OnAllElements;
+		void OnOneElementHandle();
+	}
 }
+
+public interface IProperNumberOfElementsHandlerFactory : IFactory<IProperNumberOfElementsHandler>
+{
+}
+

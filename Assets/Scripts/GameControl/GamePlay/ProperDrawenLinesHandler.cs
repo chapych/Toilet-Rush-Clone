@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Drawing;
+using GameControl.GamePlay;
 using UnityEngine;
 using Zenject;
 
@@ -16,12 +17,12 @@ public class ProperDrawenLinesHandler : OnProperNumberOfElementsHandleBase<Chara
 
 	private void Start()
 	{
-		creator.OnProperLineCreated += OnProperNumberOfElementsHandle;
+		creator.OnProperLineCreated += OnOneElementHandle;
 	}
 	
 	public override void Subscribe()
 	{
-		foreach (var character in characters)
+		foreach (var character in Elements)
 		{
 			OnAllElements += character.OnAllElementsHandle;
 		}
@@ -29,9 +30,21 @@ public class ProperDrawenLinesHandler : OnProperNumberOfElementsHandleBase<Chara
 
 	public override void Unsubcribe()
 	{
-		foreach (var character in characters)
+		foreach (var character in Elements)
 		{
 			OnAllElements -= character.OnAllElementsHandle;
+		}
+	}
+	
+	public class Factory : OnProperNumberOfElementsHandleBase<CharacterObserver>.Factory
+	{
+		public Factory(DiContainer container) : base(container)
+		{
+		}
+
+		public override IProperNumberOfElementsHandler Create()
+		{
+			return Container.Instantiate<ProperDrawenLinesHandler>();
 		}
 	}
 }

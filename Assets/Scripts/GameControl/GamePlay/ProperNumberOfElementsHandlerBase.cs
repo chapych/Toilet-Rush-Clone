@@ -1,34 +1,50 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
-public abstract class OnProperNumberOfElementsHandleBase<T> : MonoBehaviour, ISubscriber, 
-									IProperNumberOfElementsHandler where T : MonoBehaviour
+namespace GameControl.GamePlay
 {
-	private int max;
-	private int current = 0;
-	protected T[] characters;
-	public event Action OnAllElements;
+	public abstract class OnProperNumberOfElementsHandleBase<T> : MonoBehaviour, ISubscriber, 
+		IProperNumberOfElementsHandler where T : MonoBehaviour
+	{
+		private int max;
+		private int current;
+		[SerializeField] private GameObject container;
 	
-	private void Awake()
-	{
-		characters = FindObjectsOfType<T>();
-		max = characters.Length;
-		Subscribe();
-	}
+		protected T[] Elements;
 
-	public void OnProperNumberOfElementsHandle()
-	{
-		current++;
-		if (current == max)
+		public event Action OnAllElements;
+	
+		public void Initialise()
 		{
-			OnAllElements?.Invoke();
-			Unsubcribe();
+			Elements = container.GetComponentsInChildren<T>();
+			max = Elements.Length;
+			Subscribe();
+		}
+
+		public void OnOneElementHandle()
+		{
+			current++;
+			if (current == max)
+			{
+				OnAllElements?.Invoke();
+				Unsubcribe();
+			}
+		}
+
+		public abstract void Subscribe();
+
+		public abstract void Unsubcribe();
+		
+		public abstract class Factory : IProperNumberOfElementsHandlerFactory
+		{
+			protected readonly DiContainer Container;
+			public Factory(DiContainer container)
+			{
+				this.Container = container;
+			}
+
+			public abstract IProperNumberOfElementsHandler Create();
 		}
 	}
-
-	public abstract void Subscribe();
-
-	public abstract void Unsubcribe();
 }
