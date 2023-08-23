@@ -1,5 +1,12 @@
-public enum Kind
+using UnityEngine;
+
+namespace Character
 {
-	Chicken,
-	BlueBird
+	public enum Kind
+	{
+		[InspectorName(null)]
+		Universal,
+		Chicken,
+		BlueBird
+	}
 }

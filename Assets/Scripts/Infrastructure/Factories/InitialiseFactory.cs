@@ -1,6 +1,12 @@
 ﻿using Bindings;
+using Character;
 using Drawing;
 using GameControl.GamePlay;
+using Logic.GamePlay;
+using Logic.Interfaces;
+using Services.StaticDataService;
+using Services.StaticDataService.StaticData;
+using UnityEngine;
 using Zenject;
 
 namespace Infrastructure.Factories
@@ -8,17 +14,14 @@ namespace Infrastructure.Factories
     public class InitialiseFactory
     {
         private readonly Drawer.Factory drawerFactory;
-        private readonly IProperNumberOfElementsHandler.Factory properReachesHandler;
-        private readonly IProperNumberOfElementsHandler.Factory properDrawnHandler;
+        private readonly IStaticDataService staticDataService;
 
 
         public InitialiseFactory(Drawer.Factory drawerFactory, 
-            [Inject(Id = BootstrapInstaller.PROPER_DRAWN_HANDLER)] IProperNumberOfElementsHandler.Factory properDrawnHandler,
-            [Inject(Id = BootstrapInstaller.PROPER_REACHED_HANDLER)] IProperNumberOfElementsHandler.Factory properReachesHandler)
+            IStaticDataService staticDataService)
         {
             this.drawerFactory = drawerFactory;
-            this.properDrawnHandler = properDrawnHandler;
-            this.properReachesHandler = properReachesHandler;
+            this.staticDataService = staticDataService;
         }
 
         public Drawer CreateDrawer()
@@ -26,14 +29,28 @@ namespace Infrastructure.Factories
             return drawerFactory.Create();
         }
 
-        public IProperNumberOfElementsHandler CreateProperDrawnHandler()
+        public IProperNumberOfElements CreateProperDrawnHandler(int max, IObservable observable)
         {
-            return properDrawnHandler.Create();
+            return new ProperDrawnLines(max, observable);
         }
 
-        public IProperNumberOfElementsHandler CtreateProperReachedHandler()
+        public IProperNumberOfElements CreateProperReachedHandler(int max, IObservable[] observables)
         {
-            return properReachesHandler.Create();
+            return new ProperReachedFinishPoint(max, observables);
+        }
+        
+        public GameObject CreateFinish(Kind kind, Vector2 position)
+        {
+            FinishStaticData finishData = staticDataService.ForFinish(kind);
+            GameObject prefab = finishData.prefab;
+            return Object.Instantiate(prefab, position, Quaternion.identity);
+        }
+
+        public GameObject CreateCharacter(Kind kind, Vector2 position)
+        {
+            var finishData = staticDataService.ForCharacter(kind);
+            GameObject prefab = finishData.prefab;
+            return Object.Instantiate(prefab, position, Quaternion.identity);
         }
     }
 }

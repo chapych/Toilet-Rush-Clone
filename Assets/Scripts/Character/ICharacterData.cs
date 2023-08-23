@@ -1,7 +1,7 @@
-using Drawing;
-
-public interface ICharacterData : IComponent
+namespace Character
 {
-	IKindData Finish { get; set; }
-	Kind Kind { get; }
+	public interface ICharacterData : IComponent, IKindData
+	{
+		IKindData Finish { get; set; }
+	}
 }

@@ -1,40 +1,39 @@
-using Drawing;
-using UnityEngine;
+using Character;
 using UnityEditor;
+using UnityEngine;
 
-public class KindDataEditor<T> : Editor
-where T : MonoBehaviour, IKindData
+namespace Editor
 {
-	public SerializedProperty
-		isGenderNeutral;
-	public SerializedProperty
-		kind;
-	private Color color;
-	public override void OnInspectorGUI()
+	public class KindDataEditor<T>  : UnityEditor.Editor
+		where T : class, IKindData
 	{
-		color = Color.white;
+		private bool isNeutral;
+		private SerializedProperty kind;
+		private T kindData;
 
-		EditorGUILayout.PropertyField(isGenderNeutral);
-
-		if (!isGenderNeutral.boolValue)
+		public override void OnInspectorGUI()
 		{
-			EditorGUILayout.PropertyField(kind);
-			color = GetColor();
+			isNeutral = EditorGUILayout.Toggle("Is Universal Kind", isNeutral);
+			if (isNeutral)
+				kindData.Kind = Kind.Universal;
+			else
+				EditorGUILayout.PropertyField(kind);
+
+			serializedObject.ApplyModifiedProperties();
 		}
 
-		serializedObject.ApplyModifiedProperties();
-		(target as T).GetComponent<SpriteRenderer>().color = color;
-	}
+		private protected static void CircleGizmo(Transform instanceTransform, float radius, Color color)
+		{
+			Gizmos.color = color;
+			Vector2 position = instanceTransform.position;
+			Gizmos.DrawSphere(position, radius);
+		}
 
-	private Color GetColor()
-	{
-		int genderIndex = kind.enumValueIndex;
-		return KindToColor.GetColor(genderIndex);
-	}
+		private void OnEnable()
+		{
+			kind = serializedObject.FindProperty("<Kind>k__BackingField");
 
-	void OnEnable()
-	{
-		isGenderNeutral = serializedObject.FindProperty("<IsGenderNeutral>k__BackingField");
-		kind = serializedObject.FindProperty("<Kind>k__BackingField");
+			kindData = target as T;
+		}
 	}
 }

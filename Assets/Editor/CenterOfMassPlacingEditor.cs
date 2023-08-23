@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(CenterOfMassPlacing))]
-class DecalMeshHelperEditor : Editor 
+class DecalMeshHelperEditor : UnityEditor.Editor 
 {
 	CenterOfMassPlacing targetClass;
 	

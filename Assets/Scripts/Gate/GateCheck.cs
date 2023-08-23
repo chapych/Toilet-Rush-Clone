@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Character;
+using Logic.GamePlay;
 using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class GateCheck : MonoBehaviour, IKindData, ISubscriber
+public class GateCheck : MonoBehaviour, IKindData
 {
 	[field : SerializeField] public bool IsGenderNeutral { get; set; }
 	[field : SerializeField] public Kind Kind { get; set; }

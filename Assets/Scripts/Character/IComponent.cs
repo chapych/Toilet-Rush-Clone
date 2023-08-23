@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public interface IComponent
+namespace Character
 {
-	Transform transform {get;}
+	public interface IComponent
+	{
+		Transform transform {get;}
+	}
 }

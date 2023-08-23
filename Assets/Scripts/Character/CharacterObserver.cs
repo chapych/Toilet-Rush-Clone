@@ -1,19 +1,33 @@
+using System;
 using Drawing;
+using Logic.GamePlay;
+using Logic.Interfaces;
 using UnityEngine;
 
-public class CharacterObserver : MonoBehaviour //:IObservable?
+namespace Character
 {
-	private CharacterData characterData;
-    private void Start() => characterData = GetComponent<CharacterData>();
-    public void OnAllElementsHandle()
+	public class CharacterObserver 
 	{
-		ILine line = characterData.Line;
-		var lineShortener = new LineShortener(line);
-		var moveComponent = GetComponent<MoveComponent>();
+		private readonly IObservable onAllDrawn;
+		private CharacterData characterData;
 		
-		moveComponent.OnLinePointWalkedBy+=lineShortener.OnLinePointWalkedByHandler;
+		public CharacterObserver(CharacterData characterData, IObservable onAllDrawn)
+		{
+			this.characterData = characterData;
+			onAllDrawn.OnRaised += OnAllDrawnHandler;
+		}
+
+		private void OnAllDrawnHandler(object sender, EventArgs e)
+		{
+			Debug.Log("OnAllElementsHandler");
+			ILine line = characterData.Line;
+			var lineShortener = new LineShortener(line);
+			var moveComponent = characterData.GetComponent<MoveComponent>();
 		
-		var points = line.Points;
-		GetComponent<MoveComponent>().StartMovement(points.ConvertToQueue());
+			moveComponent.OnLinePointWalkedBy += lineShortener.OnLinePointWalkedByHandler;
+		
+			var points = line.Points;
+			moveComponent.StartMovement(points.ConvertToQueue());
+		}
 	}
 }

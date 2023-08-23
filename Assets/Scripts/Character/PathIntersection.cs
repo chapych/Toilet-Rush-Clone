@@ -1,71 +1,72 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using Logic.GamePlay;
 using UnityEngine;
 using Zenject;
 
-public class PathIntersection : MonoBehaviour, ISubscriber
+namespace Character
 {
-	static private bool hasCollisionHappened;
-	private GameOver gameOver;
-	private DustControl dustControl;
-	public EventHandler<CollisionEventArgs> OnCollision;
-	
-	[Inject]
-	public void Costruct(GameOver gameOver, DustControl dustControl)
+	public class PathIntersection : MonoBehaviour
 	{
-		this.gameOver = gameOver;
-		this.dustControl = dustControl;
-	}
+		static private bool hasCollisionHappened;
+		private GameOver gameOver;
+		private DustControl dustControl;
+		public EventHandler<CollisionEventArgs> OnCollision;
 	
-	void Start()
-	{
-		hasCollisionHappened = false;
-		Subscribe();
-	}
-	
-	private void OnCollisionEnter2D(Collision2D collision) 
-	{
-		var other = collision.gameObject;
-		if(other.TryGetComponent(out ICharacterData component))
+		[Inject]
+		public void Costruct(GameOver gameOver, DustControl dustControl)
 		{
-			HandleCollision(other);
+			this.gameOver = gameOver;
+			this.dustControl = dustControl;
 		}
-	}
-		
-	private void HandleCollision(GameObject other)
-	{
-		var movingObject = GetComponent<MoveComponent>();
-		Collider2D collider = GetComponent<Collider2D>();
-		
-		InvokeEventOnce(other);
-		Unsubcribe();
-		
-		StopMovement(movingObject);
-		collider.enabled = false;
-	}
-
-	private void InvokeEventOnce(GameObject other)
-	{
-		if (hasCollisionHappened) return;
-		
-		Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
-		OnCollision?.Invoke(this, new CollisionEventArgs(medianCollisionPoint));
-		hasCollisionHappened = true;
-	}
 	
-	private void StopMovement(MoveComponent movingObject) => movingObject.StopMovement();
+		void Start()
+		{
+			hasCollisionHappened = false;
+			Subscribe();
+		}
+	
+		private void OnCollisionEnter2D(Collision2D collision) 
+		{
+			var other = collision.gameObject;
+			if(other.TryGetComponent(out ICharacterData component))
+			{
+				HandleCollision(other);
+			}
+		}
+		
+		private void HandleCollision(GameObject other)
+		{
+			var movingObject = GetComponent<MoveComponent>();
+			Collider2D collider = GetComponent<Collider2D>();
+		
+			InvokeEventOnce(other);
+			Unsubcribe();
+		
+			StopMovement(movingObject);
+			collider.enabled = false;
+		}
 
-	public void Subscribe()
-	{
-		OnCollision += gameOver.OnCollisionHandleAsync;
-		OnCollision += dustControl.OnCollisionHandle;
-	}
+		private void InvokeEventOnce(GameObject other)
+		{
+			if (hasCollisionHappened) return;
+		
+			Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
+			OnCollision?.Invoke(this, new CollisionEventArgs(medianCollisionPoint));
+			hasCollisionHappened = true;
+		}
+	
+		private void StopMovement(MoveComponent movingObject) => movingObject.StopMovement();
 
-	public void Unsubcribe()
-	{
-		OnCollision -= gameOver.OnCollisionHandleAsync;
-		OnCollision -= dustControl.OnCollisionHandle;
+		public void Subscribe()
+		{
+			OnCollision += gameOver.OnCollisionHandleAsync;
+			OnCollision += dustControl.OnCollisionHandle;
+		}
+
+		public void Unsubcribe()
+		{
+			OnCollision -= gameOver.OnCollisionHandleAsync;
+			OnCollision -= dustControl.OnCollisionHandle;
+		}
 	}
 }
