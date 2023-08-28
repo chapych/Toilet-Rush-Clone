@@ -8,26 +8,30 @@ namespace Character
 {
 	public class CharacterObserver 
 	{
-		private readonly IObservable onAllDrawn;
 		private CharacterData characterData;
 		
-		public CharacterObserver(CharacterData characterData, IObservable onAllDrawn)
+		public CharacterObserver(CharacterData characterData)
 		{
 			this.characterData = characterData;
-			onAllDrawn.OnRaised += OnAllDrawnHandler;
 		}
 
-		private void OnAllDrawnHandler(object sender, EventArgs e)
+		public void OnAllDrawnHandler(object sender, EventArgs e)
 		{
-			Debug.Log("OnAllElementsHandler");
 			ILine line = characterData.Line;
 			var lineShortener = new LineShortener(line);
 			var moveComponent = characterData.GetComponent<MoveComponent>();
 		
-			moveComponent.OnLinePointWalkedBy += lineShortener.OnLinePointWalkedByHandler;
+			Subscribe(moveComponent, lineShortener);
 		
 			var points = line.Points;
-			moveComponent.StartMovement(points.ConvertToQueue());
+			moveComponent.StartMovement(points.ConvertToQueue(),
+				() => UnSubscribe(moveComponent, lineShortener));
 		}
+
+		private void Subscribe(MoveComponent component, LineShortener shortener) => 
+			component.OnLinePointWalkedBy += shortener.OnLinePointWalkedByHandler;
+
+		private void UnSubscribe(MoveComponent component, LineShortener shortener) => 
+			component.OnLinePointWalkedBy -= shortener.OnLinePointWalkedByHandler;
 	}
 }

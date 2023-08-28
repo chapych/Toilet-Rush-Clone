@@ -1,11 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Character;
+using Logic.BaseClasses;
 using UnityEngine;
 
-[Serializable]
-public class FinishData : MonoBehaviour, IKindData
+namespace Finish
 {
-	[field : SerializeField] public Kind Kind { get; set; }
+	[Serializable]
+	public class FinishData : MonoBehaviour, IFinishData
+	{
+		[field : SerializeField] public Kind Kind { get; set; }
+	}
 }

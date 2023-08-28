@@ -1,4 +1,5 @@
 using System;
+using Extensions;
 using Logic.GamePlay;
 using UnityEngine;
 using Zenject;
@@ -7,40 +8,45 @@ namespace Character
 {
 	public class PathIntersection : MonoBehaviour
 	{
-		static private bool hasCollisionHappened;
+		private static bool passed;
+		
 		private GameOver gameOver;
 		private DustControl dustControl;
+		private new Collider2D collider;
 		public EventHandler<CollisionEventArgs> OnCollision;
 	
-		[Inject]
-		public void Costruct(GameOver gameOver, DustControl dustControl)
+		// [Inject]
+		// public void Costruct(GameOver gameOver, DustControl dustControl)
+		// {
+		// 	this.gameOver = gameOver;
+		// 	this.dustControl = dustControl;
+		// }
+
+		private void Start()
 		{
-			this.gameOver = gameOver;
-			this.dustControl = dustControl;
+			passed = false;
+			collider = GetComponent<Collider2D>();
+			//Subscribe();
 		}
-	
-		void Start()
+		
+		private void Update()
 		{
-			hasCollisionHappened = false;
-			Subscribe();
-		}
-	
-		private void OnCollisionEnter2D(Collision2D collision) 
-		{
-			var other = collision.gameObject;
-			if(other.TryGetComponent(out ICharacterData component))
+			if(Physics2DExtension.TryOverlapCircle(transform.position, Constants.DETECTING_RADIUS, out Collider2D instance))
 			{
-				HandleCollision(other);
+				GameObject other = instance.gameObject;
+				if(other != gameObject && other.TryGetComponent(out ICharacterData _))
+				{
+					HandleCollision(other);
+				}
 			}
 		}
 		
 		private void HandleCollision(GameObject other)
 		{
 			var movingObject = GetComponent<MoveComponent>();
-			Collider2D collider = GetComponent<Collider2D>();
-		
+			
 			InvokeEventOnce(other);
-			Unsubcribe();
+			//Unsubcribe();
 		
 			StopMovement(movingObject);
 			collider.enabled = false;
@@ -48,11 +54,12 @@ namespace Character
 
 		private void InvokeEventOnce(GameObject other)
 		{
-			if (hasCollisionHappened) return;
+			if (passed) return;
 		
-			Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
-			OnCollision?.Invoke(this, new CollisionEventArgs(medianCollisionPoint));
-			hasCollisionHappened = true;
+			Debug.Log("collided");
+			//Vector2 medianCollisionPoint = (transform.position + other.transform.position) / 2;
+			//OnCollision?.Invoke(this, new CollisionEventArgs(medianCollisionPoint));
+			passed = true;
 		}
 	
 		private void StopMovement(MoveComponent movingObject) => movingObject.StopMovement();

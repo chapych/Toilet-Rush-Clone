@@ -10,7 +10,7 @@ namespace Drawing
 
         bool CanContinue(Vector2 newPosition, float threshold);
         void AddPoint(Vector2 newPosition);
-        void DestroySelf();
         void SetPoints(Vector3[] current);
+        void DestroySelf();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Drawing;
+using Finish;
 using UnityEngine;
 
 namespace Character
@@ -8,6 +9,7 @@ namespace Character
         ILine Line { get; set; }
         Color Color { get; }
         bool IsFree { get; }
-        bool CanBeFinishPoint(Vector2 point);
+        bool CanBeFinishPoint(IFinishData finishData);
+        void Configure(IFinishData finish);
     }
 }

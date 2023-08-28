@@ -1,19 +1,21 @@
 ﻿using System;
 using Character;
+using Logic.BaseClasses;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Services.StaticDataService.Points
 {
     [Serializable]
-    public class Point : IKindData
+    public class Point
     {
-        public Kind Kind { get; set; }
+        [FormerlySerializedAs("Kind")] public Kind kind;
         public Vector2 position;
 
 
         public Point(Kind kind, Vector2 position)
         {
-            Kind = kind;
+            this.kind = kind;
             this.position = position;
         }
     }

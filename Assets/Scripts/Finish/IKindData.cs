@@ -1,4 +1,5 @@
 using Character;
+using Logic.BaseClasses;
 
 public interface IKindData
 {

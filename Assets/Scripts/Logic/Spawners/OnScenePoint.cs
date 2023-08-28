@@ -1,4 +1,5 @@
 ﻿using Character;
+using Logic.BaseClasses;
 using UnityEngine;
 
 namespace Logic.Spawners

@@ -1,6 +1,5 @@
 ﻿using Character;
 using Drawing;
-using GameControl.GamePlay;
 using Infrastructure.Factories;
 using Infrastructure.GameStateMachine;
 using Logic.GamePlay;
@@ -23,15 +22,15 @@ namespace Bindings
     {
         public override void InstallBindings()
         {
-            Container.BindFactory<IProperNumberOfElements<CharacterObserver>, Drawer, Drawer.Factory>();
-            Container.BindFactory<string, IProperNumberOfElements<CharacterObserver>, ProperNumberOfElementsHandlerFactory>()
-                //.WithId(BootstrapInstaller.PROPER_DRAWN_HANDLER)
-                .FromFactory<PrefabResourceFactory<IProperNumberOfElements<CharacterObserver>>>();
+            // Container.BindFactory<IProperNumberOfElements<CharacterObserver>, Drawer, Drawer.Factory>();
+            // Container.BindFactory<string, IProperNumberOfElements<CharacterObserver>, ProperNumberOfElementsHandlerFactory>()
+            //     //.WithId(BootstrapInstaller.PROPER_DRAWN_HANDLER)
+            //     .FromFactory<PrefabResourceFactory<IProperNumberOfElements<CharacterObserver>>>();
             // Container.BindFactory<string, IProperNumberOfElementsHandler, ProperNumberOfElementsHandlerFactory>()
             //     .WithId(BootstrapInstaller.PROPER_REACHED_HANDLER)
             //     .FromFactory<PrefabResourceFactory<IProperNumberOfElementsHandler>>();
             
-            Container.Bind<InitialiseFactory>().AsSingle();
+           // Container.Bind<InitialiseFactory>().AsSingle();
         }
     }
 }

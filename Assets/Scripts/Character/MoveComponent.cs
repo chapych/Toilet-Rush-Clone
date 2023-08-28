@@ -16,9 +16,9 @@ namespace Character
 		{
 			rigidBody = GetComponent<Rigidbody2D>();
 		}
-		public void StartMovement(Queue<Vector2> queue)
+		public void StartMovement(Queue<Vector2> queue, Action onMovedStopped)
 		{
-			coroutine = StartCoroutine(Movement(queue));
+			coroutine = StartCoroutine(Movement(queue, onMovedStopped));
 		}
 	
 		public void StopMovement()
@@ -26,7 +26,7 @@ namespace Character
 			StopCoroutine(coroutine);
 		}
 	
-		private IEnumerator Movement(Queue<Vector2> path)
+		private IEnumerator Movement(Queue<Vector2> path, Action onMovementStopped)
 		{
 			Vector2 next = path.Dequeue();
 			float step = speed * Time.fixedDeltaTime;
@@ -38,7 +38,11 @@ namespace Character
 			
 				if(Vector2.Distance(transform.position, next) < epsilon)
 				{
-					if(path.Count == 0) break;
+					if(path.Count == 0)
+					{
+						onMovementStopped();
+						break;
+					}
 				
 					next = path.Dequeue();
 					OnLinePointWalkedBy?.Invoke();

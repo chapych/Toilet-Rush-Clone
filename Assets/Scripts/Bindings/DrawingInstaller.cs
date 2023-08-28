@@ -7,9 +7,6 @@ using Zenject;
 
 public class DrawingInstaller : MonoInstaller
 {
-	[SerializeField] private InputService inputControler;
-	[SerializeField] private DrawingStateMachine context;
-	[SerializeField] private Line prefab;
 	[SerializeField] private ICoroutineRunner coroutineRunner;
 	
 	public override void InstallBindings()

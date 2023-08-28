@@ -1,22 +1,21 @@
 using Drawing;
+using Finish;
+using Logic.BaseClasses;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Character
 {
-	public class CharacterData : MonoBehaviour, ILineHolder//, ICharacterData
+	public class CharacterData : MonoBehaviour, ILineHolder, ICharacterData
 	{
-		[SerializeField] private Kind kind;// { get; set; }
+		[field: SerializeField] public Kind Kind { get; set; }
 		public ILine Line { get; set; }
 		public bool IsFree => Line == null;
-		public Color Color => KindToColor.GetColor(kind);
-		public IKindData Finish {get; set; }
+		public Color Color => KindToColor.GetColor(Kind);
+		public IKindData Finish { get; set; }
 
-		public bool CanBeFinishPoint(Vector2 point)
-		{
-			bool hasComponent = Physics2DExtension.TryOverlapCircle(point, Constants.DETECTING_RADIUS,
-				out IKindData finish);
-		
-			return hasComponent && (finish.Kind == Kind.Universal || finish.Kind == kind);
-		}
+		public bool CanBeFinishPoint(IFinishData finish) 
+			=> finish != null && (finish.Kind == Kind.Universal || finish.Kind == Kind);
+		public void Configure(IFinishData finish) => Finish = finish;
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Character;
 using Infrastructure.Factories;
+using Logic.BaseClasses;
 using Services.StaticDataService.StaticData;
 using UnityEngine;
 using Object = UnityEngine.Object;

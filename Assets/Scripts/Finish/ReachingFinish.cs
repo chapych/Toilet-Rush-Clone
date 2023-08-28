@@ -1,23 +1,24 @@
 using System;
 using Character;
+using Logic.BaseClasses;
+using Logic.Interfaces;
 using UnityEngine;
 
-public class ReachingFinish : MonoBehaviour
+namespace Finish
 {
-	private IKindData finish;
-	public event Action OnReachedFinish;
-	
-	private void Start()
+	public class ReachingFinish : ObservableBaseMonoBehaviour
 	{
-		finish = GetComponent<FinishData>();
-	}
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		ICharacterData character = other.GetComponent<ICharacterData>();
-		if (character != null && character.Finish == finish)
+		private IKindData finish;
+		
+		private void OnTriggerEnter2D(Collider2D other)
 		{
-			other.enabled = false;
-			OnReachedFinish?.Invoke();
+			Debug.Log("s:");
+			var character = other.GetComponent<ICharacterData>();
+			if (character != null && character.Finish == finish)
+			{
+				other.enabled = false;
+				RaiseEvent();
+			}
 		}
 	}
 }

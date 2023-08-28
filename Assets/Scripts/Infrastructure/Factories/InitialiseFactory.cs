@@ -1,13 +1,11 @@
-﻿using Bindings;
-using Character;
+﻿using Character;
 using Drawing;
-using GameControl.GamePlay;
+using Logic.BaseClasses;
 using Logic.GamePlay;
 using Logic.Interfaces;
 using Services.StaticDataService;
 using Services.StaticDataService.StaticData;
 using UnityEngine;
-using Zenject;
 
 namespace Infrastructure.Factories
 {
@@ -15,8 +13,7 @@ namespace Infrastructure.Factories
     {
         private readonly Drawer.Factory drawerFactory;
         private readonly IStaticDataService staticDataService;
-
-
+        
         public InitialiseFactory(Drawer.Factory drawerFactory, 
             IStaticDataService staticDataService)
         {
@@ -29,14 +26,14 @@ namespace Infrastructure.Factories
             return drawerFactory.Create();
         }
 
-        public IProperNumberOfElements CreateProperDrawnHandler(int max, IObservable observable)
+        public IProperNumberOfElements CreateProperDrawnHandler(int maxTimeToBeInvoked)
         {
-            return new ProperDrawnLines(max, observable);
+            return new ProperDrawnLines(maxTimeToBeInvoked);
         }
 
-        public IProperNumberOfElements CreateProperReachedHandler(int max, IObservable[] observables)
+        public IProperNumberOfElements CreateProperReachedHandler(int maxTimeToBeInvoked)
         {
-            return new ProperReachedFinishPoint(max, observables);
+            return new ProperReachedFinishPoint(maxTimeToBeInvoked);
         }
         
         public GameObject CreateFinish(Kind kind, Vector2 position)
@@ -48,7 +45,7 @@ namespace Infrastructure.Factories
 
         public GameObject CreateCharacter(Kind kind, Vector2 position)
         {
-            var finishData = staticDataService.ForCharacter(kind);
+            CharacterStaticData finishData = staticDataService.ForCharacter(kind);
             GameObject prefab = finishData.prefab;
             return Object.Instantiate(prefab, position, Quaternion.identity);
         }

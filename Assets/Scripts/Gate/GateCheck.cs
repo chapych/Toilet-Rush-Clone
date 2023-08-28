@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Character;
+using Logic.BaseClasses;
 using Logic.GamePlay;
 using UnityEngine;
 using Zenject;

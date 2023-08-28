@@ -1,4 +1,5 @@
 ﻿using Character;
+using Logic.BaseClasses;
 using UnityEngine;
 
 namespace Services.StaticDataService.StaticData
