@@ -16,12 +16,14 @@ namespace Services.StaticDataService
         private Dictionary<string, LevelStaticData> levels;
         private Dictionary<Kind, FinishStaticData> finishData;
         private Dictionary<Kind, CharacterStaticData> characterData;
+        private Dictionary<WindowType, WindowStaticData> windowData;
 
         public void Load()
         {
             levels = LoadFromResources<string, LevelStaticData>("Levels", x => x.levelName);
             finishData = LoadFromResources<FinishStaticData>("Finishes");
             characterData = LoadFromResources<CharacterStaticData>("Characters");
+            windowData = LoadFromResources<WindowType, WindowStaticData>("Windows", x => x.Type);
         }
 
         private Dictionary<TKey, TValue> LoadFromResources<TKey, TValue> (string name, Func<TValue, TKey> keyDelegate) 
@@ -43,5 +45,6 @@ namespace Services.StaticDataService
         public LevelStaticData ForLevel(string level) => levels[level];
         public FinishStaticData ForFinish(Kind finish) => finishData[finish];
         public CharacterStaticData ForCharacter(Kind character) => characterData[character];
+        public WindowStaticData ForWindow(WindowType windowType) => windowData[windowType];
     }
 }

@@ -10,9 +10,8 @@ namespace Extensions
         {
             instance = default(T);
             var overlapped = new Collider2D[arrayLength];
-            int t =Physics2D.OverlapCircleNonAlloc(position, detectingRadius, overlapped, mask);
-            Debug.Log(t);
-            
+            Physics2D.OverlapCircleNonAlloc(position, detectingRadius, overlapped, mask);
+
             Collider2D collider = overlapped[0];
             if (!collider || !collider.TryGetComponent(out T component)) return false;
             instance = component;

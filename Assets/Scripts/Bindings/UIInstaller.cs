@@ -36,9 +36,9 @@ public class UIInstaller : MonoInstaller
 
 	private void BindGameOver()
 	{
-		Container.Bind<IPanel>()
-				 .WithId(GAMEOVER_PANEL_ID)
-				 .FromInstance(gameOver)
-				 .AsCached();
+	// 	Container.Bind<IPanel>()
+	// 			 .WithId(GAMEOVER_PANEL_ID)
+	// 			 .FromInstance(gameOver)
+	// 			 .AsCached();
 	}
 }

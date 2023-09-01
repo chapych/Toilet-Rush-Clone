@@ -1,11 +1,13 @@
+using Character;
 using Logic.GamePlay;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class SetupInstaller : MonoInstaller
 {
 	public const string FINISH_HOLDER_ID = "Finish holder";
-	[SerializeField] private DustControl dustControl;
+	[FormerlySerializedAs("dustControl")] [SerializeField] private ParticlesOnCollision particlesOnCollision;
 	[SerializeField] private GameObject finishPointsHolder;
 	public override void InstallBindings()
 	{
@@ -30,8 +32,8 @@ public class SetupInstaller : MonoInstaller
 
 	private void BindDustControl()
 	{
-		Container.Bind<DustControl>()
-						 .FromInstance(dustControl)
+		Container.Bind<ParticlesOnCollision>()
+						 .FromInstance(particlesOnCollision)
 						 .AsSingle();
 	}
 

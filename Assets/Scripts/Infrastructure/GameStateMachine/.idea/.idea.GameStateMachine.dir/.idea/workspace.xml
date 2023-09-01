@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ee9c032a-8658-4118-a4fd-ac7709f22ddd" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Character/CharacterDrawingObserver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Character/ParticlesOnCollision.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Character/ParticlesOnCollision.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Factories/UIFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Factories/UIFactory.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CollisionObserver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CollisionObserver.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CustomEventArgs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CustomEventArgs/ColliderEventArgs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CustomEventArgs/ColliderEventArgs.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CustomEventArgs/CollisionEventArgs.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/CustomEventArgs/CollisionEventArgs.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/TriggerObserver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/TriggerObserver.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/WindowType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/WindowType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/UI/UIObserver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Logic/UI/UIObserver.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/OpenWindow.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/OpenWindow/IWindowService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/OpenWindow/IWindowService.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/OpenWindow/WindowService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/OpenWindow/WindowService.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/StaticDataService/WindowStaticData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Services/StaticDataService/WindowStaticData.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Assembly-CSharp-Editor.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Assembly-CSharp-Editor.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../Assembly-CSharp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../Assembly-CSharp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/1614942963yellow-stripes-abstract-background.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/1614942963yellow-stripes-abstract-background.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/Free-Wallpaper-Vector-Icon-Button-Play-Button-Play-1173551.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/Free-Wallpaper-Vector-Icon-Button-Play-Button-Play-1173551.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/c11c5660-48d4-408a-bcf0-20f433f05ee4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/c11c5660-48d4-408a-bcf0-20f433f05ee4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/egg-clipart-lg.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/egg-clipart-lg.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/image_processing20210620-9573-oa9gvf.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/image_processing20210620-9573-oa9gvf.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/kisspng-button-square-orange-computer-icons-clip-art-square-5abbabc2c4cac8.4173568915222486428061.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/kisspng-button-square-orange-computer-icons-clip-art-square-5abbabc2c4cac8.4173568915222486428061.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/reload.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/reload.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/tap.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/tap.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/white-medium-square-emoji-clipart-md.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/white-medium-square-emoji-clipart-md.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/—Pngtree—yellow button_5459726 1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/—Pngtree—yellow button_5459726 1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Images/—Pngtree—yellow button_5459726.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Images/—Pngtree—yellow button_5459726.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Prefabs/Character/Blue Bird Character.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Prefabs/Character/Blue Bird Character.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Prefabs/Character/Chicken Character.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Prefabs/Character/Chicken Character.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Prefabs/Particles/Dust.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Prefabs/Particles/Dust.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../Prefabs/UI/Panels/GameOver.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Prefabs/UI/Panels/GameOver.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Bindings/SetupInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Bindings/SetupInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Bindings/UIInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Bindings/UIInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/CharacterObserver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/CharacterObserver.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../Character/CharacterDrawingObserver.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/IComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/Interfaces/IComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/IComponent.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/Interfaces/IComponent.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/MoveComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Character/MoveComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/PathIntersection.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Character/PathIntersection.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Drawing/LineShortener.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Drawing/LineShortener.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Extensions/Physics2DExtension.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Extensions/Physics2DExtension.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Finish/IKindData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/Interfaces/IKindData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Finish/IKindData.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/Interfaces/IKindData.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Finish/ReachingFinish.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Finish/ReachingFinish.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Factories/InitialiseFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Factories/InitialiseFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Logic/BaseClasses.meta" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/BaseClasses.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Logic/BaseClasses/ObservableBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/ObservableBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Logic/BaseClasses/ObservableBaseMonoBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/BaseClasses/ObservableBaseMonoBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Logic/Interfaces/IObservable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/Interfaces/IObservable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Logic/UI/Panels/GameOverPanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Logic/UI/Panels/GameOverPanel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Particles.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Particles/DustControl.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Particles/DustControl.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/StaticDataService/IStaticDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/StaticDataService/IStaticDataService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Services/StaticDataService/StaticDataService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../../Services/StaticDataService/StaticDataService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../EditModeTests.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../EditModeTests.csproj" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="ProjectId" id="2UmmX3ucnQAK5ODnYEIkK6OMOGA" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <created>1693553168334</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1693553168334</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

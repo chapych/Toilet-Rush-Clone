@@ -1,8 +1,7 @@
-﻿using Character;
-using Drawing;
+﻿using Drawing;
 using Logic.BaseClasses;
 using Logic.GamePlay;
-using Logic.Interfaces;
+using Logic.UI;
 using Services.StaticDataService;
 using Services.StaticDataService.StaticData;
 using UnityEngine;
@@ -49,5 +48,7 @@ namespace Infrastructure.Factories
             GameObject prefab = finishData.prefab;
             return Object.Instantiate(prefab, position, Quaternion.identity);
         }
+
+        public UIObserver CreateUIObserver(UIFactory factory) => new UIObserver(factory);
     }
 }

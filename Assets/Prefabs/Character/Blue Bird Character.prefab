@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3038976598102400253}
   - component: {fileID: 3038976598102400255}
   - component: {fileID: 3038976598102400254}
-  - component: {fileID: 9109597486446154128}
   - component: {fileID: 6524391392498421047}
+  - component: {fileID: -6827289906636667569}
   m_Layer: 0
   m_Name: Blue Bird Character
   m_TagString: Untagged
@@ -115,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe8210b0c0fb4a246ae3b592643929f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionObserver: {fileID: -6827289906636667569}
   speed: 10
   epsilon: 1.06
 --- !u!50 &3038976598102400254
@@ -144,18 +145,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &9109597486446154128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3038976598102400249}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fec397f3118c0a45ad34a23690f28a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &6524391392498421047
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -191,6 +180,18 @@ CircleCollider2D:
   m_Offset: {x: 0.21, y: 0.21}
   serializedVersion: 2
   m_Radius: 0.85
+--- !u!114 &-6827289906636667569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038976598102400249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 889a939c5cff49c8a5dc66d3aec346a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4179612846907357928
 PrefabInstance:
   m_ObjectHideFlags: 0

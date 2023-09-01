@@ -13,7 +13,7 @@ namespace Drawing
 			this.line = line;
 			current = line.Points;
 		}
-		public void OnLinePointWalkedByHandler()
+		public void ReducePointsByOne()
 		{
 			current = current.Skip(1)
 				.ToArray();

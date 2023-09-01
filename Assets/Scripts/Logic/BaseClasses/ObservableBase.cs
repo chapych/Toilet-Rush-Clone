@@ -18,4 +18,21 @@ namespace Logic.BaseClasses
             @event.Raise(this, EventArgs.Empty);
         }
     }
+
+    public class ObservableBase<T> : Interfaces.IObservable<T> where T : EventArgs
+
+    {
+    private readonly WeakEvent<T> @event = new WeakEvent<T>();
+
+    public event EventHandler<T> OnRaised
+    {
+        add => @event.AddListener(value);
+        remove => @event.RemoveListener(value);
+    }
+
+    public void RaiseEvent(T args)
+    {
+        @event.Raise(this, args);
+    }
+    }
 }
