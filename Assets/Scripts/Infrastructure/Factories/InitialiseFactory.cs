@@ -1,5 +1,7 @@
 ﻿using Drawing;
 using Logic.BaseClasses;
+using Logic.Character;
+using Logic.Drawing;
 using Logic.GamePlay;
 using Logic.UI;
 using Services.StaticDataService;
@@ -10,19 +12,11 @@ namespace Infrastructure.Factories
 {
     public class InitialiseFactory
     {
-        private readonly Drawer.Factory drawerFactory;
         private readonly IStaticDataService staticDataService;
         
-        public InitialiseFactory(Drawer.Factory drawerFactory, 
-            IStaticDataService staticDataService)
+        public InitialiseFactory(IStaticDataService staticDataService)
         {
-            this.drawerFactory = drawerFactory;
             this.staticDataService = staticDataService;
-        }
-
-        public Drawer CreateDrawer()
-        {
-            return drawerFactory.Create();
         }
 
         public IProperNumberOfElements CreateProperDrawnHandler(int maxTimeToBeInvoked)
@@ -45,8 +39,11 @@ namespace Infrastructure.Factories
         public GameObject CreateCharacter(Kind kind, Vector2 position)
         {
             CharacterStaticData finishData = staticDataService.ForCharacter(kind);
-            GameObject prefab = finishData.prefab;
-            return Object.Instantiate(prefab, position, Quaternion.identity);
+            GameObject gameObject = Object.Instantiate(finishData.prefab, position, Quaternion.identity);
+
+            gameObject.GetComponent<ILineHolder>().Kind = kind;
+
+            return gameObject;
         }
 
         public UIObserver CreateUIObserver(UIFactory factory) => new UIObserver(factory);

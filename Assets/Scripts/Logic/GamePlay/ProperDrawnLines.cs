@@ -1,9 +1,8 @@
 using System;
-using Character;
 
 namespace Logic.GamePlay
 {
-	public class ProperDrawnLines : ProperNumberOfElementsBase
+	public class ProperDrawnLines : ProperNumberOfElementsBase, IProperDrawnLines
 	{
 		public ProperDrawnLines(int maxTimeToBeRaised) : base(maxTimeToBeRaised)
 		{

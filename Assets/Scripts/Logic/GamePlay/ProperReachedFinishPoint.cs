@@ -1,6 +1,3 @@
-using Character;
-using Logic.Interfaces;
-
 namespace Logic.GamePlay
 {
 	public class ProperReachedFinishPoint : ProperNumberOfElementsBase

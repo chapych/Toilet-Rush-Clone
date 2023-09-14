@@ -1,38 +1,26 @@
 using System;
+using Base.Interfaces;
 using Logic.BaseClasses;
-using Logic.Interfaces;
 using UnityEngine;
 
 namespace Logic.GamePlay
 {
-	public abstract class ProperNumberOfElementsBase : ObservableBase, IProperNumberOfElements
+	public abstract class ProperNumberOfElementsBase : IProperNumberOfElements
 	{
-		private int maxTimeToBeRaised;
+		private readonly int maxTimeToBeRaised;
 		private int current;
+		public event Action OnAllElements;
 
-		public ProperNumberOfElementsBase(int maxTimeToBeRaised)
+		protected ProperNumberOfElementsBase(int maxTimeToBeRaised)
 		{
 			this.maxTimeToBeRaised = maxTimeToBeRaised;
 		}
 
-		public void OnOneElementHandle(object sender, EventArgs e)
+		public void OnOneElementHandler()
 		{
 			current++;
-			if (current == maxTimeToBeRaised)
-			{
-				RaiseEvent();
-				UnSubscribe(sender as IObservable);
-			}
-		}
-
-		public void Subscribe(IObservable observable)
-		{
-			observable.OnRaised += OnOneElementHandle;
-		}
-
-		public void UnSubscribe(IObservable observable)
-		{
-			observable.OnRaised -= OnOneElementHandle;
+			if (current != maxTimeToBeRaised) return;
+			OnAllElements?.Invoke();
 		}
 	}
 }

@@ -1,5 +1,5 @@
-using Character;
 using Drawing;
+using Logic.Character;
 using UnityEngine;
 
 namespace Services.DrawingStateMachine
@@ -19,7 +19,7 @@ namespace Services.DrawingStateMachine
 
 		public void Enter(ILineHolder lineHolder)
 		{
-			CreateLine(input.Position, lineHolder.Color);
+			CreateLine(input.Position, KindToColor.GetColor(lineHolder.Kind));
 
 			context.Enter<DrawingPressedState>();
 		}

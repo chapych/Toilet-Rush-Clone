@@ -1,4 +1,4 @@
-using Character;
+using Base.Interfaces;
 using Logic.BaseClasses;
 using UnityEditor;
 using UnityEngine;

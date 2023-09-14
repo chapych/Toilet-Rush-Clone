@@ -1,5 +1,5 @@
-﻿using Character;
-using Drawing;
+﻿using Drawing;
+using Logic.Character;
 using Services.DrawingStateMachine;
 using UnityEngine;
 

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ca49c16496f4dacbea42f6c94c79351, type: 3}
+  m_Name: Game Level Static Data
+  m_EditorClassIdentifier: 
+  levelName: Game
+  characterPoints:
+  - kind: 1
+    position: {x: 8.26, y: 4.5}
+  - kind: 1
+    position: {x: 8.26, y: -5.29}
+  finishPoints:
+  - kind: 1
+    position: {x: -2.88, y: 0.13}
+  - kind: 1
+    position: {x: -10.06, y: 0.13}

@@ -1,5 +1,5 @@
-using Character;
 using Drawing;
+using Logic.Character;
 using UnityEngine;
 
 namespace Services.DrawingStateMachine
@@ -15,10 +15,8 @@ namespace Services.DrawingStateMachine
 		}
 		public void Enter(ILineHolder holder)
 		{
-			{
-				SetLineConfigures(holder);
-				creator.CurrentLine = null;
-			}
+			SetLineConfigures(holder);
+			creator.CurrentLine = null;
 		}
 
 		private void SetLineConfigures(ILineHolder holder)

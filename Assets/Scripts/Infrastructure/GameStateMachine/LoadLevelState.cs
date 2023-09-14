@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Character;
-using Drawing;
+using Base.Interfaces;
 using Finish;
 using Infrastructure.Factories;
 using Logic.BaseClasses;
+using Logic.Character;
+using Logic.Drawing;
 using Logic.GamePlay;
-using Logic.Interfaces;
 using Logic.UI;
 using Services.OpenWindow;
 using Services.StaticDataService;
@@ -24,6 +24,7 @@ namespace Infrastructure.GameStateMachine
 		private readonly IGameStateMachine stateMachine;
 		private readonly ISceneLoader sceneLoader;
 		private readonly IStaticDataService staticDataService;
+		private readonly IDrawingService drawingService;
 		private readonly IWindowService windowService;
 		private readonly InitialiseFactory initFactory;
 		private readonly UIFactory uiFactory;
@@ -32,22 +33,22 @@ namespace Infrastructure.GameStateMachine
 			ISceneLoader sceneLoader,
 			InitialiseFactory initFactory,
 			UIFactory uiFactory,
-			IStaticDataService staticDataService)
+			IStaticDataService staticDataService,
+			IDrawingService drawingService)
 		{
 			this.stateMachine = stateMachine;
 			this.sceneLoader = sceneLoader;
 			this.initFactory = initFactory;
 			this.uiFactory = uiFactory;
 			this.staticDataService = staticDataService;
+			this.drawingService = drawingService;
 		}
 
-		public void Enter(string scene)
-		{
-			sceneLoader.Load(scene, Init);
-		}
+		public void Enter(string scene) => sceneLoader.Load(scene, Init);
 
 		private void Init()
 		{
+			drawingService.TurnOnDrawing();
 			InitUI();
 			InitGameWorld();
 		}
@@ -59,84 +60,74 @@ namespace Infrastructure.GameStateMachine
 			LevelStaticData levelData = GetLevelStaticData();
 
 			var instantiatedCharacters =
-				InitialiseFromData<CharacterData>(levelData.characterPoints, initFactory.CreateCharacter);
+				InitialiseFromData(levelData.characterPoints, initFactory.CreateCharacter);
 			var instantiatedFinishes = 
-				InitialiseFromData<FinishData>(levelData.finishPoints, initFactory.CreateFinish);
+				InitialiseFromData(levelData.finishPoints, initFactory.CreateFinish);
 			
-			Drawer drawer = CreateDrawer();
 			UIObserver uiObserver = CreateUIObserver();
-			IProperNumberOfElements properReachedHandler = CreateProperReachedHandler(instantiatedCharacters,
-				instantiatedFinishes);
-			IProperNumberOfElements properDrawnHandler = CreateProperNumberOfElementsHandler(instantiatedCharacters,
-				drawer);
+			IProperNumberOfElements properDrawnHandler = CreateProperNumberOfDrawnElementsHandler(instantiatedCharacters.Length);
+			IProperNumberOfElements properReachedHandler = CreateProperReachedHandler(instantiatedCharacters.Length);
 
-			InitialiseProperDrawnHandler(properDrawnHandler as IObservable, instantiatedCharacters);
-			InitialiseProperReachedHandler(properReachedHandler as IObservable);
-			InitialiseDrawer(drawer);
-			InitialiseUIObserver(instantiatedCharacters, uiObserver);
+			InitialiseProperDrawnHandler(properDrawnHandler, instantiatedCharacters);
+			//InitialiseProperReachedHandler(properReachedHandler);
+			//InitialiseUIObserver(instantiatedCharacters, uiObserver);
 		}
 
-		private static void InitialiseUIObserver(CharacterData[] instantiatedCharacters, UIObserver uiObserver)
+		private IProperNumberOfElements CreateProperNumberOfDrawnElementsHandler(int length)
+			=> initFactory.CreateProperDrawnHandler(length);
+
+		private void InitialiseProperDrawnHandler(IProperNumberOfElements properDrawnHandler,
+			IEnumerable<GameObject> instantiatedCharacters)
 		{
-			foreach (CollisionObserver observer in instantiatedCharacters.Select(x => x.GetComponent<CollisionObserver>()))
+			drawingService.OnDrawn += properDrawnHandler.OnOneElementHandler;
+			foreach (GameObject character in instantiatedCharacters)
 			{
-				observer.OnRaised += uiObserver.CreateGameOver;
+				var lineHolder = character.GetComponent<ILineHolder>();
+				properDrawnHandler.OnAllElements += ()=>character.GetComponent<MoveComponent>()
+					.StartMovement(lineHolder.Line.Points.ConvertToQueue(),
+						lineHolder.ShortenLineByPoint);
+
 			}
+
+			properDrawnHandler.OnAllElements += () => drawingService.OnDrawn -= properDrawnHandler.OnOneElementHandler;
 		}
 
-		private UIObserver CreateUIObserver() => initFactory.CreateUIObserver(uiFactory);
+		private IProperNumberOfElements CreateProperReachedHandler(int length)
+			=> initFactory.CreateProperReachedHandler(length);
 
-		private Drawer CreateDrawer() => initFactory.CreateDrawer();
-
-		private IProperNumberOfElements CreateProperNumberOfElementsHandler(CharacterData[] instantiatedCharacters,
-			IObservable drawer)
+		private void InitialiseProperReachedHandler(IProperNumberOfElements properReachedHandler,
+			IEnumerable<IFinishData> instantiatedFinishes)
 		{
-			int length = instantiatedCharacters.Length;
-			IProperNumberOfElements properDrawnHandler = initFactory.CreateProperDrawnHandler(length);
-			properDrawnHandler.Subscribe(drawer);
-			return properDrawnHandler;
-		}
-
-		private IProperNumberOfElements CreateProperReachedHandler(CharacterData[] instantiatedCharacters,
-						FinishData[] instantiatedFinishes)
-		{
-			int length = instantiatedCharacters.Length;
-			var finishReached = instantiatedFinishes
-				.Select(x => x.GetComponent<IObservable>())
-				.ToArray();
-			IProperNumberOfElements properReachedHandler = initFactory.CreateProperReachedHandler(length);
-			foreach (IObservable finish in finishReached)
-			{
-				properReachedHandler.Subscribe(finish);
-			}
-			return properReachedHandler;
+			// foreach (IFinishData finishData in instantiatedFinishes)
+			// {
+			// 	finishData.
+			// }
+			properReachedHandler.OnAllElements += () => Debug.Log("Success");
 		}
 
 		private LevelStaticData GetLevelStaticData()
 			=> staticDataService.ForLevel(SceneManager.GetActiveScene().name);
 
-		private void InitialiseProperReachedHandler(IObservable properReachedHandler)
-			=> properReachedHandler.OnRaised += new LevelCleared().OnAllElementsHandle;
 
-		private void InitialiseProperDrawnHandler(IObservable properDrawnHandler, CharacterData[] instantiatedCharacters)
+		private GameObject[] InitialiseFromData(IEnumerable<Point> levelData, Func<Kind, Vector2, GameObject> creatingFunc)
+			=> levelData.Select(x => creatingFunc(x.kind, x.position))
+					.ToArray();
+
+		private UIObserver CreateUIObserver() => initFactory.CreateUIObserver(uiFactory);
+
+		// private void InitialiseUIObserver(CharacterData[] instantiatedCharacters, UIObserver uiObserver)
+		// {
+		// 	foreach (CollisionObserver observer in instantiatedCharacters.Select(x => x.GetComponent<CollisionObserver>()))
+		// 	{
+		// 		//observer.OnRaised += uiObserver.CreateGameOver;
+		// 	}
+		// }
+
+		public void Exit()
 		{
-			foreach (CharacterData data in instantiatedCharacters)
-			{
-				var characterObserver = new CharacterDrawingObserver(data);
-				properDrawnHandler.OnRaised += characterObserver.OnAllDrawnHandler;
-			}
+			drawingService.TurnOffDrawing();
 		}
 
-		private void InitialiseDrawer(Drawer drawer) => drawer.Initialise();
-
-		private T[] InitialiseFromData<T>(List<Point> levelData, Func<Kind, Vector2, GameObject> creatingFunc)
-		{
-			return levelData.Select(x => creatingFunc(x.kind, x.position)
-					.GetComponent<T>())
-				.ToArray();
-		}
-
-		public void Exit() { }
 		public class Factory : PlaceholderFactory<IGameStateMachine, LoadLevelState> { }
 	}
 }

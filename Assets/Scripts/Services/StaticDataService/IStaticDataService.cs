@@ -1,5 +1,4 @@
-﻿using Character;
-using Infrastructure.Factories;
+﻿using Infrastructure.Factories;
 using Logic.BaseClasses;
 using Services.StaticDataService.StaticData;
 

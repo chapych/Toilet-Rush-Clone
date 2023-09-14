@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Character;
 using Infrastructure.Factories;
 
 namespace Services.DrawingStateMachine

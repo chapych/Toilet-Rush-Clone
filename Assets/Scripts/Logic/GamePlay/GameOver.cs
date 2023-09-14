@@ -11,11 +11,8 @@ namespace Logic.GamePlay
 		[SerializeField] private float secondsToWait = 1f;
 	
 		[Inject]
-		public void Construct([Inject(Id = UIInstaller.GAMEOVER_PANEL_ID)] IPanel panel, 
-			[Inject(Id = UIInstaller.GUI_PANEL_ID)]IPanel gui)
+		public void Construct()
 		{
-			this.panel = panel;
-			this.gui = gui;
 		}
 	
 		public async void OnCollisionHandleAsync(object sender, CollisionEventArgs args)

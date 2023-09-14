@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a11054bfbc4010a0885ce8cadc0ef2, type: 3}
+  m_Name: Chicken Static Data
+  m_EditorClassIdentifier: 
+  <Kind>k__BackingField: 1
+  prefab: {fileID: 2436595598548046541, guid: 35bacfc4592d8ca4697ab7c8ef1ef0e2, type: 3}

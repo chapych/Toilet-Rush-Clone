@@ -3,6 +3,8 @@ using GameControl;
 using Infrastructure;
 using Infrastructure.Factories;
 using Infrastructure.GameStateMachine;
+using Logic.Drawing;
+using Services.DrawingService;
 using Services.DrawingStateMachine;
 using Services.StaticDataService;
 using Zenject;
@@ -11,12 +13,6 @@ namespace Bindings
 {
 	public class BootstrapInstaller : MonoInstaller
 	{
-		public const string PROPER_DRAWN_HANDLER = "Proper Drawen Handler";
-		public const string PROPER_REACHED_HANDLER = "Proper Reached Handler";
-
-		//private IProperNumberOfElements<CharacterObserver> properDrawnLines;
-		//[SerializeField] private IProperNumberOfElementsHandler properReachedFinishHandler;
-
 		public override void InstallBindings()
 		{
 			BindCoroutineRunner();
@@ -34,6 +30,14 @@ namespace Bindings
 			BindProgressService();
 			BindStaticService();
 			BindUIFactory();
+			BindDrawingService();
+		}
+
+		private void BindDrawingService()
+		{
+			Container.Bind<IDrawingService>()
+				.To<DrawingService>()
+				.AsSingle();
 		}
 
 		private void BindUIFactory()
@@ -46,7 +50,6 @@ namespace Bindings
 		{
 			Container.Bind<InitialiseFactory>()
 				.AsSingle();
-			Container.BindFactory<Drawer, Drawer.Factory>();
 		}
 
 		private void BindStaticService()

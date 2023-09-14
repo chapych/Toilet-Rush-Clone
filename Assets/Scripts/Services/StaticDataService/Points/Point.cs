@@ -1,5 +1,4 @@
 ﻿using System;
-using Character;
 using Logic.BaseClasses;
 using UnityEngine;
 using UnityEngine.Serialization;

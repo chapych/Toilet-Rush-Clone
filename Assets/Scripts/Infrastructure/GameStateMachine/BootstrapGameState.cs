@@ -1,5 +1,6 @@
 using Drawing;
 using Infrastructure.Factories;
+using Logic.Drawing;
 using Services.StaticDataService;
 using Zenject;
 
@@ -14,22 +15,31 @@ namespace Infrastructure.GameStateMachine
 		private readonly ISceneLoader sceneLoader;
 		private readonly IInputService input;
 		private readonly IStaticDataService staticDataService;
+		private readonly IDrawingService drawingService;
 
 		public BootstrapGameState(IGameStateMachine stateMachine,
 			ISceneLoader sceneLoader,
 			IInputService input,
-			IStaticDataService staticDataService)
+			IStaticDataService staticDataService,
+			IDrawingService drawingService)
 		{
 			this.stateMachine = stateMachine;
 			this.sceneLoader = sceneLoader;
 			this.input = input;
 			this.staticDataService = staticDataService;
+			this.drawingService = drawingService;
 		}
 
 		private void InitialiseServices()
 		{
 			InitialiseInputService();
 			InitialiseStaticDataService();
+			InitialiseDrawingService();
+		}
+
+		private void InitialiseDrawingService()
+		{
+			drawingService.Initialise();
 		}
 
 		private void InitialiseStaticDataService()
@@ -48,9 +58,7 @@ namespace Infrastructure.GameStateMachine
 		}
 
 		public void Exit()
-		{
-		
-		}
+		{ }
 
 		public class Factory : PlaceholderFactory<IGameStateMachine, BootstrapGameState>
 		{

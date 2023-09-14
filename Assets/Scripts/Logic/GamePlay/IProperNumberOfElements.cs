@@ -1,12 +1,11 @@
 ﻿using System;
-using Logic.Interfaces;
+using Base.Interfaces;
 
 namespace Logic.GamePlay
 {
     public interface IProperNumberOfElements
     {
-        void OnOneElementHandle(object sender, EventArgs e);
-        void Subscribe(IObservable observable);
-        void UnSubscribe(IObservable observable);
+        void OnOneElementHandler();
+        event Action OnAllElements;
     }
 }
