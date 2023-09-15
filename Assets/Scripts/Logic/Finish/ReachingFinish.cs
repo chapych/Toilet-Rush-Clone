@@ -3,36 +3,35 @@ using Base.Interfaces;
 using Logic.BaseClasses;
 using Logic.BaseClasses.CustomEventArgs;
 using Logic.Character;
+using Logic.Finish;
 using UnityEngine;
 
 namespace Finish
 {
-	public class ReachingFinish : MonoBehaviour
+	public class ReachingFinish : MonoBehaviour, ITarget
 	{
-		[SerializeField] private TriggerObserver triggerObserver;
 		private IKindData finish;
-		private event Action OnReachFinish;
+		[SerializeField] private TriggerObserver triggerObserver;
+		public event Action OnTargetReached;
 
 		private void Awake()
 		{
-			triggerObserver.OnTrigger += OnRaisedHandler;
+			finish = GetComponent<IKindData>();
+			triggerObserver ??= GetComponent<TriggerObserver>();
 		}
 
-		private void OnRaisedHandler(object sender, ColliderEventArgs args)
+		private void Start() => triggerObserver.OnTrigger += OnTriggerHandler;
+
+		private void OnTriggerHandler(object sender, ColliderEventArgs args)
 		{
 			Collider2D other = args.Collider;
 			var character = other.GetComponent<ILineHolder>();
 
-			if (character != null && character.Finish == finish)
-			{
-				other.enabled = false;
-				OnReachFinish?.Invoke();
-			}
+			if (character == null || character.Finish != finish) return;
+			other.enabled = false;
+			OnTargetReached?.Invoke();
 		}
 
-		private void OnDestroy()
-		{
-			triggerObserver.OnTrigger -= OnRaisedHandler;
-		}
+		private void OnDestroy() => triggerObserver.OnTrigger -= OnTriggerHandler;
 	}
 }

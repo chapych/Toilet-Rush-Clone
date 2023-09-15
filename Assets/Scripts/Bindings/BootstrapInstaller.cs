@@ -6,6 +6,7 @@ using Infrastructure.GameStateMachine;
 using Logic.Drawing;
 using Services.DrawingService;
 using Services.DrawingStateMachine;
+using Services.OpenWindow;
 using Services.StaticDataService;
 using Zenject;
 
@@ -31,6 +32,14 @@ namespace Bindings
 			BindStaticService();
 			BindUIFactory();
 			BindDrawingService();
+			BindWindowService();
+		}
+
+		private void BindWindowService()
+		{
+			Container.Bind<IWindowService>()
+				.To<WindowService>()
+				.AsSingle();
 		}
 
 		private void BindDrawingService()

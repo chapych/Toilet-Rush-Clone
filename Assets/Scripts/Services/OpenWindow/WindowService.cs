@@ -1,5 +1,5 @@
-﻿using Infrastructure.Factories;
-using Logic.BaseClasses;
+﻿using Base.BaseClasses.Enums;
+using Infrastructure.Factories;
 
 namespace Services.OpenWindow
 {
@@ -17,6 +17,9 @@ namespace Services.OpenWindow
             {
                 case WindowType.GameOver:
                     factory.CreateGameOverWindow();
+                    break;
+                case WindowType.LevelCleared:
+                    factory.CreateLevelClearedWindow();
                     break;
             }
         }

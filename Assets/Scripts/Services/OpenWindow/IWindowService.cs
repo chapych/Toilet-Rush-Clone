@@ -1,4 +1,5 @@
-﻿using Logic.BaseClasses;
+﻿using Base.BaseClasses.Enums;
+using Logic.BaseClasses;
 
 namespace Services.OpenWindow
 {

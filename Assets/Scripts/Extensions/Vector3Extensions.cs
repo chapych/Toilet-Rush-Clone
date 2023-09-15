@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Vector3Extensions
 {
-	public static Queue<Vector2> ConvertToQueue(this Vector3[] array)
+	public static Queue<Vector2> ToQueue(this Vector3[] array)
 	{
 		int count = array.Length;
 		

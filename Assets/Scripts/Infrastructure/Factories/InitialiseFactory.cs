@@ -1,4 +1,5 @@
 ﻿using Drawing;
+using Finish;
 using Logic.BaseClasses;
 using Logic.Character;
 using Logic.Drawing;
@@ -31,15 +32,18 @@ namespace Infrastructure.Factories
         
         public GameObject CreateFinish(Kind kind, Vector2 position)
         {
-            FinishStaticData finishData = staticDataService.ForFinish(kind);
-            GameObject prefab = finishData.prefab;
-            return Object.Instantiate(prefab, position, Quaternion.identity);
+            FinishStaticData data = staticDataService.ForFinish(kind);
+            GameObject gameObject = Object.Instantiate(data.prefab, position, Quaternion.identity);
+
+            gameObject.GetComponent<IFinishData>().Kind = kind;
+
+            return gameObject;
         }
 
         public GameObject CreateCharacter(Kind kind, Vector2 position)
         {
-            CharacterStaticData finishData = staticDataService.ForCharacter(kind);
-            GameObject gameObject = Object.Instantiate(finishData.prefab, position, Quaternion.identity);
+            CharacterStaticData data = staticDataService.ForCharacter(kind);
+            GameObject gameObject = Object.Instantiate(data.prefab, position, Quaternion.identity);
 
             gameObject.GetComponent<ILineHolder>().Kind = kind;
 

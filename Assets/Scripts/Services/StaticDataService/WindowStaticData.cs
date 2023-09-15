@@ -1,4 +1,5 @@
-﻿using Infrastructure.Factories;
+﻿using Base.BaseClasses.Enums;
+using Infrastructure.Factories;
 using Logic.BaseClasses;
 using UnityEngine;
 

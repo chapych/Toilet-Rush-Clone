@@ -63,8 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  collisionObserver: {fileID: 5769797809849205566}
   epsilon: 1.06
+  collisionObserver: {fileID: 5769797809849205566}
+  rigidBody: {fileID: 2436595598548046538}
 --- !u!50 &2436595598548046538
 Rigidbody2D:
   serializedVersion: 4

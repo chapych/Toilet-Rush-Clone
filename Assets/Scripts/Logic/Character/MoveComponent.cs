@@ -7,40 +7,34 @@ using UnityEngine;
 
 namespace Logic.Character
 {
-	public class MoveComponent : MonoBehaviour
+	public class MoveComponent : MonoBehaviour, IMovable
 	{
 		private Coroutine coroutine;
-		private Rigidbody2D rigidBody;
-		private ILineHolder lineHolder;
-		public float speed;
-		[SerializeField] private CollisionObserver collisionObserver;
+		[SerializeField] private float speed;
 		[SerializeField] private float epsilon;
+		[SerializeField] private CollisionObserver collisionObserver;
+		[SerializeField] private Rigidbody2D rigidBody;
 
 		private void Awake()
 		{
-			lineHolder = GetComponent<ILineHolder>();
-			rigidBody = GetComponent<Rigidbody2D>();
+			rigidBody ??= GetComponent<Rigidbody2D>();
+			collisionObserver ??= GetComponent<CollisionObserver>();
 		}
 
-		private void Start()
-		{
-			collisionObserver.OnCollision += StopMovement;
-		}
+		private void Start() => collisionObserver.OnCollision += StopMovement;
 
-		public void StartMovement(Queue<Vector2> queue, Action onPointWalkedBy = null, Action onMovedStopped = null)
+		public void StartMovement(Queue<Vector2> queue, Action onPointWalkedBy = null, Action onMovementFinished = null)
 		{
-			coroutine = StartCoroutine(Movement(queue, onPointWalkedBy, onMovedStopped));
+			coroutine = StartCoroutine(Movement(queue, onPointWalkedBy, onMovementFinished));
 		}
 
 		private void StopMovement(object sender, CollisionEventArgs e)
 		{
 			GameObject other = e.Collision.gameObject;
-			if(other != gameObject && other.TryGetComponent(out ILineHolder _))
-				StopMovement();
+			if (other != gameObject && other.TryGetComponent(out ILineHolder _))
+				StopCoroutine(coroutine);
 		}
-
-		private void StopMovement() => StopCoroutine(coroutine);
-
+		
 		private IEnumerator Movement(Queue<Vector2> path, Action onPointWalkedBy, Action onMovementStopped)
 		{
 			Vector2 next = path.Dequeue();
@@ -50,7 +44,7 @@ namespace Logic.Character
 			{
 				Vector2 newPosition = Vector2.MoveTowards(transform.position, next, step);
 				rigidBody.MovePosition(newPosition);
-			
+
 				if(Vector2.Distance(transform.position, next) < epsilon)
 				{
 					if(path.Count == 0)

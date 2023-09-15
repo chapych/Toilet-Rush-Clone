@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base.BaseClasses.Enums;
 using Base.Interfaces;
 using Infrastructure.Factories;
 using Logic.BaseClasses;

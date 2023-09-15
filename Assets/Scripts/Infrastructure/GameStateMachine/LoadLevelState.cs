@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Base.BaseClasses.Enums;
 using Base.Interfaces;
 using Finish;
 using Infrastructure.Factories;
 using Logic.BaseClasses;
 using Logic.Character;
 using Logic.Drawing;
+using Logic.Finish;
 using Logic.GamePlay;
 using Logic.UI;
 using Services.OpenWindow;
@@ -34,7 +36,8 @@ namespace Infrastructure.GameStateMachine
 			InitialiseFactory initFactory,
 			UIFactory uiFactory,
 			IStaticDataService staticDataService,
-			IDrawingService drawingService)
+			IDrawingService drawingService,
+			IWindowService windowService)
 		{
 			this.stateMachine = stateMachine;
 			this.sceneLoader = sceneLoader;
@@ -42,6 +45,7 @@ namespace Infrastructure.GameStateMachine
 			this.uiFactory = uiFactory;
 			this.staticDataService = staticDataService;
 			this.drawingService = drawingService;
+			this.windowService = windowService;
 		}
 
 		public void Enter(string scene) => sceneLoader.Load(scene, Init);
@@ -69,7 +73,7 @@ namespace Infrastructure.GameStateMachine
 			IProperNumberOfElements properReachedHandler = CreateProperReachedHandler(instantiatedCharacters.Length);
 
 			InitialiseProperDrawnHandler(properDrawnHandler, instantiatedCharacters);
-			//InitialiseProperReachedHandler(properReachedHandler);
+			InitialiseProperReachedHandler(properReachedHandler, instantiatedFinishes);
 			//InitialiseUIObserver(instantiatedCharacters, uiObserver);
 		}
 
@@ -83,12 +87,15 @@ namespace Infrastructure.GameStateMachine
 			foreach (GameObject character in instantiatedCharacters)
 			{
 				var lineHolder = character.GetComponent<ILineHolder>();
-				properDrawnHandler.OnAllElements += ()=>character.GetComponent<MoveComponent>()
-					.StartMovement(lineHolder.Line.Points.ConvertToQueue(),
-						lineHolder.ShortenLineByPoint);
-
+				var moveComponent = character.GetComponent<IMovable>();
+				properDrawnHandler.OnAllElements += () => moveComponent.StartMovement(
+					lineHolder
+						.Line
+						.Points
+						.ToQueue(),
+					lineHolder.ShortenLineByPoint
+					);
 			}
-
 			properDrawnHandler.OnAllElements += () => drawingService.OnDrawn -= properDrawnHandler.OnOneElementHandler;
 		}
 
@@ -96,13 +103,17 @@ namespace Infrastructure.GameStateMachine
 			=> initFactory.CreateProperReachedHandler(length);
 
 		private void InitialiseProperReachedHandler(IProperNumberOfElements properReachedHandler,
-			IEnumerable<IFinishData> instantiatedFinishes)
+			IEnumerable<GameObject> instantiatedFinishes)
 		{
-			// foreach (IFinishData finishData in instantiatedFinishes)
-			// {
-			// 	finishData.
-			// }
-			properReachedHandler.OnAllElements += () => Debug.Log("Success");
+			Action onOneElementHandler = properReachedHandler.OnOneElementHandler;
+
+			foreach (GameObject finishData in instantiatedFinishes)
+			{
+				var target = finishData.GetComponent<ITarget>();
+				target.OnTargetReached += onOneElementHandler;
+				properReachedHandler.OnAllElements += () => target.OnTargetReached -= onOneElementHandler;
+			}
+			properReachedHandler.OnAllElements += () => windowService.Open(WindowType.LevelCleared);
 		}
 
 		private LevelStaticData GetLevelStaticData()

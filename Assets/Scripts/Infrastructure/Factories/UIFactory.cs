@@ -1,4 +1,5 @@
-﻿using Logic.BaseClasses;
+﻿using Base.BaseClasses.Enums;
+using Logic.BaseClasses;
 using Services.StaticDataService;
 using UnityEngine;
 
@@ -26,6 +27,12 @@ namespace Infrastructure.Factories
         public GameObject CreateGameOverWindow()
         {
             WindowStaticData config = staticData.ForWindow(WindowType.GameOver);
+            return Object.Instantiate(config.Prefab, uiRoot);
+        }
+
+        public GameObject CreateLevelClearedWindow()
+        {
+            WindowStaticData config = staticData.ForWindow(WindowType.LevelCleared);
             return Object.Instantiate(config.Prefab, uiRoot);
         }
     }
