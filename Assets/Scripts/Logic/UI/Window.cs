@@ -7,14 +7,11 @@ namespace Logic.UI
     {
         [SerializeField] private Button closeButton;
 
-        private void Awake()
-        {
-            OnAwake();
-        }
+        private void Awake() => OnAwake();
 
         private protected void OnAwake()
         {
-            if(closeButton) closeButton.onClick.AddListener(()=>Destroy(gameObject));
+            if(closeButton) closeButton.onClick.AddListener(() => Destroy(gameObject));
         }
     }
 }

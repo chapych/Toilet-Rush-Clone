@@ -1,27 +1,32 @@
 ﻿using Base.BaseClasses.Enums;
 using Infrastructure.Factories;
+using Logic.UI;
+using UnityEngine;
 
 namespace Services.OpenWindow
 {
     public class WindowService : IWindowService
     {
         private readonly UIFactory factory;
+        private GameObject lastOpened;
 
         public WindowService(UIFactory factory)
-        {
-            this.factory = factory;
-        }
+            => this.factory = factory;
+
         public void Open(WindowType windowType)
         {
-            switch (windowType)
+            if(lastOpened) Close(lastOpened);
+
+            lastOpened = windowType switch
             {
-                case WindowType.GameOver:
-                    factory.CreateGameOverWindow();
-                    break;
-                case WindowType.LevelCleared:
-                    factory.CreateLevelClearedWindow();
-                    break;
-            }
+                WindowType.GameOver => factory.CreateGameOverWindow(),
+                WindowType.LevelCleared => factory.CreateLevelClearedWindow(),
+                WindowType.Pause => factory.CreatePauseWindow(),
+                _ => lastOpened
+            };
         }
+
+        private void Close(GameObject window)
+            => Object.Destroy(window.gameObject);
     }
 }

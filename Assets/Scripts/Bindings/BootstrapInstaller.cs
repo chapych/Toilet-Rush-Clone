@@ -148,7 +148,7 @@ namespace Bindings
 		private void BindCoroutineRunner()
 		{
 			Container.Bind<ICoroutineRunner>()
-				.FromComponentInNewPrefabResource(AssetPath.COROUTINE_RUNNER)
+				.FromComponentInNewPrefabResource(AssetPath.COROUTINE_RUNNER_PATH)
 				.AsSingle();
 		}
 	}

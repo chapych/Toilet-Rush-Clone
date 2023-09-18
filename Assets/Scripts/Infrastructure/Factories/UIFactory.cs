@@ -24,6 +24,12 @@ namespace Infrastructure.Factories
             uiRoot = Object.Instantiate(prefab).transform;
         }
 
+        public GameObject CreatHUD()
+        {
+            GameObject prefab = assetProvider.Get(AssetPath.HUD_PATH);
+            return Object.Instantiate(prefab);
+        }
+
         public GameObject CreateGameOverWindow()
         {
             WindowStaticData config = staticData.ForWindow(WindowType.GameOver);
@@ -33,6 +39,12 @@ namespace Infrastructure.Factories
         public GameObject CreateLevelClearedWindow()
         {
             WindowStaticData config = staticData.ForWindow(WindowType.LevelCleared);
+            return Object.Instantiate(config.Prefab, uiRoot);
+        }
+
+        public GameObject CreatePauseWindow()
+        {
+            WindowStaticData config = staticData.ForWindow(WindowType.Pause);
             return Object.Instantiate(config.Prefab, uiRoot);
         }
     }

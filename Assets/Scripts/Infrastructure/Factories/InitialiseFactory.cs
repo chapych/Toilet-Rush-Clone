@@ -50,6 +50,5 @@ namespace Infrastructure.Factories
             return gameObject;
         }
 
-        public UIObserver CreateUIObserver(UIFactory factory) => new UIObserver(factory);
     }
 }

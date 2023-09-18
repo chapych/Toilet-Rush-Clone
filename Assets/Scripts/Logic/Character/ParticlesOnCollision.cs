@@ -9,24 +9,16 @@ namespace Logic.Character
         [SerializeField] private CollisionObserver collisionObserver;
         [SerializeField] private ParticleSystem dustParticles;
 
-        private void Awake()
-        {
+        private void Awake() => 
             collisionObserver.OnCollision += PlayDustAnimation;
-        }
 
-        private void PlayDustAnimation(object sender, CollisionEventArgs args)
-        {
+        private void PlayDustAnimation(object sender, CollisionEventArgs args) =>
             PlayDustAnimation(args.Collision.contacts[0].point);
-        }
 
-        public void PlayDustAnimation(Vector2 at)
-        {
+        public void PlayDustAnimation(Vector2 at) =>
             Instantiate(dustParticles, at, Quaternion.identity);
-        }
 
-        private void OnDestroy()
-        {
+        private void OnDestroy() =>
             collisionObserver.OnCollision -= PlayDustAnimation;
-        }
     }
 }

@@ -4,6 +4,7 @@
     {
         Null,
         GameOver,
-        LevelCleared
+        LevelCleared,
+        Pause
     }
 }

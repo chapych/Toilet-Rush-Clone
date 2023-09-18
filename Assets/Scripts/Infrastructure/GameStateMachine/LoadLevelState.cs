@@ -52,12 +52,18 @@ namespace Infrastructure.GameStateMachine
 
 		private void Init()
 		{
-			drawingService.TurnOnDrawing();
 			InitUI();
 			InitGameWorld();
+			TurnOnDrawing();
 		}
 
-		private void InitUI() => uiFactory.CreateRootUI();
+		private void InitUI()
+		{
+			uiFactory.CreateRootUI();
+			GameObject hud = uiFactory.CreatHUD();
+			var openButtons = hud.GetComponentsInChildren<OpenButton>();
+			foreach (OpenButton openButton in openButtons) openButton.Construct(windowService);
+		}
 
 		private void InitGameWorld()
 		{
@@ -68,14 +74,14 @@ namespace Infrastructure.GameStateMachine
 			var instantiatedFinishes = 
 				InitialiseFromData(levelData.finishPoints, initFactory.CreateFinish);
 			
-			UIObserver uiObserver = CreateUIObserver();
 			IProperNumberOfElements properDrawnHandler = CreateProperNumberOfDrawnElementsHandler(instantiatedCharacters.Length);
 			IProperNumberOfElements properReachedHandler = CreateProperReachedHandler(instantiatedCharacters.Length);
 
 			InitialiseProperDrawnHandler(properDrawnHandler, instantiatedCharacters);
 			InitialiseProperReachedHandler(properReachedHandler, instantiatedFinishes);
-			//InitialiseUIObserver(instantiatedCharacters, uiObserver);
 		}
+
+		private void TurnOnDrawing() => drawingService.TurnOnDrawing();
 
 		private IProperNumberOfElements CreateProperNumberOfDrawnElementsHandler(int length)
 			=> initFactory.CreateProperDrawnHandler(length);
@@ -124,20 +130,8 @@ namespace Infrastructure.GameStateMachine
 			=> levelData.Select(x => creatingFunc(x.kind, x.position))
 					.ToArray();
 
-		private UIObserver CreateUIObserver() => initFactory.CreateUIObserver(uiFactory);
 
-		// private void InitialiseUIObserver(CharacterData[] instantiatedCharacters, UIObserver uiObserver)
-		// {
-		// 	foreach (CollisionObserver observer in instantiatedCharacters.Select(x => x.GetComponent<CollisionObserver>()))
-		// 	{
-		// 		//observer.OnRaised += uiObserver.CreateGameOver;
-		// 	}
-		// }
-
-		public void Exit()
-		{
-			drawingService.TurnOffDrawing();
-		}
+		public void Exit() => drawingService.TurnOffDrawing();
 
 		public class Factory : PlaceholderFactory<IGameStateMachine, LoadLevelState> { }
 	}
