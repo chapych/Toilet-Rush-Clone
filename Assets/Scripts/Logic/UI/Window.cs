@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Services.OpenWindow;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Logic.UI
@@ -9,7 +10,7 @@ namespace Logic.UI
 
         private void Awake() => OnAwake();
 
-        private protected void OnAwake()
+        private protected virtual void OnAwake()
         {
             if(closeButton) closeButton.onClick.AddListener(() => Destroy(gameObject));
         }

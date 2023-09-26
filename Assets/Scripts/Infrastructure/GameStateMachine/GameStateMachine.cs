@@ -9,13 +9,15 @@ namespace Infrastructure.GameStateMachine
 		
 		public GameStateMachine(BootstrapGameState.Factory bootstrapFactory,
 			LoadProgressGameState.Factory loadProgressFactory,
-			LoadLevelState.Factory loadLevelFactory)
+			LoadLevelState.Factory loadLevelFactory,
+			InitGamePlayState.Factory initGamePlayFactory)
 		{
 			states = new Dictionary<System.Type, IExitableState>
 			{
 				[typeof(BootstrapGameState)] = bootstrapFactory.Create(this),
 				[typeof(LoadProgressGameState)] = loadProgressFactory.Create(this),
-				[typeof(LoadLevelState)] = loadLevelFactory.Create(this)
+				[typeof(LoadLevelState)] = loadLevelFactory.Create(this),
+				[typeof(InitGamePlayState)] = initGamePlayFactory.Create(this)
 			};
 		}
 	

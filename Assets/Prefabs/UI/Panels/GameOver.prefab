@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   closeButton: {fileID: 4909148340748924999}
+  replayButton: {fileID: 4909148340748924999}
 --- !u!1 &4909148340616137429
 GameObject:
   m_ObjectHideFlags: 0

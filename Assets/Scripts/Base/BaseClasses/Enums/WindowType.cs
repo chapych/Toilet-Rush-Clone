@@ -5,6 +5,7 @@
         Null,
         GameOver,
         LevelCleared,
-        Pause
+        Pause,
+        Settings
     }
 }

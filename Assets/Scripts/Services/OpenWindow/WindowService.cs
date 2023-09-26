@@ -15,18 +15,20 @@ namespace Services.OpenWindow
 
         public void Open(WindowType windowType)
         {
-            if(lastOpened) Close(lastOpened);
 
             lastOpened = windowType switch
             {
                 WindowType.GameOver => factory.CreateGameOverWindow(),
                 WindowType.LevelCleared => factory.CreateLevelClearedWindow(),
-                WindowType.Pause => factory.CreatePauseWindow(),
+                WindowType.Pause => factory.CreatePauseWindow(this),
+                WindowType.Settings => factory.CreateSettingsWindow(this),
                 _ => lastOpened
             };
         }
 
-        private void Close(GameObject window)
-            => Object.Destroy(window.gameObject);
+        public void CloseLastOpened()
+        {
+            if(lastOpened) Object.Destroy(lastOpened.gameObject);
+        }
     }
 }

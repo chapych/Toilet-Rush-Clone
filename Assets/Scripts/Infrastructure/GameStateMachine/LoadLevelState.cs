@@ -1,19 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Base.BaseClasses.Enums;
-using Base.Interfaces;
-using Finish;
 using Infrastructure.Factories;
-using Logic.BaseClasses;
-using Logic.Character;
-using Logic.Drawing;
-using Logic.Finish;
-using Logic.GamePlay;
 using Logic.UI;
 using Services.OpenWindow;
-using Services.StaticDataService;
-using Services.StaticDataService.Points;
 using Services.StaticDataService.StaticData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,113 +12,50 @@ namespace Infrastructure.GameStateMachine
 	{
 		private readonly IGameStateMachine stateMachine;
 		private readonly ISceneLoader sceneLoader;
-		private readonly IStaticDataService staticDataService;
-		private readonly IDrawingService drawingService;
 		private readonly IWindowService windowService;
-		private readonly InitialiseFactory initFactory;
 		private readonly UIFactory uiFactory;
+		private string sceneName;
 
 		public LoadLevelState(IGameStateMachine stateMachine,
 			ISceneLoader sceneLoader,
-			InitialiseFactory initFactory,
 			UIFactory uiFactory,
-			IStaticDataService staticDataService,
-			IDrawingService drawingService,
 			IWindowService windowService)
 		{
 			this.stateMachine = stateMachine;
 			this.sceneLoader = sceneLoader;
-			this.initFactory = initFactory;
 			this.uiFactory = uiFactory;
-			this.staticDataService = staticDataService;
-			this.drawingService = drawingService;
 			this.windowService = windowService;
 		}
 
-		public void Enter(string scene) => sceneLoader.Load(scene, Init);
+		public void Enter(string scene)
+		{
+			sceneName = scene;
+			sceneLoader.Load(scene, Init);
+		}
 
 		private void Init()
 		{
 			InitUI();
-			InitGameWorld();
-			TurnOnDrawing();
+
+			stateMachine.Enter<InitGamePlayState, string>(sceneName);
 		}
 
 		private void InitUI()
 		{
 			uiFactory.CreateRootUI();
+			CreateInitHub();
+		}
+
+		private void CreateInitHub()
+		{
 			GameObject hud = uiFactory.CreatHUD();
 			var openButtons = hud.GetComponentsInChildren<OpenButton>();
-			foreach (OpenButton openButton in openButtons) openButton.Construct(windowService);
+			foreach (OpenButton openButton in openButtons)
+				openButton.Construct(windowService);
 		}
 
-		private void InitGameWorld()
-		{
-			LevelStaticData levelData = GetLevelStaticData();
 
-			var instantiatedCharacters =
-				InitialiseFromData(levelData.characterPoints, initFactory.CreateCharacter);
-			var instantiatedFinishes = 
-				InitialiseFromData(levelData.finishPoints, initFactory.CreateFinish);
-			
-			IProperNumberOfElements properDrawnHandler = CreateProperNumberOfDrawnElementsHandler(instantiatedCharacters.Length);
-			IProperNumberOfElements properReachedHandler = CreateProperReachedHandler(instantiatedCharacters.Length);
-
-			InitialiseProperDrawnHandler(properDrawnHandler, instantiatedCharacters);
-			InitialiseProperReachedHandler(properReachedHandler, instantiatedFinishes);
-		}
-
-		private void TurnOnDrawing() => drawingService.TurnOnDrawing();
-
-		private IProperNumberOfElements CreateProperNumberOfDrawnElementsHandler(int length)
-			=> initFactory.CreateProperDrawnHandler(length);
-
-		private void InitialiseProperDrawnHandler(IProperNumberOfElements properDrawnHandler,
-			IEnumerable<GameObject> instantiatedCharacters)
-		{
-			drawingService.OnDrawn += properDrawnHandler.OnOneElementHandler;
-			foreach (GameObject character in instantiatedCharacters)
-			{
-				var lineHolder = character.GetComponent<ILineHolder>();
-				var moveComponent = character.GetComponent<IMovable>();
-				properDrawnHandler.OnAllElements += () => moveComponent.StartMovement(
-					lineHolder
-						.Line
-						.Points
-						.ToQueue(),
-					lineHolder.ShortenLineByPoint
-					);
-			}
-			properDrawnHandler.OnAllElements += () => drawingService.OnDrawn -= properDrawnHandler.OnOneElementHandler;
-		}
-
-		private IProperNumberOfElements CreateProperReachedHandler(int length)
-			=> initFactory.CreateProperReachedHandler(length);
-
-		private void InitialiseProperReachedHandler(IProperNumberOfElements properReachedHandler,
-			IEnumerable<GameObject> instantiatedFinishes)
-		{
-			Action onOneElementHandler = properReachedHandler.OnOneElementHandler;
-
-			foreach (GameObject finishData in instantiatedFinishes)
-			{
-				var target = finishData.GetComponent<ITarget>();
-				target.OnTargetReached += onOneElementHandler;
-				properReachedHandler.OnAllElements += () => target.OnTargetReached -= onOneElementHandler;
-			}
-			properReachedHandler.OnAllElements += () => windowService.Open(WindowType.LevelCleared);
-		}
-
-		private LevelStaticData GetLevelStaticData()
-			=> staticDataService.ForLevel(SceneManager.GetActiveScene().name);
-
-
-		private GameObject[] InitialiseFromData(IEnumerable<Point> levelData, Func<Kind, Vector2, GameObject> creatingFunc)
-			=> levelData.Select(x => creatingFunc(x.kind, x.position))
-					.ToArray();
-
-
-		public void Exit() => drawingService.TurnOffDrawing();
+		public void Exit() {}
 
 		public class Factory : PlaceholderFactory<IGameStateMachine, LoadLevelState> { }
 	}

@@ -16,18 +16,21 @@ namespace Infrastructure.GameStateMachine
 		private readonly IInputService input;
 		private readonly IStaticDataService staticDataService;
 		private readonly IDrawingService drawingService;
+		private readonly UIFactory uiFactory;
 
 		public BootstrapGameState(IGameStateMachine stateMachine,
 			ISceneLoader sceneLoader,
 			IInputService input,
 			IStaticDataService staticDataService,
-			IDrawingService drawingService)
+			IDrawingService drawingService,
+			UIFactory uiFactory)
 		{
 			this.stateMachine = stateMachine;
 			this.sceneLoader = sceneLoader;
 			this.input = input;
 			this.staticDataService = staticDataService;
 			this.drawingService = drawingService;
+			this.uiFactory = uiFactory;
 		}
 
 		private void InitialiseServices()
@@ -35,6 +38,12 @@ namespace Infrastructure.GameStateMachine
 			InitialiseInputService();
 			InitialiseStaticDataService();
 			InitialiseDrawingService();
+			InitialiseUIFactory();
+		}
+
+		private void InitialiseUIFactory()
+		{
+			uiFactory.Init(stateMachine);
 		}
 
 		private void InitialiseDrawingService()

@@ -52,6 +52,8 @@ namespace Bindings
 		private void BindUIFactory()
 		{
 			Container.Bind<UIFactory>()
+				.FromSubContainerResolve()
+				.ByInstaller<UIFactoryInstaller>()
 				.AsSingle();
 		}
 

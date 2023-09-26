@@ -9,7 +9,7 @@ namespace Logic.Character
         [SerializeField] private CollisionObserver collisionObserver;
         [SerializeField] private ParticleSystem dustParticles;
 
-        private void Awake() => 
+        private void Awake() =>
             collisionObserver.OnCollision += PlayDustAnimation;
 
         private void PlayDustAnimation(object sender, CollisionEventArgs args) =>

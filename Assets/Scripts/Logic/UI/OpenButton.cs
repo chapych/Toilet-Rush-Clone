@@ -17,7 +17,11 @@ namespace Logic.UI
 
             if (!button)
                 button = GetComponent<Button>();
-            button.onClick.AddListener(() => windowService.Open(window));
+            button.onClick.AddListener(() =>
+            {
+                windowService.CloseLastOpened();
+                windowService.Open(window);
+            });
         }
     }
 }

@@ -1,5 +1,9 @@
 ﻿using Base.BaseClasses.Enums;
+using Infrastructure.GameStateMachine;
 using Logic.BaseClasses;
+using Logic.UI;
+using Logic.UI.Windows;
+using Services.OpenWindow;
 using Services.StaticDataService;
 using UnityEngine;
 
@@ -9,13 +13,20 @@ namespace Infrastructure.Factories
     {
         private readonly IStaticDataService staticData;
         private readonly IAssetProvider assetProvider;
+        private IGameStateMachine stateMachine;
 
         private Transform uiRoot;
 
-        public UIFactory(IStaticDataService staticData, IAssetProvider assetProvider)
+        public UIFactory(IStaticDataService staticData,
+            IAssetProvider assetProvider)
         {
             this.staticData = staticData;
             this.assetProvider = assetProvider;
+        }
+
+        public void Init(IGameStateMachine stateMachine)
+        {
+            this.stateMachine = stateMachine;
         }
 
         public void CreateRootUI()
@@ -32,19 +43,37 @@ namespace Infrastructure.Factories
 
         public GameObject CreateGameOverWindow()
         {
-            WindowStaticData config = staticData.ForWindow(WindowType.GameOver);
-            return Object.Instantiate(config.Prefab, uiRoot);
+            GameObject gameObject = CreateWindow(WindowType.GameOver);
+            gameObject.GetComponent<GameOverWindow>().Construct(stateMachine);
+
+            return gameObject;
         }
 
-        public GameObject CreateLevelClearedWindow()
+        public GameObject CreateLevelClearedWindow() => CreateWindow(WindowType.LevelCleared);
+
+        public GameObject CreatePauseWindow(IWindowService windowService)
         {
-            WindowStaticData config = staticData.ForWindow(WindowType.LevelCleared);
-            return Object.Instantiate(config.Prefab, uiRoot);
+            GameObject gameObject = CreateWindow(WindowType.Pause);
+            var window = gameObject.GetComponent<PauseWindow>();
+            window.SetWindowService(windowService);
+            window.InitialiseButtons();
+
+            return gameObject;
         }
 
-        public GameObject CreatePauseWindow()
+        public GameObject CreateSettingsWindow(IWindowService windowService)
         {
-            WindowStaticData config = staticData.ForWindow(WindowType.Pause);
+            GameObject gameObject = CreateWindow(WindowType.Settings);
+            var window = gameObject.GetComponent<SettingsWindow>();
+            window.SetWindowService(windowService);
+            window.InitialiseButtons();
+
+            return gameObject;
+        }
+
+        private GameObject CreateWindow(WindowType windowType)
+        {
+            WindowStaticData config = staticData.ForWindow(windowType);
             return Object.Instantiate(config.Prefab, uiRoot);
         }
     }
